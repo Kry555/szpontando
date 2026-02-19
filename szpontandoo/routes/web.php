@@ -1,13 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
     return view('main');
 });
-Route::get('/login', function () {
-    return view('sign_in');
-});
-Route::get('/rejestracja', function () {
-    return view('sign_up');
-});
+
+//do logowania 
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+
+// przetwarzanie danych logowania
+Route::post('/login', [AuthController::class, 'login']);
+
+// wylogowanie
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
