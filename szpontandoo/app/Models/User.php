@@ -1,48 +1,28 @@
 <?php
+//jest to plik który jest dostosowany do naszej tabeli z userami bo nie zrobiłem ją ze standardem falafela User.php jest do domyślnej ale to kurwa jest trudne
 
+//do czego musi mieć dostęp 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use Notifiable;
+    //tabela z bazy
+    protected $table = 'user';
+    // nie ma kiedy stworzono wienc wywalm to 
+    public $timestamps = false;
+    //nie da sie przesłać innych wartosci niż to 
+    protected $fillable = ['nick', 'email', 'haslo', 'id_profil'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    //haslo chronione
+    protected $hidden = ['haslo'];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    // która kolumna to haslo
+    public function getAuthPassword()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->haslo;
     }
 }

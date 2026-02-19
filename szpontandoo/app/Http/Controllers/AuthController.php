@@ -10,19 +10,19 @@ class AuthController extends Controller
     //pokazuje widok z logowania
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view('sign_in');
     }
     public function login(Request $request)
     {
         //czy info email i haslo wogule dotarło 
         $credentials = $request->validate([
             'email' => 'required|email',
-            'haslo' => 'required',
+            'password' => 'required',
         ]);
         //tu sie dzieje magia z sprawdzeniem hasla i emaila czy prawidlowy
         if (Auth::attempt([
             'email' => $credentials['email'],
-            'haslo' => $credentials['haslo']
+            'haslo' => $credentials['password']
         ])) {
             //regeneracja sesji
             $request->session()->regenerate();

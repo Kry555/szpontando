@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{{ asset('css/stop_z_wypalaniem_gał.css') }}">
 </head>
 
 <body>
-    <h1>tu max rejestruje sie na pornhub</h1>
+    tu wiersz
 </body>
 
 </html>
