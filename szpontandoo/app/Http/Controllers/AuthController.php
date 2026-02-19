@@ -17,12 +17,12 @@ class AuthController extends Controller
         //czy info email i haslo wogule dotarło 
         $credentials = $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
+            'haslo' => 'required',
         ]);
         //tu sie dzieje magia z sprawdzeniem hasla i emaila czy prawidlowy
         if (Auth::attempt([
             'email' => $credentials['email'],
-            'haslo' => $credentials['password']
+            'haslo' => $credentials['haslo']
         ])) {
             //regeneracja sesji
             $request->session()->regenerate();
