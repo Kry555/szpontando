@@ -154,10 +154,7 @@ CREATE TABLE `profil` (
 -- Dumping data for table `profil`
 --
 
-INSERT INTO `profil` (`id_profil`, `nick`, `imie`, `nazwisko`, `data_ur`, `miasto`, `email_kontaktowy`, `ocena`, `profilowe`, `sex`) VALUES
-(1, 'kutas', '', '', '0000-00-00', '', '', 0, '', ''),
-(2, 'krystain', '', '', '0000-00-00', '', '', 0, '', ''),
-(3, 'maj', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 
 -- --------------------------------------------------------
 
@@ -200,15 +197,6 @@ CREATE TABLE `users` (
 
 --
 -- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `nick`, `email`, `password`, `czy_admin`, `id_profil`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@test.pl', '$2y$12$tLWfdS78c8X6.FsCxXQZ0eAA9R4SYtjLy4iclkUo6Zs5wHt.7WflC', 0, NULL, '2026-02-20 07:48:53', '2026-02-20 07:48:53'),
-(2, 'kryx', 'kry@email.com', '$2y$12$HcuLI0Z45oirgeHVRSjXFuQt2xvtGtD458YxJe.m3BcIbTx246UXW', 0, NULL, '2026-02-20 07:51:27', '2026-02-20 07:51:27'),
-(3, 'chuj', 'chuj@email.com', '$2y$12$zxZ.dnjyHlo73xRYIi6Z8.YPYjzCAZ/hQYL/D9BEzDWm5wKAvfHjW', 0, NULL, '2026-02-20 18:09:07', '2026-02-20 18:09:07'),
-(4, 'kajetan', 'remidiusz@email.com', '$2y$12$Zk7ghrh4ueO4w6ll95cANeMxQWlA9PxfQrvzObefvP0R7P7tFTiYC', 0, 3, '2026-02-20 18:57:44', '2026-02-20 18:57:44'),
-(5, 'ADFS', 'kur@email.com', '$2y$12$/C9gzvaJLsmyL3Sj3OGCPeK7P9cwsO4BHOfjGKgyYwa7AuNBkpF4K', 0, 3, '2026-02-20 19:20:02', '2026-02-20 19:20:02'),
-(7, 'maj', 'maj@wp.pl', '$2y$12$vZz8hK87YQNy1NtNCa2iXuQIFuRDtSSrhc7EsPNTmWj1dlqRaLvy2', 0, 3, '2026-02-20 19:30:56', '2026-02-20 19:30:56');
 
 --
 -- Indeksy dla zrzutów tabel

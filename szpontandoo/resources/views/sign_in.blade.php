@@ -14,6 +14,12 @@
         @csrf <!--  to chroni przed atakami tylko niewiem jak -->
         <input type="email" name="email" placeholder="Email" required value="{{ old('email') }}"> <br>
         <input type="password" name="password" placeholder="Hasło" required>
+        <!-- Komunikaty o nieaktywnym koncie -->
+        @if (session('warning'))
+        <div style="color:orange; font-weight:bold;">
+            {{ session('warning') }}
+        </div>
+        @endif
 
         <!-- Błędy -->
         @if($errors->any())
