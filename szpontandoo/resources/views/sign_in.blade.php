@@ -13,7 +13,7 @@
     <form method="POST" action="/login">
         @csrf <!--  to chroni przed atakami tylko niewiem jak -->
         <input type="email" name="email" placeholder="Email" required value="{{ old('email') }}"> <br>
-        <input type="password" name="haslo" placeholder="Hasło" required>
+        <input type="password" name="password" placeholder="Hasło" required>
 
         <!-- Błędy -->
         @if($errors->any())
