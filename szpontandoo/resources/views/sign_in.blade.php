@@ -24,7 +24,15 @@
         <br>
         <!-- Przycisk logowania -->
         <button type="submit">Zaloguj się</button>
+
     </form>
+    <a href="{{ route('main') }}">
+        <button type="button">wróc na główną jełopie</button>
+    </a>
+
+    <a href="{{ route('sign_up') }}">
+        <button type="button">Nie masz jeszcze konta zjebie, załuż lepiej bo łysy z brazers wyczysci ci dupe</button>
+    </a>
 </body>
 
 </html>
