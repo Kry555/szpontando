@@ -36,18 +36,21 @@ class RegisterController extends Controller
         $user = null;
 
         DB::transaction(function () use ($request, &$user) {
-            $ostatni_profil = DB::table('profil')->lockForUpdate()->max('id_profil');
-            $ostatni_profil = $ostatni_profil ? $ostatni_profil + 1 : 1;
 
+            // Tworzymy profil (AUTO_INCREMENT id_profil)
+            $profil_id = DB::table('profil')->insertGetId([
+                'nick' => $request->nick,
+                // reszta pól może zostać NULL
+            ]);
+
+            // Tworzymy użytkownika powiązanego z tym id_profil
             $user = User::create([
                 'nick' => $request->nick,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'czy_admin' => 0,
-                'id_profil' => $ostatni_profil,
-            ]);
-            DB::table('profil')->insert([
-                'nick' => $request->nick,
+                'id_profil' => $profil_id,
+                'aktywny' => 0,
             ]);
         });
 

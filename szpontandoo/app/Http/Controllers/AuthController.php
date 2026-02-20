@@ -19,6 +19,13 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
+
+        $user = \App\Models\User::where('email', $request->email)->first();
+        if ($user && $user->aktywny == 0) {
+            // Konto istnieje, ale nieaktywne → wyświetlamy komunikat
+            return back()->with('warning', 'Aktywuj konto dildosie pierdolony');
+        }
+
         //tu sie dzieje magia z sprawdzeniem hasla i emaila czy prawidlowy
         if (Auth::attempt([
             'email' => $credentials['email'],
