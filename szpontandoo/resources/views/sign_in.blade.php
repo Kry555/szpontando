@@ -30,7 +30,7 @@
         <button type="button">wróc na główną jełopie</button>
     </a>
 
-    <a href="{{ route('sign_up') }}">
+    <a href="{{ route('register.show') }}">
         <button type="button">Nie masz jeszcze konta zjebie, załuż lepiej bo łysy z brazers wyczysci ci dupe</button>
     </a>
 </body>
