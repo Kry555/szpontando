@@ -26,6 +26,10 @@
         <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
         <input type="password" name="password" placeholder="Hasło" required>
         <input type="password" name="password_confirmation" placeholder="Powtórz hasło" required>
+        <label>
+            <input type="checkbox" name="tapczan" value="1" {{ old('tapczan') ? 'checked' : '' }}>
+            Tapczan nowy system anty botowy
+        </label>
         <button type="submit">Zarejestruj się</button>
     </form>
     <a href="{{ route('login') }}">
