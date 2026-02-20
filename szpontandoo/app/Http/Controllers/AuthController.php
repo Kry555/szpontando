@@ -17,17 +17,17 @@ class AuthController extends Controller
         //czy info email i haslo wogule dotarło 
         $credentials = $request->validate([
             'email' => 'required|email',
-            'haslo' => 'required',
+            'password' => 'required',
         ]);
         //tu sie dzieje magia z sprawdzeniem hasla i emaila czy prawidlowy
         if (Auth::attempt([
             'email' => $credentials['email'],
-            'haslo' => $credentials['haslo']
+            'password' => $credentials['password']
         ])) {
             //regeneracja sesji
             $request->session()->regenerate();
             //przekierowanie po zalogowaniu
-            return redirect()->intended('/main');
+            return redirect()->intended('/');
         }
         //jesli sie nie uda
         return back()->withErrors(['email' => 'Debilu zły email lub haslo jebal cie pies']);
@@ -43,6 +43,6 @@ class AuthController extends Controller
         $request->session()->regenerateToken(); //nowy token chuj wie co to
 
         //gdzie przekieruje
-        return redirect('/main');
+        return redirect('/');
     }
 }
