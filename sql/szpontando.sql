@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2026 at 06:46 PM
+-- Generation Time: Feb 20, 2026 at 09:41 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -140,14 +140,14 @@ CREATE TABLE `password_reset_tokens` (
 CREATE TABLE `profil` (
   `id_profil` int(11) NOT NULL,
   `nick` varchar(50) NOT NULL,
-  `imie` varchar(50) NOT NULL,
-  `nazwisko` varchar(50) NOT NULL,
-  `data_ur` date NOT NULL,
-  `miasto` varchar(100) NOT NULL,
-  `email_kontaktowy` varchar(100) NOT NULL,
-  `ocena` int(11) NOT NULL,
-  `profilowe` varchar(100) NOT NULL,
-  `sex` varchar(15) NOT NULL
+  `imie` varchar(50) DEFAULT NULL,
+  `nazwisko` varchar(50) DEFAULT NULL,
+  `data_ur` date DEFAULT NULL,
+  `miasto` varchar(100) DEFAULT NULL,
+  `email_kontaktowy` varchar(100) DEFAULT NULL,
+  `ocena` int(11) DEFAULT NULL,
+  `profilowe` varchar(100) DEFAULT NULL,
+  `sex` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -156,7 +156,8 @@ CREATE TABLE `profil` (
 
 INSERT INTO `profil` (`id_profil`, `nick`, `imie`, `nazwisko`, `data_ur`, `miasto`, `email_kontaktowy`, `ocena`, `profilowe`, `sex`) VALUES
 (1, 'kutas', '', '', '0000-00-00', '', '', 0, '', ''),
-(2, 'krystain', '', '', '0000-00-00', '', '', 0, '', '');
+(2, 'krystain', '', '', '0000-00-00', '', '', 0, '', ''),
+(3, 'maj', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -178,9 +179,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('HThsyMeXBv9mRyoInx31Dr1ZQXfz6SMu19a2MrZ0', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiUzJqSlF2eUVnWmQzbmtEVzloZUhxOVhUYVRjVkJlTDlRV3hoQTJQTyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7czo1OiJyb3V0ZSI7czo1OiJsb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7fQ==', 1771577826),
-('PoyzsLBbAIxSphBf5ERIoVYRK7aYVAy3JfVYda3R', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiSUE4SmI5enVzNEUzT3duU095UXBvMlE0dTZybE0yQ2VsRUplUlFIRiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJtYWluIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mjt9', 1771608983),
-('XWyRsG2ZqwJxFTQMuUiQ3KYiNWAMsk4Xq0Iwrvfh', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoibUJ2QldCNWhneXpiVmNuQW9SRlBEMWFRcFl3d01WS29FaGJXdTMyayI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7czo1OiJyb3V0ZSI7czo1OiJsb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1771541043);
+('5Qr3nMxFXU2R6NOWT00ahguvdlM1qdz7W2rZZkBf', 7, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiOXllUVM4b280ZmtiTWh3dHFiVkUxYVlmMmV6UFNCVmg0dktlSFo3diI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJtYWluIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Nzt9', 1771619456);
 
 -- --------------------------------------------------------
 
@@ -205,7 +204,11 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `nick`, `email`, `password`, `czy_admin`, `id_profil`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'admin@test.pl', '$2y$12$tLWfdS78c8X6.FsCxXQZ0eAA9R4SYtjLy4iclkUo6Zs5wHt.7WflC', 0, NULL, '2026-02-20 07:48:53', '2026-02-20 07:48:53'),
-(2, 'kryx', 'kry@email.com', '$2y$12$HcuLI0Z45oirgeHVRSjXFuQt2xvtGtD458YxJe.m3BcIbTx246UXW', 0, NULL, '2026-02-20 07:51:27', '2026-02-20 07:51:27');
+(2, 'kryx', 'kry@email.com', '$2y$12$HcuLI0Z45oirgeHVRSjXFuQt2xvtGtD458YxJe.m3BcIbTx246UXW', 0, NULL, '2026-02-20 07:51:27', '2026-02-20 07:51:27'),
+(3, 'chuj', 'chuj@email.com', '$2y$12$zxZ.dnjyHlo73xRYIi6Z8.YPYjzCAZ/hQYL/D9BEzDWm5wKAvfHjW', 0, NULL, '2026-02-20 18:09:07', '2026-02-20 18:09:07'),
+(4, 'kajetan', 'remidiusz@email.com', '$2y$12$Zk7ghrh4ueO4w6ll95cANeMxQWlA9PxfQrvzObefvP0R7P7tFTiYC', 0, 3, '2026-02-20 18:57:44', '2026-02-20 18:57:44'),
+(5, 'ADFS', 'kur@email.com', '$2y$12$/C9gzvaJLsmyL3Sj3OGCPeK7P9cwsO4BHOfjGKgyYwa7AuNBkpF4K', 0, 3, '2026-02-20 19:20:02', '2026-02-20 19:20:02'),
+(7, 'maj', 'maj@wp.pl', '$2y$12$vZz8hK87YQNy1NtNCa2iXuQIFuRDtSSrhc7EsPNTmWj1dlqRaLvy2', 0, 3, '2026-02-20 19:30:56', '2026-02-20 19:30:56');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -302,13 +305,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `profil`
 --
 ALTER TABLE `profil`
-  MODIFY `id_profil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_profil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
