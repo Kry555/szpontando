@@ -2,14 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\RegisterController;
+
 
 Route::get('/', function () {
     return view('main');
 })->name('main');
 
-Route::get('/sign_up', function () {
-    return view('sign_up');
-})->name('sign_up');
 //do logowania 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
@@ -20,8 +19,14 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logoutt', function () {
     return view('logout-szablon');
 })->name('logoutt');
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Wyświetlenie formularza rejestracji
+Route::get('/register', [RegisterController::class, 'show'])->name('register.show');
+
+// Obsługa POST – tworzenie użytkownika
+Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
 //nie wiem co to ale sie przyda trza ogarnąć po co to
 // przykładowy dashboard – chroniony
 // Route::get('/dashboard', function () {
