@@ -22,6 +22,23 @@
     @else
     <p>Loguj sie pało a nie jestes taki incognito fapper <a href="{{ route('login') }}">Zatenteguj się</a> lub <a href="{{ route('register.show') }}">Zajeb konto</a>.</p>
     @endauth
+
+
+    @isset($dane)
+    @forelse($dane as $oferta)
+    <div>
+        <p><strong>Tytuł:</strong> {{ $oferta->typ }}</p>
+        <p><strong>Opis:</strong> {{ $oferta->opis }}</p>
+        <hr>
+    </div>
+    @empty
+    <p>Brak ofert</p>
+    @endforelse
+    @endisset
+
+
+
+
     <!-- <a href="{{ route('login') }}">
         <button type="button">Sign_in</button>
     </a>
