@@ -56,8 +56,9 @@ class RegisterController extends Controller
 
         echo " debil utworzony, ID: " . $user->id . "<br>";
         // auth()->login($user) podswietla mi blad na tym
-        Auth::login($user);
-        echo "chuj zalogowany<br>";
+        //Auth::login($user);
+        //echo "chuj zalogowany<br>";
+
         return redirect('/')->with('success', 'Konto jebnięte wariacie');
     }
 }
