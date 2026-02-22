@@ -1,0 +1,9 @@
+/* resources/css/app.css */
+body {
+    background-color: #e0f7fa;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+    color: #00796b;
+}
