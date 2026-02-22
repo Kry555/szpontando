@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>main</title>
-    <link rel="stylesheet" href="{{ asset('css/stop_z_wypalaniem_gał.css') }}">
+    @vite('resources/css/stop_z_wypalaniem_gał.css')
 </head>
 
 <body>
