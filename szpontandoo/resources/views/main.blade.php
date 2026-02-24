@@ -42,7 +42,8 @@
         </p>
 
         <img src="{{ asset('storage/'.$oferta->profilowe) }}" width="60">
-
+        <input type="hidden" name="oferta_id" value="{{ $oferta->id_oferty }}">
+        <button type="submit">Wybierz ofertę</button>
     </div>
     @endforeach
 
