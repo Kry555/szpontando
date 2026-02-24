@@ -42,8 +42,11 @@
         </p>
 
         <img src="{{ asset('storage/'.$oferta->profilowe) }}" width="60">
-        <input type="hidden" name="oferta_id" value="{{ $oferta->id_oferty }}">
-        <button type="submit">Wybierz ofertę</button>
+        <form method="POST" action="{{ route('oferta.wybierz') }}">
+            @csrf
+            <input type="hidden" name="oferta_id" value="{{ $oferta->id_oferty }}">
+            <button type="submit">Wybierz ofertę</button>
+        </form>
     </div>
     @endforeach
 

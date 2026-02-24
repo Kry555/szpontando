@@ -12,7 +12,8 @@ use App\Http\Controllers\OfertyController;
 
 Route::get('/', [OfertyController::class, 'oferty'])->name('main');
 
-
+Route::post('/wybierz', [OfertyController::class, 'wybierz'])
+    ->name('oferta.wybierz');
 //do logowania 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
