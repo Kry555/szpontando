@@ -22,6 +22,37 @@
     @else
     <p>Loguj sie pało a nie jestes taki incognito fapper <a href="{{ route('login') }}">Zatenteguj się</a> lub <a href="{{ route('register.show') }}">Zajeb konto</a>.</p>
     @endauth
+
+
+    @foreach($oferty_przeglandarka as $oferta)
+    <div class="oferty_przeglandarka">
+
+        <h3>{{ $oferta->typ }}</h3>
+
+        <p><strong>Opis:</strong> {{ $oferta->opis }}</p>
+        <p><strong>Cena:</strong> {{ $oferta->cena }} zł</p>
+        <p><strong>Adres:</strong> {{ $oferta->adres }}</p>
+        <p><strong>Ważne do:</strong> {{ $oferta->do_kiedy_wazne }}</p>
+
+        <hr>
+
+        <p>
+            <strong>Autor:</strong>
+            {{ $oferta->imie }} {{ $oferta->nazwisko }}
+        </p>
+
+        <img src="{{ asset('storage/'.$oferta->profilowe) }}" width="60">
+        <form method="POST" action="{{ route('oferta.wybierz') }}">
+            @csrf
+            <input type="hidden" name="oferta_id" value="{{ $oferta->id_oferty }}">
+            <button type="submit">Wybierz ofertę</button>
+        </form>
+    </div>
+    @endforeach
+
+
+
+
     <!-- <a href="{{ route('login') }}">
         <button type="button">Sign_in</button>
     </a>
