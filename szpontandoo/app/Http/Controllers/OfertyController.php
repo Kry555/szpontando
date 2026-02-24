@@ -7,11 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class OfertyController extends Controller
 {
-    public function show()
-    {
-        return view('main');
-    }
-
     public function oferty()
     {
         if (!auth()->check()) {
@@ -19,8 +14,20 @@ class OfertyController extends Controller
         }
         $id = auth()->user()->id_profil;
         //SELECT * FROM oferty WHERE  != 1;
-        $dane = DB::table('oferty')->where('id_profil_owner', '!=', $id)->get();
 
-        return $dane;
+        // profil.imie,profil.nazwisko,profil.profilowe,oferty:adres,typ,cena,do_kidey_wazne,opis,stworzone
+        $dane = DB::table('oferty')->select(
+            'profil.imie',
+            'profil.nazwisko',
+            'profil.profilowe',
+            'oferty.adres',
+            'oferty.typ',
+            'oferty.cena',
+            'oferty.do_kiedy_wazne',
+            'oferty.opis',
+            'oferty.stworzone'
+        )->join('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->where('oferty.id_profil_owner', '!=', $id)->get();
+
+        return view('main', ['oferty_przeglandarka' => $dane]);
     }
 }

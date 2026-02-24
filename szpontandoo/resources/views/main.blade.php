@@ -24,17 +24,27 @@
     @endauth
 
 
-    @isset($dane)
-    @forelse($dane as $oferta)
-    <div>
-        <p><strong>Tytuł:</strong> {{ $oferta->typ }}</p>
+    @foreach($oferty_przeglandarka as $oferta)
+    <div class="oferty_przeglandarka">
+
+        <h3>{{ $oferta->typ }}</h3>
+
         <p><strong>Opis:</strong> {{ $oferta->opis }}</p>
+        <p><strong>Cena:</strong> {{ $oferta->cena }} zł</p>
+        <p><strong>Adres:</strong> {{ $oferta->adres }}</p>
+        <p><strong>Ważne do:</strong> {{ $oferta->do_kiedy_wazne }}</p>
+
         <hr>
+
+        <p>
+            <strong>Autor:</strong>
+            {{ $oferta->imie }} {{ $oferta->nazwisko }}
+        </p>
+
+        <img src="{{ asset('storage/'.$oferta->profilowe) }}" width="60">
+
     </div>
-    @empty
-    <p>Brak ofert</p>
-    @endforelse
-    @endisset
+    @endforeach
 
 
 
