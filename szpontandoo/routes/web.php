@@ -5,10 +5,15 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 
 
-Route::get('/', function () {
-    return view('main');
-})->name('main');
+// Route::get('/', function () {
+//     return view('main');
+// })->name('main');
+use App\Http\Controllers\OfertyController;
 
+Route::get('/', [OfertyController::class, 'oferty'])->name('main');
+
+Route::post('/wybierz', [OfertyController::class, 'wybierz'])
+    ->name('oferta.wybierz');
 //do logowania 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
