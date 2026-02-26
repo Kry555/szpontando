@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     @vite('resources/css/stop_z_wypalaniem_gał.css')
+    
 </head>
 
 <body>
@@ -22,7 +23,7 @@
 
     <form method="POST" action="{{ route('register.post') }}">
         @csrf
-        <input type="text" name="nick" placeholder="Nick" value="{{ old('nick') }}" required>
+        <input type="text" name="nick" placeholder="Nickeee" value="{{ old('nick') }}" required>
         <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
         <input type="password" name="password" placeholder="Hasło" required>
         <input type="password" name="password_confirmation" placeholder="Powtórz hasło" required>

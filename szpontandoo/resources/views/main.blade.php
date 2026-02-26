@@ -24,7 +24,7 @@
     @endauth
 
 
-    @foreach($oferty_przeglandarka as $oferta)
+    <!-- @foreach($oferty_przeglandarka as $oferta)
     <div class="oferty_przeglandarka">
 
         <h3>{{ $oferta->typ }}</h3>
@@ -48,7 +48,7 @@
             <button type="submit">Wybierz ofertę</button>
         </form>
     </div>
-    @endforeach
+    @endforeach -->
 
 
 
