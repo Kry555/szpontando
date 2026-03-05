@@ -1,0 +1,196 @@
+
+
+
+
+    .captcha-box {
+        display: flex;
+        margin:0 auto;
+        align-items: center;
+        background: white;
+        padding: 0px 5px;
+        border: 1px solid #d3d3d3;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        width: 260px;
+        height: 70px;
+        justify-content: space-between;
+    }
+
+    .left-section {
+        display: flex;
+        align-items: center;
+        /* background-color: pink; */
+        width:80%;
+    }
+
+    .checkbox {
+        width: 24px;
+        height: 24px;
+        border: 2px solid #555;
+        border-radius: 3px;
+        margin-right: 10px;
+        position: relative;
+    }
+
+    .checkbox::after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 18px;
+        border: solid green;
+        border-width: 0 3px 3px 0;
+        transform: rotate(45deg);
+        top: 0px;
+        left: 6px;
+        display: none; /* purely visual, no functionality */
+    }
+    .captcha-text {
+        font-size: 14px;
+        color: #333;
+    }
+    .right-section {
+        text-align: center;
+        align-items: right;
+        font-size: 10px;
+        color: #777;
+        /* background-color: red; */
+    }
+    .logo-box-img {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 3px;
+}
+.zdjtapczan{
+    height:33.5px;
+    width:auto;
+    display:block;
+    object-fit: contain;
+    margin: 0 auto;
+    
+}
+/* hide real checkbox */
+#captchaCheck{
+    display:none;
+}
+
+/* fake checkbox */
+.custom-checkbox{
+    width:24px;
+    height:24px;
+    border:2px solid #555;
+    border-radius:3px;
+    margin-right:10px;
+    position:relative;
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.custom-checkbox::before{
+    content:"";
+    position:absolute;
+    width:16px;
+    height:16px;
+    border:3px solid transparent;
+    border-top:3px solid #4285f4;
+    border-radius:50%;
+
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+
+    opacity:0;
+}
+
+/* checkmark */
+.custom-checkbox::after{
+    content:"";
+    position:absolute;
+
+    width:8px;
+    height:14px;
+
+    border:solid white;
+    border-width:0 3px 3px 0;
+
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-60%) rotate(45deg);
+
+    opacity:0;
+}
+
+/* start spinning when checked */
+#captchaCheck:checked + .custom-checkbox::before{
+    opacity:1;
+    animation:spinFade 1s linear forwards;
+}
+
+/* after spin make green */
+#captchaCheck.checked + .custom-checkbox{
+    background:#34a853;
+    border-color:#34a853;
+}
+
+/* show checkmark */
+#captchaCheck.checked + .custom-checkbox::after{
+    opacity:1;
+}
+
+/* spin animation */
+@keyframes spinFade{
+    0%{
+        transform:translate(-50%,-50%) rotate(0deg);
+        opacity:1;
+    }
+
+    80%{
+        transform:translate(-50%,-50%) rotate(360deg);
+        opacity:1;
+    }
+
+    100%{
+        transform:translate(-50%,-50%) rotate(360deg);
+        opacity:0;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* dark-mode.css */
+body {
+    background-color: black;
+    /* ciemnoszary / prawie czarny */
+    color: #ffffff;
+    /* biały tekst */
+    text-align: center;
+    /* wyrównanie tekstu do środka */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    /* pełna wysokość widoku */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* wyśrodkowanie w pionie */
+    align-items: center;
+    /* wyśrodkowanie w poziomie */
+}
+
+* {
+    box-sizing: border-box;
+}
