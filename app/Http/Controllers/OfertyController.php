@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OfertyController extends Controller
 {
     public function oferty()
     {
         //----jesli nie zalogowany to oferty----
-        if (!auth()->check()) {
+        if (!auth()::check()) {
             $dane = DB::table('oferty')->select(
                 'profil.imie',
                 'oferty.id_oferty',
