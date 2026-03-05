@@ -26,46 +26,45 @@
         <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required><br>
         <input type="password" name="password" placeholder="Hasło" required><br>
         <input type="password" name="password_confirmation" placeholder="Powtórz hasło" required><br>
-<div class="captcha-box">
-    <div class="left-section">
 
-        <input type="checkbox" id="captchaCheck" name="tapczan" value="1" {{ old('tapczan') ? 'checked' : '' }}>
+        <div class="captcha-box">
+            <div class="left-section">
+                <input type="checkbox" id="captchaCheck" name="tapczan" value="1" {{ old('tapczan') ? 'checked' : '' }}>
+                <label for="captchaCheck" class="custom-checkbox"></label>
+                <div class="captcha-text">nie jestem robocikiem</div>
+            </div>
 
-        <label for="captchaCheck" class="custom-checkbox"></label>
+            <div class="right-section">
+                <img src="{{ Vite::asset('resources/images/tapczan.jpg') }}" class="zdjtapczan" alt="tapczan">
+                TAPCZAN<br>
+                Prywatność - bezpieczeństwo
+            </div>
+        </div>
 
-        <div class="captcha-text">nie jestem robocikiem</div>
-
-    </div>
-
-    <div class="right-section">
-        <img src="{{ Vite::asset('resources/images/tapczan.jpg') }}" class="zdjtapczan" alt="tapczan">
-        TAPCZAN<br>
-        Prywatność - bezpieczeństwo
-    </div>
-</div>
-</div>
         <button type="submit">Zarejestruj się</button>
     </form>
+
     <a href="{{ route('login') }}">
         <button type="button">Sign_in</button>
     </a>
+
     <script>
-document.getElementById("captchaCheck").addEventListener("change", function(){
+        document.getElementById("captchaCheck").addEventListener("change", function() {
 
-    const checkbox = this;
+            const checkbox = this;
 
-    if(checkbox.checked){
+            if (checkbox.checked) {
 
-        setTimeout(()=>{
-            checkbox.classList.add("checked");
-        },1000);
+                setTimeout(() => {
+                    checkbox.classList.add("checked");
+                }, 1000);
 
-    }else{
-        checkbox.classList.remove("checked");
-    }
+            } else {
+                checkbox.classList.remove("checked");
+            }
 
-});
-</script>
+        });
+    </script>
 </body>
 
 </html>
