@@ -16,10 +16,6 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-
-
-
-
         $exceptions->render(function (QueryException $e, Request $request) {
 
             if (str_contains($e->getMessage(), 'SQLSTATE[HY000] [2002]')) {

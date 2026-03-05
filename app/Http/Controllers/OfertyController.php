@@ -22,7 +22,7 @@ class OfertyController extends Controller
                 'oferty.do_kiedy_wazne',
                 'oferty.opis',
                 'oferty.stworzone'
-            )->join('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->get();
+            )->leftjoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->get();
 
             return view('main', ['oferty_przeglandarka' => $dane]);
         }
@@ -41,19 +41,35 @@ class OfertyController extends Controller
             'oferty.do_kiedy_wazne',
             'oferty.opis',
             'oferty.stworzone'
-        )->join('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->where('oferty.id_profil_owner', '!=', $id)->get();
+        )->leftjoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->where('oferty.id_profil_owner', '!=', $id)->get();
 
-        return view('main', ['oferty_przeglandarka' => $dane]);
+        // Pobieramy ID ofert, do których użytkownik się zgłosił
+        $aktywne = $id ? DB::table('zgloszenia')
+            ->where('id_profil_wykonawca', $id)
+            ->pluck('id_oferty')
+            ->toArray() : [];
+
+        return view('main', ['oferty_przeglandarka' => $dane, 'Zgloszenia_aktywne' => $aktywne]);
     }
 
     public function wybierz(Request $request)
     {
+        $request->validate([
+            'oferta_id' => 'required|integer|exists:oferty,id_oferty',
+            'wiadomosc' => 'nullable|string|max:1000',
+        ]);
+
         $ofertaId = $request->oferta_id;
         $id_zatwierdzajacego = auth()->user()->id_profil;
+        $wiadomosc = $request->wiadomosc; // <- pobieramy wiadomość z formularza
+
         DB::table('zgloszenia')->insert([
             'id_oferty' => $ofertaId,
             'id_profil_wykonawca' => $id_zatwierdzajacego,
+            'wiadomosc' => $wiadomosc,       // <- dodajemy ją do bazy
             'zatwierdzone' => 0,
         ]);
+
+        return redirect()->route('main')->with('modal_success', $request->oferta_id);
     }
 }

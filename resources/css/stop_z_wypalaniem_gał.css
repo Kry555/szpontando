@@ -21,3 +21,9 @@ body {
 * {
     box-sizing: border-box;
 }
+
+button[disabled] {
+    background: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
