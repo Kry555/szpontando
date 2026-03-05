@@ -23,8 +23,8 @@ class OfertyController extends Controller
                 'oferty.opis',
                 'oferty.stworzone'
             )->leftjoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->get();
-
-            return view('main', ['oferty_przeglandarka' => $dane]);
+            $komuch = 'Zaloguj sie by czytać powiadomienia mały fiucie';
+            return view('main', ['oferty_przeglandarka' => $dane, 'notf' => $komuch]);
         }
         $id = auth()->user()->id_profil;
         //SELECT * FROM oferty WHERE  != 1;
@@ -49,11 +49,17 @@ class OfertyController extends Controller
             ->pluck('id_oferty')
             ->toArray() : [];
 
-        return view('main', ['oferty_przeglandarka' => $dane, 'Zgloszenia_aktywne' => $aktywne]);
+        $komuch = DB::table('powiadomienia')->select(
+            'tytul',
+            'text',
+        )->where('id_user', '=', $id)->where('odzcytane', '=', 0)->get();
+
+        return view('main', ['oferty_przeglandarka' => $dane, 'Zgloszenia_aktywne' => $aktywne, 'notf' => $komuch]);
     }
 
     public function wybierz(Request $request)
     {
+
         $request->validate([
             'oferta_id' => 'required|integer|exists:oferty,id_oferty',
             'wiadomosc' => 'nullable|string|max:1000',
@@ -68,6 +74,20 @@ class OfertyController extends Controller
             'id_profil_wykonawca' => $id_zatwierdzajacego,
             'wiadomosc' => $wiadomosc,       // <- dodajemy ją do bazy
             'zatwierdzone' => 0,
+        ]);
+
+        $nick = DB::table('users')
+            ->where('id_profil', $id_zatwierdzajacego)->value('nick');
+
+        $id_wlasciciel = DB::table('oferty')
+            ->where('id_oferty', $ofertaId)
+            ->value('id_profil_owner');
+
+        DB::table('powiadomienia')->insert([
+            'tytul' => 'nowe zgloszenie do twojej oferty',
+            'text' => 'uzytkownik ' . $nick . ' zglosil sie do twojego zgloszenia',
+            'odzcytane' => 0,
+            'id_user' => $id_wlasciciel
         ]);
 
         return redirect()->route('main')->with('modal_success', $request->oferta_id);

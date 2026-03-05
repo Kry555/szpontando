@@ -20,6 +20,9 @@
         @csrf
         <button type="submit">Wyloguj się</button>
     </form>
+    <button onclick="openModal_Wiadomosci()">
+        Wiadomosci ({{ is_string($notf) ? 0 : $notf->count() }})
+    </button>
     @else
     <p>Loguj sie pało a nie jestes taki incognito fapper <a href="{{ route('login') }}">Zatenteguj się</a> lub <a href="{{ route('register.show') }}">Zajeb konto</a>.</p>
     @endauth
@@ -46,7 +49,7 @@
             Już zgłoszony
         </button>
         @else
-        <button onclick="openModal({{ $oferta->id_oferty }})">
+        <button onclick="openModal_zglos({{ $oferta->id_oferty }})">
             Zgłoś się
         </button>
         @endif
@@ -60,8 +63,7 @@
         <button type="button">logout</button>
     </a>
     <!-- modale_wyskakujące okienka -->
-    <!-- Modal -->
-    <div id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+    <div id="modal_zglos" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
         <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
             <h2>Wyślij wiadomość</h2>
 
@@ -74,19 +76,52 @@
 
                 <br><br>
                 <button type="submit">Wyślij</button>
-                <button type="button" onclick="closeModal()">Anuluj</button>
+                <button type="button" onclick="closeModal_zglos()">Anuluj</button>
+            </form>
+        </div>
+    </div>
+    <div id="modal_Wiadomosci" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+        <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
+            <h2>Wiadomosci</h2>
+            @if(is_string($notf))
+            <p>{{ $notf }}</p>
+            @else
+
+            @if($notf->isEmpty())
+            <p>Brak nowych powiadomień</p>
+            @else
+
+            @foreach($notf as $wiadomosc)
+            <div style="border-bottom:1px solid #ccc; margin-bottom:10px;">
+                <strong>{{ $wiadomosc->tytul }}</strong>
+                <p>{{ $wiadomosc->text }}</p>
+            </div>
+            @endforeach
+
+            @endif
+            @endif
+            <button type="button" onclick="closeModal_Wiadomosci()">Anuluj</button>
             </form>
         </div>
     </div>
 
     <script>
-        function openModal(ofertaId) {
-            document.getElementById('modal').style.display = 'block';
+        function openModal_zglos(ofertaId) {
+            document.getElementById('modal_zglos').style.display = 'block';
             document.getElementById('modal_oferta_id').value = ofertaId;
         }
 
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
+        function closeModal_zglos() {
+            document.getElementById('modal_zglos').style.display = 'none';
+        }
+
+        function openModal_Wiadomosci() {
+            document.getElementById('modal_Wiadomosci').style.display = 'block';
+
+        }
+
+        function closeModal_Wiadomosci() {
+            document.getElementById('modal_Wiadomosci').style.display = 'none';
         }
 
         // Pokazanie modal po wysłaniu zgłoszenia (session flash)
