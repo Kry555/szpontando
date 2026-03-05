@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 05, 2026 at 02:10 PM
+-- Generation Time: Mar 05, 2026 at 04:07 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -147,7 +147,8 @@ INSERT INTO `oferty` (`id_oferty`, `id_profil_owner`, `adres`, `typ`, `cena`, `d
 (2, 2, 'Kraków, ul. Floriańska 10', 'Pokój', '1200', '2026-11-30 00:00:00', 'Pokój do wynajęcia dla studenta.', 'aktywna', '2026-03-05 12:42:43', '2026-03-05 12:42:43'),
 (3, 3, 'Wrocław, ul. Rynek 3', 'Apartament', '4000', '2026-09-30 00:00:00', 'Apartament w centrum.', 'aktywna', '2026-03-05 12:42:43', '2026-03-05 12:42:43'),
 (4, 4, 'Gdańsk, ul. Długa 7', 'Mieszkanie', '3000', '2026-10-31 00:00:00', 'Mieszkanie przy plaży.', 'aktywna', '2026-03-05 12:42:43', '2026-03-05 12:42:43'),
-(5, 5, 'Poznań, ul. Stary Rynek 2', 'Pokój', '1500', '2026-11-15 00:00:00', 'Pokój w spokojnej okolicy.', 'aktywna', '2026-03-05 12:42:43', '2026-03-05 12:42:43');
+(5, 5, 'Poznań, ul. Stary Rynek 2', 'Pokój', '1500', '2026-11-15 00:00:00', 'Pokój w spokojnej okolicy.', 'aktywna', '2026-03-05 12:42:43', '2026-03-05 12:42:43'),
+(6, 6, 'chuj', 'chuj', '2137', '2026-12-31 00:00:00', 'chuj', 'aktywna', '2026-03-05 15:00:47', '2026-03-05 15:00:47');
 
 -- --------------------------------------------------------
 
@@ -160,6 +161,20 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `powiadomienia`
+--
+
+CREATE TABLE `powiadomienia` (
+  `id_powiadomienia` int(11) NOT NULL,
+  `tytul` text NOT NULL,
+  `text` text NOT NULL,
+  `odzcytane` tinyint(1) NOT NULL,
+  `id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -189,7 +204,8 @@ INSERT INTO `profil` (`id_profil`, `nick`, `imie`, `nazwisko`, `data_ur`, `miast
 (2, 'user2', 'Anna', 'Nowak', NULL, NULL, NULL, NULL, 'profil2.png', NULL),
 (3, 'user3', 'Piotr', 'Wiśniewski', NULL, NULL, NULL, NULL, 'profil3.png', NULL),
 (4, 'user4', 'Katarzyna', 'Wójcik', NULL, NULL, NULL, NULL, 'profil4.png', NULL),
-(5, 'user5', 'Michał', 'Kaczmarek', NULL, NULL, NULL, NULL, 'profil5.png', NULL);
+(5, 'user5', 'Michał', 'Kaczmarek', NULL, NULL, NULL, NULL, 'profil5.png', NULL),
+(6, 'chujj', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -211,7 +227,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('7x7KmYpBQTmMyVnWMLPFoE3LfUNNJUXz9D96rOy1', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoidDhTSnBHWk1ybkQ5NU5qUFZ6ZllJS0FXU00zdnc2UzQyQ244bnUxYyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJtYWluIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1772716197);
+('A3JIc27IZj9jPrzsgR6dfI67HVszmOH9mC6hickB', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQWRjYzFpYXlZNGpGRDFuTHFRa1BFMjVDMVlua1NDaUN4d0MxaU5vbiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJtYWluIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1772723190);
 
 -- --------------------------------------------------------
 
@@ -240,7 +256,8 @@ INSERT INTO `users` (`id`, `nick`, `email`, `password`, `czy_admin`, `id_profil`
 (2, 'user2', 'user2@email.com', '$2y$12$dummyhash2', 0, 2, NULL, NULL, 1),
 (3, 'user3', 'user3@email.com', '$2y$12$dummyhash3', 0, 3, NULL, NULL, 1),
 (4, 'user4', 'user4@email.com', '$2y$12$dummyhash4', 0, 4, NULL, NULL, 1),
-(5, 'user5', 'user5@email.com', '$2y$12$dummyhash5', 0, 5, NULL, NULL, 1);
+(5, 'user5', 'user5@email.com', '$2y$12$dummyhash5', 0, 5, NULL, NULL, 1),
+(6, 'chujj', 'chujj@email.com', '$2y$12$WyS1etX6/gercTc2nM8az.Exg.QwDMqF7dZ0sKbpiUGQ1BuRheA5i', 0, 6, '2026-03-05 13:56:16', '2026-03-05 13:56:16', 1);
 
 -- --------------------------------------------------------
 
@@ -255,6 +272,16 @@ CREATE TABLE `zgloszenia` (
   `wiadomosc` text DEFAULT NULL,
   `zatwierdzone` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zgloszenia`
+--
+
+INSERT INTO `zgloszenia` (`id_zgloszenia`, `id_oferty`, `id_profil_wykonawca`, `wiadomosc`, `zatwierdzone`) VALUES
+(1, 2, '1', 'chuj', 0),
+(2, 6, '1', 'chuj chuj', 0),
+(3, 6, '1', 'chuj chuj', 0),
+(4, 6, '1', 'chuj chuj', 0);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -313,6 +340,12 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indeksy dla tabeli `powiadomienia`
+--
+ALTER TABLE `powiadomienia`
+  ADD PRIMARY KEY (`id_powiadomienia`);
+
+--
 -- Indeksy dla tabeli `profil`
 --
 ALTER TABLE `profil`
@@ -363,25 +396,31 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `oferty`
 --
 ALTER TABLE `oferty`
-  MODIFY `id_oferty` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_oferty` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `powiadomienia`
+--
+ALTER TABLE `powiadomienia`
+  MODIFY `id_powiadomienia` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `profil`
 --
 ALTER TABLE `profil`
-  MODIFY `id_profil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_profil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `zgloszenia`
 --
 ALTER TABLE `zgloszenia`
-  MODIFY `id_zgloszenia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_zgloszenia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
