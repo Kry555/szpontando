@@ -10,6 +10,7 @@ class OfertyController extends Controller
 {
     public function oferty()
     {
+        //----jesli nie zalogowany to oferty----
         if (!auth()->check()) {
             $dane = DB::table('oferty')->select(
                 'profil.imie',
@@ -23,11 +24,14 @@ class OfertyController extends Controller
                 'oferty.opis',
                 'oferty.stworzone'
             )->leftjoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->get();
-            $komuch = 'Zaloguj sie by czytać powiadomienia mały fiucie';
+            //musi byc bo blad
+            $komuch = '';
+
             return view('main', ['oferty_przeglandarka' => $dane, 'notf' => $komuch]);
         }
         $id = auth()->user()->id_profil;
-        //SELECT * FROM oferty WHERE  != 1;
+
+        //----oferty dla zalogowanego-----
 
         // profil.imie,profil.nazwisko,profil.profilowe,oferty:adres,typ,cena,do_kidey_wazne,opis,stworzone
         $dane = DB::table('oferty')->select(
@@ -42,12 +46,14 @@ class OfertyController extends Controller
             'oferty.opis',
             'oferty.stworzone'
         )->leftjoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->where('oferty.id_profil_owner', '!=', $id)->orderBy('oferty.stworzone', 'desc')->get();
-        // Pobieramy ID ofert, do których użytkownik się zgłosił
+
+        //----id do kturych sie zglosil----
         $aktywne = $id ? DB::table('zgloszenia')
             ->where('id_profil_wykonawca', $id)
             ->pluck('id_oferty')
             ->toArray() : [];
 
+        //----odczyt powiadomien----
         $komuch = DB::table('powiadomienia')->select(
             'tytul',
             'text',
@@ -58,12 +64,13 @@ class OfertyController extends Controller
 
     public function wybierz(Request $request)
     {
-
+        //----walidacja tego co pszyszlo----
         $request->validate([
             'oferta_id' => 'required|integer|exists:oferty,id_oferty',
             'wiadomosc' => 'nullable|string|max:1000',
         ]);
 
+        //----zmienne----
         $ofertaId = $request->oferta_id;
         $id_zatwierdzajacego = auth()->user()->id_profil;
         $wiadomosc = $request->wiadomosc;
@@ -75,6 +82,7 @@ class OfertyController extends Controller
             ->where('id_oferty', $ofertaId)
             ->value('id_profil_owner');
 
+        //---- zabezpieczenie by nie zglosic sie do swojej oferty(!!pod tresc zadania!!)----
         if ($id_wlasciciel != $id_zatwierdzajacego) {
             DB::table('zgloszenia')->insert([
                 'id_oferty' => $ofertaId,
@@ -82,8 +90,6 @@ class OfertyController extends Controller
                 'wiadomosc' => $wiadomosc,
                 'zatwierdzone' => 0,
             ]);
-
-
 
             DB::table('powiadomienia')->insert([
                 'tytul' => 'nowe zgloszenie do twojej oferty',
