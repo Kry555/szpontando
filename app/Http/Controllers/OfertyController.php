@@ -12,7 +12,7 @@ class OfertyController extends Controller
     public function oferty()
     {
         //----jesli nie zalogowany to oferty----
-        if (!auth()::check()) {
+        if (!Auth::check()) {
             $dane = DB::table('oferty')->select(
                 'profil.imie',
                 'oferty.id_oferty',
@@ -30,7 +30,7 @@ class OfertyController extends Controller
 
             return view('main', ['oferty_przeglandarka' => $dane, 'notf' => $komuch]);
         }
-        $id = auth()->user()->id_profil;
+        $id = Auth::user()->id_profil;
 
         //----oferty dla zalogowanego-----
 
@@ -73,7 +73,7 @@ class OfertyController extends Controller
 
         //----zmienne----
         $ofertaId = $request->oferta_id;
-        $id_zatwierdzajacego = auth()->user()->id_profil;
+        $id_zatwierdzajacego = Auth::user()->id_profil;
         $wiadomosc = $request->wiadomosc;
 
         $nick = DB::table('users')

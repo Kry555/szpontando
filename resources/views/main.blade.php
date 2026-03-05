@@ -18,9 +18,16 @@
 
         @auth
         <p>Witaj, {{ auth()->user()->nick }}!</p>
+        <!-- pzycisk do wylogowywania pzenies tylko ten kod -->
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit">Wyloguj się</button>
+        </form>
+
+        <!-- pzycisk do dodawania oferty pzenies tylko ten kod-->
+        <form method="POST" action="{{ route('oferty-add') }}">
+            @csrf
+            <button type="submit">Dodaj oferte</button>
         </form>
 
         <button onclick="openModal_Wiadomosci()">
