@@ -12,8 +12,7 @@ use App\Http\Controllers\OfertyController;
 
 Route::get('/', [OfertyController::class, 'oferty'])->name('main');
 
-Route::post('/wybierz', [OfertyController::class, 'wybierz'])
-    ->name('oferta.wybierz');
+Route::post('/wybierz', [OfertyController::class, 'wybierz'])->name('oferta.wybierz');
 //do logowania 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
@@ -32,8 +31,3 @@ Route::get('/register', [RegisterController::class, 'show'])->name('register.sho
 
 // Obsługa POST – tworzenie użytkownika
 Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
-//nie wiem co to ale sie przyda trza ogarnąć po co to
-// przykładowy dashboard – chroniony
-// Route::get('/dashboard', function () {
-//     return 'Panel użytkownika: ' . auth()->user()->nick;
-// })->middleware('auth');
