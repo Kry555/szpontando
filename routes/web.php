@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
-
+use App\Http\Controllers\OfertyAddControler;
 
 // Route::get('/', function () {
 //     return view('main');
@@ -31,3 +31,7 @@ Route::get('/register', [RegisterController::class, 'show'])->name('register.sho
 
 // Obsługa POST – tworzenie użytkownika
 Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
+
+//dodawanie oferty 
+Route::get('/oferty-add', [OfertyAddControler::class, 'show_form'])->name('oferty-add');
+Route::post('/oferty-add', [OfertyAddControler::class, 'add_ofert'])->name('add_oferta.post');

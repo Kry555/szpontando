@@ -12,6 +12,7 @@ class AuthController extends Controller
     {
         return view('sign_in');
     }
+
     public function login(Request $request)
     {
         //czy info email i haslo wogule dotarło 
