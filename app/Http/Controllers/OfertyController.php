@@ -42,7 +42,6 @@ class OfertyController extends Controller
             'oferty.opis',
             'oferty.stworzone'
         )->leftjoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->where('oferty.id_profil_owner', '!=', $id)->orderBy('oferty.stworzone', 'desc')->get();
-
         // Pobieramy ID ofert, do których użytkownik się zgłosił
         $aktywne = $id ? DB::table('zgloszenia')
             ->where('id_profil_wykonawca', $id)
@@ -67,14 +66,7 @@ class OfertyController extends Controller
 
         $ofertaId = $request->oferta_id;
         $id_zatwierdzajacego = auth()->user()->id_profil;
-        $wiadomosc = $request->wiadomosc; // <- pobieramy wiadomość z formularza
-
-        DB::table('zgloszenia')->insert([
-            'id_oferty' => $ofertaId,
-            'id_profil_wykonawca' => $id_zatwierdzajacego,
-            'wiadomosc' => $wiadomosc,       // <- dodajemy ją do bazy
-            'zatwierdzone' => 0,
-        ]);
+        $wiadomosc = $request->wiadomosc;
 
         $nick = DB::table('users')
             ->where('id_profil', $id_zatwierdzajacego)->value('nick');
@@ -83,12 +75,23 @@ class OfertyController extends Controller
             ->where('id_oferty', $ofertaId)
             ->value('id_profil_owner');
 
-        DB::table('powiadomienia')->insert([
-            'tytul' => 'nowe zgloszenie do twojej oferty',
-            'text' => 'uzytkownik ' . $nick . ' zglosil sie do twojego zgloszenia',
-            'odzcytane' => 0,
-            'id_user' => $id_wlasciciel
-        ]);
+        if ($id_wlasciciel != $id_zatwierdzajacego) {
+            DB::table('zgloszenia')->insert([
+                'id_oferty' => $ofertaId,
+                'id_profil_wykonawca' => $id_zatwierdzajacego,
+                'wiadomosc' => $wiadomosc,
+                'zatwierdzone' => 0,
+            ]);
+
+
+
+            DB::table('powiadomienia')->insert([
+                'tytul' => 'nowe zgloszenie do twojej oferty',
+                'text' => 'uzytkownik ' . $nick . ' zglosil sie do twojego zgloszenia',
+                'odzcytane' => 0,
+                'id_user' => $id_wlasciciel
+            ]);
+        }
 
         return redirect()->route('main')->with('modal_success', $request->oferta_id);
     }
