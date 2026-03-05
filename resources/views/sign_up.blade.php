@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    @vite('resources/css/stop_z_wypalaniem_gał.css')
-    
+    @vite('resources/css/sign_up.css')
 </head>
 
 <body>
@@ -23,19 +22,50 @@
 
     <form method="POST" action="{{ route('register.post') }}">
         @csrf
-        <input type="text" name="nick" placeholder="Nickeee" value="{{ old('nick') }}" required>
-        <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
-        <input type="password" name="password" placeholder="Hasło" required>
-        <input type="password" name="password_confirmation" placeholder="Powtórz hasło" required>
-        <label>
-            <input type="checkbox" name="tapczan" value="1" {{ old('tapczan') ? 'checked' : '' }}>
-            Tapczan nowy system anty botowy
-        </label>
+        <input type="text" name="nick" placeholder="Nicke" value="{{ old('nick') }}" required><br>
+        <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required><br>
+        <input type="password" name="password" placeholder="Hasło" required><br>
+        <input type="password" name="password_confirmation" placeholder="Powtórz hasło" required><br>
+<div class="captcha-box">
+    <div class="left-section">
+
+        <input type="checkbox" id="captchaCheck" name="tapczan" value="1" {{ old('tapczan') ? 'checked' : '' }}>
+
+        <label for="captchaCheck" class="custom-checkbox"></label>
+
+        <div class="captcha-text">nie jestem robocikiem</div>
+
+    </div>
+
+    <div class="right-section">
+        <img src="{{ Vite::asset('resources/images/tapczan.jpg') }}" class="zdjtapczan" alt="tapczan">
+        TAPCZAN<br>
+        Prywatność - bezpieczeństwo
+    </div>
+</div>
+</div>
         <button type="submit">Zarejestruj się</button>
     </form>
     <a href="{{ route('login') }}">
         <button type="button">Sign_in</button>
     </a>
+    <script>
+document.getElementById("captchaCheck").addEventListener("change", function(){
+
+    const checkbox = this;
+
+    if(checkbox.checked){
+
+        setTimeout(()=>{
+            checkbox.classList.add("checked");
+        },1000);
+
+    }else{
+        checkbox.classList.remove("checked");
+    }
+
+});
+</script>
 </body>
 
 </html>
