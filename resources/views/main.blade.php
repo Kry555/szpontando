@@ -22,9 +22,7 @@
     @else
     <p>Loguj sie pało a nie jestes taki incognito fapper <a href="{{ route('login') }}">Zatenteguj się</a> lub <a href="{{ route('register.show') }}">Zajeb konto</a>.</p>
     @endauth
-
-
-    <!-- @foreach($oferty_przeglandarka as $oferta)
+    @foreach($oferty_przeglandarka as $oferta)
     <div class="oferty_przeglandarka">
 
         <h3>{{ $oferta->typ }}</h3>
@@ -48,17 +46,15 @@
             <button type="submit">Wybierz ofertę</button>
         </form>
     </div>
-    @endforeach -->
+    @endforeach
 
 
-
-
-    <!-- <a href="{{ route('login') }}">
+    <a href="{{ route('login') }}">
         <button type="button">Sign_in</button>
     </a>
     <a href="{{ route('logoutt') }}">
         <button type="button">logout</button>
-    </a> -->
+    </a>
 </body>
 
 </html>

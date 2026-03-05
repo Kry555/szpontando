@@ -11,7 +11,20 @@ class OfertyController extends Controller
     public function oferty()
     {
         if (!auth()->check()) {
-            return view('main');
+            $dane = DB::table('oferty')->select(
+                'profil.imie',
+                'oferty.id_oferty',
+                'profil.nazwisko',
+                'profil.profilowe',
+                'oferty.adres',
+                'oferty.typ',
+                'oferty.cena',
+                'oferty.do_kiedy_wazne',
+                'oferty.opis',
+                'oferty.stworzone'
+            )->join('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->get();
+
+            return view('main', ['oferty_przeglandarka' => $dane]);
         }
         $id = auth()->user()->id_profil;
         //SELECT * FROM oferty WHERE  != 1;
