@@ -41,7 +41,7 @@ class OfertyController extends Controller
             'oferty.do_kiedy_wazne',
             'oferty.opis',
             'oferty.stworzone'
-        )->leftjoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->where('oferty.id_profil_owner', '!=', $id)->get();
+        )->leftjoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->where('oferty.id_profil_owner', '!=', $id)->orderBy('oferty.stworzone', 'desc')->get();
 
         // Pobieramy ID ofert, do których użytkownik się zgłosił
         $aktywne = $id ? DB::table('zgloszenia')
