@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\OfertyAddController;
+use App\Http\Controllers\SetProfilController;
+
 
 // Route::get('/', function () {
 //     return view('main');
@@ -35,3 +37,6 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 //dodawanie oferty 
 Route::get('/add-ofert', [OfertyAddController::class, 'show_form'])->name('add_ofert');
 Route::post('/add-ofert', [OfertyAddController::class, 'add_ofert'])->name('add_ofert.post');
+//panel do zmieniania 
+Route::get('/set-profil', [SetProfilController::class, 'showProfil'])->name('set_profil');
+Route::post('/set-profil', [SetProfilController::class, 'editProfil'])->name('set_profil.post');
