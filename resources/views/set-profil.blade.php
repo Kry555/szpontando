@@ -26,15 +26,22 @@
     <button onclick="openModal_change()">
         Edytuj profil
     </button>
+    <button onclick="openModal_change_users()">
+        Edytuj dane logowania
+    </button>
 
     <div id="modal_change" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
         <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
             <h1>Edytuj profil</h1>
-            <form method="POST" action="{{ route('set_profil.post') }}">
+            <form method="POST" action="{{ route('set_profil.post') }}" enctype="multipart/form-data">
                 @csrf
 
-                <!-- Profilowe (opcjonalne) -->
-                <input type="text" name="profilowe" placeholder="profilowe" value="{{ old('profilowe', $profil->profilowe) }}"><br>
+                <!-- Profilowe (zdjęcie) -->
+                <label for="profilowe">Wybierz zdjęcie profilowe:</label><br>
+                <input type="file" id="profilowe" name="profilowe" accept="image/*"><br>
+                @if($profil->profilowe)
+                <img src="{{ asset('images/profilowe/' . $profil->profilowe) }}" alt="Profilowe" width="100" style="margin-top:5px;">
+                @endif
                 @error('profilowe')
                 <div class="error-message">{{ $message }}</div>
                 @enderror
@@ -103,6 +110,15 @@
 
         </div>
     </div>
+
+    <div id="modal_change_users" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+        <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
+            <h1>Edytuj dane logownaia</h1>
+            <!-- tu bendzie dwa guzki zmien email i zmien haslo -->
+            <button type="button" onclick="closeModal_change_users()">Anuluj</button>
+        </div>
+    </div>
+
     <script>
         function openModal_change() {
             document.getElementById('modal_change').style.display = 'block';
@@ -110,6 +126,14 @@
 
         function closeModal_change() {
             document.getElementById('modal_change').style.display = 'none';
+        }
+
+        function openModal_change_users() {
+            document.getElementById('modal_change_users').style.display = 'block';
+        }
+
+        function closeModal_change_users() {
+            document.getElementById('modal_change_users').style.display = 'none';
         }
     </script>
     @if($errors->any())
