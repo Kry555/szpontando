@@ -12,63 +12,76 @@
 </head>
 
 <body>
-    <div class="początek napisy">
-        <h1>szpontando</h1>
-        <h2>tutaj poszponcisz sobie i jeszcze zarobisz</h2>
-
-        @auth
-        <p>Witaj, {{ auth()->user()->nick }}!</p>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit">Wyloguj się</button>
-        </form>
-
-        <button onclick="openModal_Wiadomosci()">
-            Wiadomosci ({{ is_string($notf) ? 0 : $notf->count() }})
-        </button>
-        @else
-        <p>Loguj sie pało a nie jestes taki incognito fapper <a href="{{ route('login') }}">Zatenteguj się</a> lub <a href="{{ route('register.show') }}">Zajeb konto</a>.</p>
-        @endauth
-    </div>
-    @foreach($oferty_przeglandarka as $oferta)
-    <div class="oferty_przeglandarka">
-        <div class="informacje">
-            <h3>{{ $oferta->typ }}</h3>
-            <p><strong>Opis:</strong> {{ $oferta->opis }}</p>
-            <p><strong>Cena:</strong> {{ $oferta->cena }} zł</p>
-            <p><strong>Adres:</strong> {{ $oferta->adres }}</p>
-            <p><strong>Ważne do:</strong> {{ $oferta->do_kiedy_wazne }}</p>
-            <hr>
-            <p>
-                <strong>Autor:</strong>
-                {{ $oferta->imie }} {{ $oferta->nazwisko }}
-            </p>
-        </div>
-        <div class="guziki">
-            @php
-            $zgloszony = in_array($oferta->id_oferty, $Zgloszenia_aktywne ?? []);
-            @endphp
-
-            @auth
-            @if($zgloszony)
-            <button disabled style="background: #ccc; cursor: not-allowed;">
-                Już zgłoszony
-            </button>
-            @else
-            <button onclick="openModal_zglos({{ $oferta->id_oferty }})">
-                Zgłoś się
-            </button>
-            @endif
-            @endauth
-
-            @guest
-            <button disabled style="background:#ccc; cursor:not-allowed;">
-                Zaloguj się aby zgłosić
-            </button>
-            @endguest
+    <div class="początek">
+        <img src="{{ asset('images/logo.png') }}" alt="logo">
+        <div class="napisy">
+            <h2>tutaj poszponcisz sobie i jeszcze zarobisz</h2>
         </div>
     </div>
-    @endforeach
+    @auth
+    <p>Witaj, {{ auth()->user()->nick }}!</p>
+    <!-- pzycisk do wylogowywania pzenies tylko ten kod -->
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit">Wyloguj się</button>
+    </form>
+
+    <!-- pzycisk do dodawania oferty pzenies tylko ten kod-->
+    <a href="{{ route('add_ofert') }}">
+        <button type="button">Dodaj ofertę</button>
+    </a>
+    <a href="{{ route('set_profil') }}">
+        <button type="button">Set profil</button>
+    </a>
+
+    <button onclick="openModal_Wiadomosci()">
+        Wiadomosci ({{ is_string($notf) ? 0 : $notf->count() }})
+    </button>
+    @else
+    <p>Loguj sie pało a nie jestes taki incognito fapper <a href="{{ route('login') }}">Zatenteguj się</a> lub <a href="{{ route('register.show') }}">Zajeb konto</a>.</p>
+    @endauth
+
+    <div class="oferty">
+        @foreach($oferty_przeglandarka as $oferta)
+        <div class="oferty_przeglandarka">
+            <div class="informacje">
+                <h3>{{ $oferta->typ }}</h3>
+                <p><strong>Opis:</strong> {{ $oferta->opis }}</p>
+                <p><strong>Cena:</strong> {{ $oferta->cena }} zł</p>
+                <p><strong>Adres:</strong> {{ $oferta->adres }}</p>
+                <p><strong>Ważne do:</strong> {{ $oferta->do_kiedy_wazne }}</p>
+                <hr>
+                <p>
+                    <strong>Autor:</strong>
+                    {{ $oferta->imie }} {{ $oferta->nazwisko }}
+                </p>
+            </div>
+            <div class="guziki">
+                @php
+                $zgloszony = in_array($oferta->id_oferty, $Zgloszenia_aktywne ?? []);
+                @endphp
+
+                @auth
+                @if($zgloszony)
+                <button disabled style="background: #ccc; cursor: not-allowed;">
+                    Już zgłoszony
+                </button>
+                @else
+                <button onclick="openModal_zglos({{ $oferta->id_oferty }})">
+                    Zgłoś się
+                </button>
+                @endif
+                @endauth
+
+                @guest
+                <button disabled style="background:#ccc; cursor:not-allowed;">
+                    Zaloguj się aby zgłosić
+                </button>
+                @endguest
+            </div>
+        </div>
+        @endforeach
+    </div>
     <div class="komentarze">
         <!-- trzeba przeniesc te butony  -->
         <!-- <a href="{{ route('login') }}">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 05, 2026 at 04:07 PM
+-- Generation Time: Mar 06, 2026 at 01:37 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -148,7 +148,13 @@ INSERT INTO `oferty` (`id_oferty`, `id_profil_owner`, `adres`, `typ`, `cena`, `d
 (3, 3, 'Wrocław, ul. Rynek 3', 'Apartament', '4000', '2026-09-30 00:00:00', 'Apartament w centrum.', 'aktywna', '2026-03-05 12:42:43', '2026-03-05 12:42:43'),
 (4, 4, 'Gdańsk, ul. Długa 7', 'Mieszkanie', '3000', '2026-10-31 00:00:00', 'Mieszkanie przy plaży.', 'aktywna', '2026-03-05 12:42:43', '2026-03-05 12:42:43'),
 (5, 5, 'Poznań, ul. Stary Rynek 2', 'Pokój', '1500', '2026-11-15 00:00:00', 'Pokój w spokojnej okolicy.', 'aktywna', '2026-03-05 12:42:43', '2026-03-05 12:42:43'),
-(6, 6, 'chuj', 'chuj', '2137', '2026-12-31 00:00:00', 'chuj', 'aktywna', '2026-03-05 15:00:47', '2026-03-05 15:00:47');
+(6, 6, 'chuj', 'chuj', '2137', '2026-12-31 00:00:00', 'chuj', 'aktywna', '2026-03-05 15:00:47', '2026-03-05 15:00:47'),
+(7, 1, 'chuj cie strzelił 12', 'kutas', '2137', '2026-11-11 21:37:00', 'ktos musi mi wypucowac berło', 'aktywna', '2026-03-06 09:27:42', '2026-03-06 09:27:42'),
+(8, 1, 'chuj cie strzelił 12', 'kutas', '2137', '2026-11-11 21:37:00', 'ktos musi mi wypucowac berło', 'aktywna', '2026-03-06 09:27:47', '2026-03-06 09:27:47'),
+(9, 1, 'chuj cie strzelił 12', 'kutas', '2137', '2026-11-11 21:37:00', 'ktos musi mi wypucowac berło', 'aktywna', '2026-03-06 09:27:58', '2026-03-06 09:27:58'),
+(10, 1, 'chuj cie strzelił 12', 'kutas', '2137', '2026-11-11 21:37:00', 'ktos musi mi wypucowac berło', 'aktywna', '2026-03-06 09:28:40', '2026-03-06 09:28:40'),
+(11, 1, 'kurweska 69', 'kutas', '2137', '2026-10-11 21:37:00', 'ktos musi berlo puscowac', 'aktywna', '2026-03-06 09:30:22', '2026-03-06 09:30:22'),
+(12, 1, 'kurweska 69', 'kutas', '2137', '2026-10-11 21:37:00', 'ktos musi berlo puscowac', 'aktywna', '2026-03-06 09:31:39', '2026-03-06 09:31:39');
 
 -- --------------------------------------------------------
 
@@ -176,6 +182,14 @@ CREATE TABLE `powiadomienia` (
   `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `powiadomienia`
+--
+
+INSERT INTO `powiadomienia` (`id_powiadomienia`, `tytul`, `text`, `odzcytane`, `id_user`) VALUES
+(1, 'nowe zgloszenie do twojej oferty', 'uzytkownik chuj zglosil sie do twojego zgloszenia', 0, 6),
+(2, 'nowe zgloszenie do twojej oferty', 'uzytkownik chujj zglosil sie do twojego zgloszenia', 0, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -200,7 +214,7 @@ CREATE TABLE `profil` (
 --
 
 INSERT INTO `profil` (`id_profil`, `nick`, `imie`, `nazwisko`, `data_ur`, `miasto`, `email_kontaktowy`, `ocena`, `profilowe`, `sex`) VALUES
-(1, 'chuj', 'Jan', 'Kowalski', NULL, NULL, NULL, NULL, 'profil1.png', NULL),
+(1, 'chuj', 'Jan', 'Kowalski', '2026-03-03', 'opole', 'chujjjjjj@email', NULL, '1772800561_1677876366916 (1).png', 'men'),
 (2, 'user2', 'Anna', 'Nowak', NULL, NULL, NULL, NULL, 'profil2.png', NULL),
 (3, 'user3', 'Piotr', 'Wiśniewski', NULL, NULL, NULL, NULL, 'profil3.png', NULL),
 (4, 'user4', 'Katarzyna', 'Wójcik', NULL, NULL, NULL, NULL, 'profil4.png', NULL),
@@ -227,7 +241,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('A3JIc27IZj9jPrzsgR6dfI67HVszmOH9mC6hickB', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQWRjYzFpYXlZNGpGRDFuTHFRa1BFMjVDMVlua1NDaUN4d0MxaU5vbiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJtYWluIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1772723190);
+('M56tL3pc0BCOMIjxzvBpPl8S7c48nD8TaGlYB2xx', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiVkZOTm16QVo2cDF1R2J4bzhiNlp0bFdtNWk4R0tJaTU5ajhoZVJMRyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zZXQtcHJvZmlsIjtzOjU6InJvdXRlIjtzOjEwOiJzZXRfcHJvZmlsIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1772800561);
 
 -- --------------------------------------------------------
 
@@ -281,7 +295,9 @@ INSERT INTO `zgloszenia` (`id_zgloszenia`, `id_oferty`, `id_profil_wykonawca`, `
 (1, 2, '1', 'chuj', 0),
 (2, 6, '1', 'chuj chuj', 0),
 (3, 6, '1', 'chuj chuj', 0),
-(4, 6, '1', 'chuj chuj', 0);
+(4, 6, '1', 'chuj chuj', 0),
+(5, 6, '1', 'chuj chuj', 0),
+(6, 12, '6', 'ta chuja ci wymyje', 0);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -396,13 +412,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `oferty`
 --
 ALTER TABLE `oferty`
-  MODIFY `id_oferty` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_oferty` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `powiadomienia`
 --
 ALTER TABLE `powiadomienia`
-  MODIFY `id_powiadomienia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_powiadomienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `profil`
@@ -420,7 +436,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `zgloszenia`
 --
 ALTER TABLE `zgloszenia`
-  MODIFY `id_zgloszenia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_zgloszenia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
