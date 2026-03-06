@@ -44,7 +44,23 @@
             <label for="slupCheck" class="custom-checkbox"></label>
             <span>Słup elektryczny</span>
         </div>
+        <div class="captcha-box">
+            <div class="left-section">
 
+                <input type="checkbox" id="captchaCheck" name="tapczan" value="1" {{ old('tapczan') ? 'checked' : '' }}>
+
+                <label for="captchaCheck" class="custom-checkbox"></label>
+
+                <div class="captcha-text">nie jestem robocikiem</div>
+
+            </div>
+
+            <div class="right-section">
+                <img src="{{ Vite::asset('resources/images/tapczan.jpg') }}" class="zdjtapczan" alt="tapczan">
+                TAPCZAN<br>
+                Prywatność - bezpieczeństwo
+            </div>
+        </div>
         <button type="submit">Zmien profil</button>
     </form>
 
