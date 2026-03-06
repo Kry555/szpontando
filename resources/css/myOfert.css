@@ -1,0 +1,129 @@
+/* Kontener dla pojedynczej oferty */
+.oferta,
+.zgloszenie {
+    background-color: #2a2a2a;
+    /* ciemne tło kart */
+    border-radius: 12px;
+    padding: 15px;
+    margin: 10px auto;
+    width: 350px;
+    max-width: 90%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    text-align: left;
+}
+
+/* Nagłówek oferty */
+.oferta h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #1db954;
+    /* wyróżnienie nagłówka */
+}
+
+/* Tekst oferty */
+.oferta p {
+    margin: 4px 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Kontener przycisków oferty */
+.oferta .guziki {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.oferta button {
+    background-color: #1db954;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s ease, transform 0.2s ease;
+    margin: 0 5px;
+}
+
+.oferta button:hover {
+    background-color: #17a44b;
+    transform: translateY(-2px);
+}
+
+.oferta button[disabled] {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+/* Profil w zgłoszeniach */
+.profil-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profil-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.profil-btn img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    margin-bottom: 8px;
+    transition: border-color 0.2s ease;
+}
+
+.profil-btn:hover img {
+    border-color: #1db954;
+}
+
+.profil-btn span {
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Wiadomość w zgłoszeniu */
+.zgloszenie p {
+    margin: 5px 0;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.zgloszenie p strong {
+    color: #1db954;
+}
+
+/* Nagłówki sekcji */
+h1,
+h2 {
+    text-align: center;
+    color: #1db954;
+}
+
+/* Responsywność */
+@media (max-width: 400px) {
+
+    .oferta,
+    .zgloszenie {
+        width: 95%;
+        padding: 12px;
+    }
+
+    .profil-btn img {
+        width: 60px;
+        height: 60px;
+    }
+}
