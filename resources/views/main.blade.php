@@ -25,7 +25,7 @@
         </form>
 
         <!-- pzycisk do dodawania oferty pzenies tylko ten kod-->
-        <a href="{{ route('oferty-add') }}">
+        <a href="{{ route('add_ofert') }}">
             <button type="button">Dodaj ofertę</button>
         </a>
 

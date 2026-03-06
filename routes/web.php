@@ -33,5 +33,5 @@ Route::get('/register', [RegisterController::class, 'show'])->name('register.sho
 Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
 
 //dodawanie oferty 
-Route::get('/oferty-add', [OfertyAddController::class, 'show_form'])->name('oferty-add');
-Route::post('/oferty-add', [OfertyAddController::class, 'add_ofert'])->name('add_oferta.post');
+Route::get('/add-ofert', [OfertyAddController::class, 'show_form'])->name('add_ofert');
+Route::post('/add-ofert', [OfertyAddController::class, 'add_ofert'])->name('add_ofert.post');

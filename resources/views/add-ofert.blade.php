@@ -7,6 +7,8 @@
     <title>main</title>
     <!-- <link rel="stylesheet" href="{{ asset('css/stop_z_wypalaniem_gał.css') }}"> -->
     @vite('resources/css/stop_z_wypalaniem_gał.css')
+    @vite('resources/css/add-ofert.css')
+
 </head>
 
 <body>
@@ -23,12 +25,24 @@
     </div>
     @endif
 
-    <form method="POST" action="{{ route('add_oferta.post') }}">
+    <form method="POST" action="{{ route('add_ofert.post') }}">
         @csrf
         <input type="text" name="adres" placeholder="adres" value="{{ old('adres') }}" required><br>
         <input type="text" name="typ" placeholder="typ" value="{{ old('typ') }}" required><br>
-        <input type="text" name="cena" placeholder="cena" value="{{ old('cena') }}" required><br>
-        <input type="text" name="do_kiedy_wazne" placeholder="do kiedy wazne" value="{{ old('do_kiedy_wazne') }}" required><br>
+        <input
+            type="number"
+            name="cena"
+            placeholder="cena"
+            value="{{ old('cena') }}"
+            min="0"
+            step="0.01"
+            required> <span>zł</span><br>
+        <input
+            type="datetime-local"
+            name="do_kiedy_wazne"
+            value="{{ old('do_kiedy_wazne') }}"
+            min="{{ now()->addDay()->format('Y-m-d\TH:i') }}"
+            required><br>
         <input type="text" name="opis" placeholder="opis" value="{{ old('opis') }}" required><br>
 
         <button type="submit">Wystaw ogloszenie</button>
