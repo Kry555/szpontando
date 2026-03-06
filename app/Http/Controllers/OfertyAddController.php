@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
 
-class OfertyAddControler extends Controller
+class OfertyAddController extends Controller
 {
     public function show_form()
     {
