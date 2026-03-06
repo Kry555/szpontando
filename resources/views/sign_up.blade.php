@@ -27,21 +27,25 @@
         <input type="password" name="password" placeholder="Hasło" required><br>
         <input type="password" name="password_confirmation" placeholder="Powtórz hasło" required><br>
 
-        <div class="captcha-box">
-            <div class="left-section">
-                <input type="checkbox" id="captchaCheck" name="tapczan" value="1" {{ old('tapczan') ? 'checked' : '' }}>
-                <label for="captchaCheck" class="custom-checkbox"></label>
-                <div class="captcha-text">nie jestem robocikiem</div>
-            </div>
-
-            <div class="right-section">
-                <img src="{{ Vite::asset('resources/images/tapczan.jpg') }}" class="zdjtapczan" alt="tapczan">
-                TAPCZAN<br>
-                Prywatność - bezpieczeństwo
-            </div>
+        <div class="men">
+            <input type="radio" id="menCheck" name="gender" value="men" {{ old('gender') == 'men' ? 'checked' : '' }}>
+            <label for="menCheck" class="custom-checkbox"></label>
+            <span>Men</span>
         </div>
 
-        <button type="submit">Zarejestruj się</button>
+        <div class="women">
+            <input type="radio" id="womenCheck" name="gender" value="women" {{ old('gender') == 'women' ? 'checked' : '' }}>
+            <label for="womenCheck" class="custom-checkbox"></label>
+            <span>Women</span>
+        </div>
+
+        <div class="slup">
+            <input type="radio" id="slupCheck" name="gender" value="slup" {{ old('gender') == 'slup' ? 'checked' : '' }}>
+            <label for="slupCheck" class="custom-checkbox"></label>
+            <span>Słup elektryczny</span>
+        </div>
+
+        <button type="submit">Zmien profil</button>
     </form>
 
     <a href="{{ route('login') }}">

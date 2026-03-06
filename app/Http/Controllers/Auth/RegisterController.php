@@ -21,7 +21,7 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        echo " Start rejestracji<br>";
+
         //sprawdza cz dane git
         $request->validate([
             'nick' => 'required|string|max:50',
@@ -31,7 +31,7 @@ class RegisterController extends Controller
         ], [
             'tapczan.accepted' => 'Jesteś ruskim botem wypierdalaj',
         ]);
-        echo " Wszystko poprawne przeszła<br>";
+
 
         $user = null;
 
