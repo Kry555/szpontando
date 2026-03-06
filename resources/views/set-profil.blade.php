@@ -26,46 +26,81 @@
     <button onclick="openModal_change()">
         Edytuj profil
     </button>
-    @endauth
+
     <div id="modal_change" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
         <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
-            <h1>edytuj profil</h1>
+            <h1>Edytuj profil</h1>
             <form method="POST" action="{{ route('set_profil.post') }}">
                 @csrf
-                <input type="text" name="profilowe" placeholder="profilowe" value="{{ old('profilowe') }}" required><br>
-                <input type="text" name="nick" placeholder="nick" value="{{ old('nick') }}" required><br>
-                <input type="text" name="imie" placeholder="imie" value="{{ old('imie') }}" required><br>
-                <input type="text" name="nazwisko" placeholder="nazwisko" value="{{ old('nazwisko') }}" required><br>
-                <input
-                    type="datetime-local"
-                    name="data_ur"
-                    value="{{ old('data_ur') }}"
-                    min="{{ now()->addDay()->format('Y-m-d\TH:i') }}"
+
+                <!-- Profilowe (opcjonalne) -->
+                <input type="text" name="profilowe" placeholder="profilowe" value="{{ old('profilowe', $profil->profilowe) }}"><br>
+                @error('profilowe')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
+
+                <!-- Nick -->
+                <input type="text" name="nick" placeholder="nick" value="{{ old('nick', $profil->nick) }}" required><br>
+                @error('nick')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
+
+                <!-- Imię -->
+                <input type="text" name="imie" placeholder="imie" value="{{ old('imie', $profil->imie) }}" required><br>
+                @error('imie')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
+
+                <!-- Nazwisko -->
+                <input type="text" name="nazwisko" placeholder="nazwisko" value="{{ old('nazwisko', $profil->nazwisko) }}" required><br>
+                @error('nazwisko')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
+
+                <!-- Data urodzenia -->
+                <input type="datetime-local" name="data_ur"
+                    value="{{ old('data_ur', optional($profil->data_ur) ? \Carbon\Carbon::parse($profil->data_ur)->format('Y-m-d\TH:i') : '') }}"
                     required><br>
-                <input type="text" name="adres" placeholder="adres" value="{{ old('adres') }}" required><br>
-                <input type="text" name="miasto" placeholder="miasto" value="{{ old('miasto') }}" required><br>
-                <input type="text" name="email_kontaktowy" placeholder="email_kontaktowy" value="{{ old('email_kontaktowy') }}" required><br>
-                <div class="men">
-                    <input type="radio" id="menCheck" name="gender" value="men" {{ old('gender') == 'men' ? 'checked' : '' }}>
-                    <label for="menCheck" class="custom-checkbox"></label>
-                    <span>Men</span>
-                </div>
+                @error('data_ur')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
 
-                <div class="women">
-                    <input type="radio" id="womenCheck" name="gender" value="women" {{ old('gender') == 'women' ? 'checked' : '' }}>
-                    <label for="womenCheck" class="custom-checkbox"></label>
-                    <span>Women</span>
-                </div>
+                <!-- Miasto -->
+                <input type="text" name="miasto" placeholder="miasto" value="{{ old('miasto', $profil->miasto) }}" required><br>
+                @error('miasto')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
 
-                <div class="slup">
-                    <input type="radio" id="slupCheck" name="gender" value="slup" {{ old('gender') == 'slup' ? 'checked' : '' }}>
-                    <label for="slupCheck" class="custom-checkbox"></label>
-                    <span>Słup elektryczny</span>
-                </div>
+                <!-- Email kontaktowy -->
+                <input type="email" name="email_kontaktowy" placeholder="email_kontaktowy" value="{{ old('email_kontaktowy', $profil->email_kontaktowy) }}" required><br>
+                @error('email_kontaktowy')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
 
-                <button type="submit">Wystaw ogloszenie</button>
+                <!-- Gender -->
+                <div class="gender-radio">
+                    <input type="radio" id="menCheck" name="gender" value="men"
+                        {{ old('gender', $profil->sex) == 'men' ? 'checked' : '' }}>
+                    <label for="menCheck">Men</label>
+                </div>
+                <div class="gender-radio">
+                    <input type="radio" id="womenCheck" name="gender" value="women"
+                        {{ old('gender', $profil->sex) == 'women' ? 'checked' : '' }}>
+                    <label for="womenCheck">Women</label>
+                </div>
+                <div class="gender-radio">
+                    <input type="radio" id="slupCheck" name="gender" value="slup"
+                        {{ old('gender', $profil->sex) == 'slup' ? 'checked' : '' }}>
+                    <label for="slupCheck">Słup elektryczny</label>
+                </div>
+                @error('gender')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
+
+                <button type="submit">Zaktualizuj profil</button>
+                <button type="button" onclick="closeModal_change()">Anuluj</button>
             </form>
-            <button type="button" onclick="closeModal_change()">Anuluj</button>
+
         </div>
     </div>
     <script>
@@ -77,6 +112,17 @@
             document.getElementById('modal_change').style.display = 'none';
         }
     </script>
+    @if($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            openModal_change();
+        });
+    </script>
+    @endif
+    @endauth
+    <a href="{{ route('main') }}">
+        <button type="button">wróc na główną jełopie</button>
+    </a>
 </body>
 
 </html>
