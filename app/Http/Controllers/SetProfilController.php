@@ -36,7 +36,7 @@ class SetProfilController extends Controller
     {
         $idprofil = Auth::user()->id_profil;
         $valid = $request->validate([
-            'profilowe' => 'nullable|string|max:255', // można pozostawić puste, jeśli obrazek będzie opcjonalny
+            'profilowe' => 'nullable|image|max:2048', // max 2MB
             'nick' => [
                 'required',
                 'string',
@@ -69,9 +69,24 @@ class SetProfilController extends Controller
             'gender' => 'required|in:men,women,slup',
         ]);
 
-        DB::transaction(function () use ($valid, $idprofil) {
+        DB::transaction(function () use ($request, $valid, $idprofil) {
+
+            // Obsługa uploadu zdjęcia
+            $profiloweName = null;
+            $currentProfil = DB::table('profil')->where('id_profil', $idprofil)->first();
+
+            if ($request->hasFile('profilowe')) {
+                $file = $request->file('profilowe');
+                $profiloweName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('images/profilowe'), $profiloweName);
+            } else {
+                // jeśli nie wybrano nowego zdjęcia, zostaw stary plik
+                $profiloweName = $currentProfil->profilowe ?? null;
+            }
+
+            // Aktualizacja tabeli profil
             DB::table('profil')->where('id_profil', $idprofil)->update([
-                'profilowe' => $valid['profilowe'],
+                'profilowe' => $profiloweName,
                 'nick' => $valid['nick'],
                 'imie' => $valid['imie'],
                 'nazwisko' => $valid['nazwisko'],
@@ -81,6 +96,7 @@ class SetProfilController extends Controller
                 'sex' => $valid['gender'],
             ]);
 
+            // Aktualizacja tabeli users (tylko nick)
             DB::table('users')->where('id_profil', $idprofil)->update([
                 'nick' => $valid['nick'],
             ]);
