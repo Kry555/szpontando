@@ -1,0 +1,12 @@
+.cena-box {
+    display: inline-flex;
+    align-items: center;
+}
+
+.cena-box input {
+    width: 100px;
+}
+
+.cena-box span {
+    margin-left: 5px;
+}
