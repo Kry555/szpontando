@@ -60,6 +60,16 @@ class OfertyController extends Controller
             'text',
         )->where('id_user', '=', $id)->where('odzcytane', '=', 0)->get();
 
+        $teraz = date('Y-m-d H:i:s');
+
+        foreach ($dane as $dan) {
+            if ($dan->do_kiedy_wazne <= $teraz) {
+                DB::table('profil')->where('id_oferty', $dan->id_oferty)->update([
+                    'status' => 'wygaslo'
+                ]);
+            }
+        }
+
         return view('main', ['oferty_przeglandarka' => $dane, 'Zgloszenia_aktywne' => $aktywne, 'notf' => $komuch]);
     }
 
