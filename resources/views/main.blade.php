@@ -33,6 +33,9 @@
     <a href="{{ route('set_profil') }}">
         <button type="button">Set profil</button>
     </a>
+    <a href="{{ route('my_ofert') }}">
+        <button type="button">MyOfert</button>
+    </a>
 
     <button onclick="openModal_Wiadomosci()">
         Wiadomosci ({{ is_string($notf) ? 0 : $notf->count() }})

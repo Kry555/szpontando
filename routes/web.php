@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\OfertyAddController;
 use App\Http\Controllers\SetProfilController;
+use App\Http\Controllers\MyOfertController;
+
 
 
 // Route::get('/', function () {
@@ -40,3 +42,5 @@ Route::post('/add-ofert', [OfertyAddController::class, 'add_ofert'])->name('add_
 //panel do zmieniania 
 Route::get('/set-profil', [SetProfilController::class, 'showProfil'])->name('set_profil');
 Route::post('/set-profil', [SetProfilController::class, 'editProfil'])->name('set_profil.post');
+
+Route::get('/my-ofert', [MyOfertController::class, 'showOfert'])->name('my_ofert');
