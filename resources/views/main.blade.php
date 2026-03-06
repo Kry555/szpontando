@@ -25,10 +25,9 @@
         </form>
 
         <!-- pzycisk do dodawania oferty pzenies tylko ten kod-->
-        <form method="POST" action="{{ route('oferty-add') }}">
-            @csrf
-            <button type="submit">Dodaj oferte</button>
-        </form>
+        <a href="{{ route('oferty-add') }}">
+            <button type="button">Dodaj ofertę</button>
+        </a>
 
         <button onclick="openModal_Wiadomosci()">
             Wiadomosci ({{ is_string($notf) ? 0 : $notf->count() }})
