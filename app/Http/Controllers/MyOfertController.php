@@ -11,39 +11,51 @@ class MyOfertController extends Controller
 {
     public function showOfert()
     {
+        // Sprawdzenie czy użytkownik jest zalogowany
         if (!Auth::check()) {
-
-            $las = '';
-
-            return view('main', ['myofert' => $las]);
+            return view('main', ['myofert' => '']);
         }
+
         $id = Auth::user()->id_profil;
-        $las = DB::table('zgloszenia')
+
+
+        $oferty = DB::table('oferty')
+            ->where('id_profil_owner', $id)
+            ->get();
+
+
+        $zgloszenia = DB::table('zgloszenia')
             ->select(
+                'zgloszenia.id_zgloszenia',
+                'zgloszenia.id_oferty',
+                'zgloszenia.id_profil_wykonawca',
                 'zgloszenia.wiadomosc',
                 'zgloszenia.zatwierdzone',
-                'oferty.adres',
-                'oferty.typ',
-                'oferty.cena',
-                'oferty.do_kiedy_wazne',
-                'oferty.opis',
-                'oferty.status',
                 'profil.nick',
                 'profil.imie',
                 'profil.nazwisko',
-                'profil.data_ur',
                 'profil.miasto',
                 'profil.email_kontaktowy',
                 'profil.ocena',
                 'profil.profilowe',
                 'profil.sex',
-                'zgloszenia.id_zgloszenia',
-                'zgloszenia.id_oferty'
+                'oferty.adres',
+                'oferty.typ',
+                'oferty.cena',
+                'oferty.do_kiedy_wazne',
+                'oferty.opis',
+                'oferty.status'
             )
             ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
             ->join('profil', 'profil.id_profil', '=', 'zgloszenia.id_profil_wykonawca')
-            ->where('oferty.id_profil_owner', '=', $id)->get();
-        return view('myOfert', ['myofert' => $las]);
+            ->where('oferty.id_profil_owner', $id)
+            ->get();
+
+
+        return view('myOfert', [
+            'oferty' => $oferty,
+            'zgloszenia' => $zgloszenia
+        ]);
     }
     public function acceptOfert(Request $request)
     {

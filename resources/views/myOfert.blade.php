@@ -15,42 +15,29 @@
     @auth
 
     <h1>Twoje oferty</h1>
-
-    @foreach($myofert as $oferta)
+    @foreach($oferty as $oferta)
     <div class="oferta">
-
         <p><strong>Adres:</strong> {{ $oferta->adres }}</p>
         <p><strong>Typ:</strong> {{ $oferta->typ }}</p>
         <p><strong>Cena:</strong> {{ $oferta->cena }}</p>
         <p><strong>Ważne do:</strong> {{ $oferta->do_kiedy_wazne }}</p>
         <p><strong>Opis:</strong> {{ $oferta->opis }}</p>
         <p><strong>Status:</strong> {{ $oferta->status }}</p>
-
         <form method="POST" action="{{ route('zakonczOfert.post') }}">
             @csrf
             <input type="hidden" name="id_oferty" value="{{ $oferta->id_oferty }}">
-
-            <button type="submit"
-                @if($oferta->status == 'anulowane')
-                disabled
-                @endif
-                >
+            <button type="submit" @if($oferta->status == 'anulowane') disabled @endif>
                 Zakończ ofertę
             </button>
         </form>
-
     </div>
     @endforeach
 
 
     <h2>Zgłoszenia do Twoich ofert</h2>
-
-    @foreach($myofert as $zgloszenie)
-
+    @foreach($zgloszenia as $zgloszenie)
     @if($zgloszenie->wiadomosc)
-
     <div class="zgloszenie">
-
         <button class="profil-btn" onclick="openModal_profil(
         '{{ $zgloszenie->nick }}',
         '{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}',
@@ -60,52 +47,21 @@
         '{{ $zgloszenie->email_kontaktowy ?? '' }}',
         '{{ $zgloszenie->ocena ?? '' }}'
     )">
-
             <img src="{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}" alt="Profilowe">
-
             <span>{{ $zgloszenie->nick }}</span>
-
         </button>
-
-
         <p><strong>Wiadomość:</strong> {{ $zgloszenie->wiadomosc }}</p>
-
         <p><strong>Zatwierdzone:</strong> {{ $zgloszenie->zatwierdzone ? 'Tak' : 'Nie' }}</p>
-
-
-        <!-- SZCZEGÓŁY OFERTY -->
-        <button onclick="openModal_oferta(
-        '{{ $zgloszenie->adres }}',
-        '{{ $zgloszenie->typ }}',
-        '{{ $zgloszenie->cena }}',
-        '{{ $zgloszenie->do_kiedy_wazne }}',
-        '{{ $zgloszenie->opis }}',
-        '{{ $zgloszenie->status }}'
-    )">
-            Szczegóły oferty
-        </button>
-
-
         <form method="POST" action="{{ route('acceptOfert.post') }}">
             @csrf
-
             <input type="hidden" name="id_oferty" value="{{ $zgloszenie->id_oferty }}">
             <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
-
-            <button type="submit"
-                @if($zgloszenie->zatwierdzone)
-                disabled
-                @endif
-                >
+            <button type="submit" @if($zgloszenie->zatwierdzone) disabled @endif>
                 Zakceptuj zgłoszenie
             </button>
-
         </form>
-
     </div>
-
     @endif
-
     @endforeach
 
 
