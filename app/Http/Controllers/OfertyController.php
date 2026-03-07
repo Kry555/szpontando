@@ -112,4 +112,19 @@ class OfertyController extends Controller
 
         return redirect()->route('main')->with('modal_success', $request->oferta_id);
     }
+
+    public function zakonczOfert(Request $request)
+    {
+        $request->validate([
+            'id_oferty' => 'required|integer'
+        ]);
+
+        DB::table('oferty')
+            ->where('id_oferty', $request->id_oferty)
+            ->update([
+                'status' => 'anulowane'
+            ]);
+
+        return back()->with('success', 'Oferta została zakończona');
+    }
 }

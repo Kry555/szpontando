@@ -44,3 +44,5 @@ Route::get('/set-profil', [SetProfilController::class, 'showProfil'])->name('set
 Route::post('/set-profil', [SetProfilController::class, 'editProfil'])->name('set_profil.post');
 
 Route::get('/my-ofert', [MyOfertController::class, 'showOfert'])->name('my_ofert');
+Route::post('/set-profil', [MyOfertController::class, 'acceptOfert'])->name('acceptOfert.post');
+Route::post('/oferta-zakoncz', [MyOfertController::class, 'zakonczOfert'])->name('zakonczOfert.post');

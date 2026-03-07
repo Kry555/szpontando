@@ -36,11 +36,70 @@ class MyOfertController extends Controller
                 'profil.email_kontaktowy',
                 'profil.ocena',
                 'profil.profilowe',
-                'profil.sex'
+                'profil.sex',
+                'zgloszenia.id_zgloszenia',
+                'zgloszenia.id_oferty'
             )
             ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
             ->join('profil', 'profil.id_profil', '=', 'zgloszenia.id_profil_wykonawca')
             ->where('oferty.id_profil_owner', '=', $id)->get();
         return view('myOfert', ['myofert' => $las]);
+    }
+    public function acceptOfert(Request $request)
+    {
+        $request->validate([
+            'id_oferty' => 'required|integer',
+            'id_zgloszenia' => 'required|integer'
+        ]);
+
+        // sprawdzenie czy ktoś już został zaakceptowany
+        $exists = DB::table('zgloszenia')
+            ->where('id_oferty', $request->id_oferty)
+            ->where('zatwierdzone', 1)
+            ->exists();
+
+        if ($exists) {
+            return back()->with('error', 'Ktoś już został zaakceptowany do tej oferty');
+        }
+
+        DB::table('zgloszenia')
+            ->where('id_zgloszenia', $request->id_zgloszenia)
+            ->update([
+                'zatwierdzone' => 1
+            ]);
+
+        // pobierz dane wykonawcy
+        $zgloszenie = DB::table('zgloszenia')
+            ->where('id_zgloszenia', $request->id_zgloszenia)
+            ->first();
+
+        // znajdź usera po id_profil
+        $user = DB::table('users')
+            ->where('id_profil', $zgloszenie->id_profil_wykonawca)
+            ->first();
+
+        // powiadomienie
+        DB::table('powiadomienia')->insert([
+            'tytul' => 'twoje zgłoszenie zostało zaakceptowane',
+            'text' => 'Twoje zgłoszenie do oferty zostało zaakceptowane',
+            'odzcytane' => 0,
+            'id_user' => $user->id
+        ]);
+
+        return back()->with('success', 'Zgłoszenie zaakceptowane');
+    }
+    public function zakonczOfert(Request $request)
+    {
+        $request->validate([
+            'id_oferty' => 'required|integer'
+        ]);
+
+        DB::table('oferty')
+            ->where('id_oferty', $request->id_oferty)
+            ->update([
+                'status' => 'anulowane'
+            ]);
+
+        return back()->with('success', 'Oferta została zakończona');
     }
 }
