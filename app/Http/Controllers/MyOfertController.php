@@ -127,4 +127,39 @@ class MyOfertController extends Controller
 
         return back()->with('success', 'Oferta została zakończona');
     }
+    public function editOffer(Request $request)
+    {
+        $idProfil = Auth::user()->id_profil;
+
+        $validated = $request->validate([
+            'id_oferty' => 'required|integer|exists:oferty,id_oferty',
+            'adres' => 'required|string|max:255',
+            'typ' => 'required|string|max:100',
+            'cena' => 'required|numeric|min:0',
+            'do_kiedy_wazne' => 'required|date|after:now',
+            'opis' => 'required|string|max:2000',
+        ]);
+
+        $oferta = DB::table('oferty')
+            ->where('id_oferty', $validated['id_oferty'])
+            ->where('id_profil_owner', $idProfil)
+            ->first();
+
+        if (!$oferta) {
+            return back()->with('error', 'Nie masz prawa edytować tej oferty.');
+        }
+
+        DB::table('oferty')
+            ->where('id_oferty', $validated['id_oferty'])
+            ->update([
+                'adres' => $validated['adres'],
+                'typ' => $validated['typ'],
+                'cena' => $validated['cena'],
+                'do_kiedy_wazne' => $validated['do_kiedy_wazne'],
+                'opis' => $validated['opis'],
+                'updated_at' => now(),
+            ]);
+
+        return back()->with('success', 'Oferta została zaktualizowana.');
+    }
 }

@@ -46,3 +46,4 @@ Route::post('/set-profil', [SetProfilController::class, 'editProfil'])->name('se
 Route::get('/my-ofert', [MyOfertController::class, 'showOfert'])->name('my_ofert');
 Route::post('/accept-ofert', [MyOfertController::class, 'acceptOfert'])->name('acceptOfert.post');
 Route::post('/oferta-zakoncz', [MyOfertController::class, 'zakonczOfert'])->name('zakonczOfert.post');
+Route::post('/edit-offer', [MyOfertController::class, 'editOffer'])->name('edit_offer.post')->middleware('auth');
