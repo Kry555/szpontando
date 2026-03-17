@@ -64,6 +64,13 @@ class MyOfertController extends Controller
             'id_zgloszenia' => 'required|integer'
         ]);
 
+        $oferta = DB::table('oferty')
+            ->where('id_oferty', $request->id_oferty)
+            ->first();
+
+        if ($oferta->status === 'anulowane') {
+            return back()->with('error', 'Nie można zaakceptować zgłoszenia do anulowanej oferty');
+        }
         // sprawdzenie czy ktoś już został zaakceptowany
         $exists = DB::table('zgloszenia')
             ->where('id_oferty', $request->id_oferty)
@@ -97,6 +104,11 @@ class MyOfertController extends Controller
             'odzcytane' => 0,
             'id_user' => $user->id
         ]);
+        // jescze tabela oferty status ma byc przyjęte
+        DB::table('oferty')->where('id_oferty', $request->id_oferty)->update([
+            'status' => 'zaakceptowana'
+        ]);
+
 
         return back()->with('success', 'Zgłoszenie zaakceptowane');
     }
