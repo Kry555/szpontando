@@ -83,6 +83,17 @@ class OfertyController extends Controller
 
         //----zmienne----
         $ofertaId = $request->oferta_id;
+
+
+        //--zabezpieczenie nie mozna sie zglosic do nie aktywnej oferty 
+        $status = DB::table('oferty')
+            ->where('id_oferty', $ofertaId)
+            ->value('status');
+
+        if ($status !== 'aktywna') {
+            return back()->with('error', 'Nie można zgłosić się do tej oferty');
+        }
+
         $id_zatwierdzajacego = Auth::user()->id_profil;
         $wiadomosc = $request->wiadomosc;
 

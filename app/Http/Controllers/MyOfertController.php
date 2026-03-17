@@ -68,8 +68,9 @@ class MyOfertController extends Controller
             ->where('id_oferty', $request->id_oferty)
             ->first();
 
-        if ($oferta->status === 'anulowane') {
-            return back()->with('error', 'Nie można zaakceptować zgłoszenia do anulowanej oferty');
+        // Blokada dla wszystkiego, co nie jest aktywne
+        if ($oferta->status !== 'aktywna') {
+            return back()->with('error', 'Nie można zaakceptować zgłoszenia do oferty, która nie jest aktywna.');
         }
         // sprawdzenie czy ktoś już został zaakceptowany
         $exists = DB::table('zgloszenia')
