@@ -23,6 +23,17 @@
         <p><strong>Ważne do:</strong> {{ $oferta->do_kiedy_wazne }}</p>
         <p><strong>Opis:</strong> {{ $oferta->opis }}</p>
         <p><strong>Status:</strong> {{ $oferta->status }}</p>
+        <button onclick="openModal_editOffer({
+            id_oferty: '{{ $oferta->id_oferty }}',
+            adres: '{{ $oferta->adres }}',
+            typ: '{{ $oferta->typ }}',
+            cena: '{{ $oferta->cena }}',
+            do_kiedy_wazne: '{{ $oferta->do_kiedy_wazne }}',
+            opis: '{{ $oferta->opis }}'
+            })">
+            Edytuj ofertę
+        </button>
+
         <form method="POST" action="{{ route('zakonczOfert.post') }}">
             @csrf
             <input type="hidden" name="id_oferty" value="{{ $oferta->id_oferty }}">
@@ -117,8 +128,30 @@
         </div>
     </div>
 
+    <!-- MODAL EDYCJA OFERTY -->
+    <div id="modal_edit_offer" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+        <div style="background:#fff; color:black; padding:20px; width:450px; margin:50px auto; position:relative; border-radius:10px;">
+            <button onclick="closeModal_editOffer()" style="position:absolute; top:10px; right:10px;">✖</button>
+            <h2>Edytuj ofertę</h2>
+            <form method="POST" action="{{ route('edit_offer.post') }}">
+                @csrf
+                <input type="hidden" name="id_oferty" id="edit_offer_id">
 
+                <p>Rodzaj sprzątania (wybierz jeden):</p>
+                <div id="edit_typ_radio">
+                    <!-- tutaj JS wstawi radio buttony jak w add_ofert -->
+                </div>
 
+                <input type="text" name="adres" id="edit_adres" placeholder="adres" required><br>
+                <input type="number" name="cena" id="edit_cena" placeholder="cena" min="0" step="0.01" required> <span>zł</span><br>
+                <input type="datetime-local" name="do_kiedy_wazne" id="edit_do_kiedy_wazne" required><br>
+                <input type="text" name="opis" id="edit_opis" placeholder="opis" required><br>
+
+                <button type="submit">Zapisz zmiany</button>
+                <button type="button" onclick="closeModal_editOffer()">Anuluj</button>
+            </form>
+        </div>
+    </div>
 
 
     <script>
@@ -153,6 +186,104 @@
 
         function closeModal_oferta() {
             document.getElementById('modal_oferta').style.display = 'none';
+        }
+
+        // OTWIERANIE MODALA EDYCJI OFERTY
+        const typy = [{
+                value: 'samochod',
+                label: 'Samochód'
+            },
+            {
+                value: 'rower',
+                label: 'Rower'
+            },
+            {
+                value: 'caly_dom',
+                label: 'Cały dom'
+            },
+            {
+                value: 'wybrane_pomieszczenia',
+                label: 'Wybrane pomieszczenia'
+            },
+            {
+                value: 'brud_ciezki_przemyslowy',
+                label: 'Brud ciężki (przemysłowy)'
+            },
+            {
+                value: 'miejsce_zbrodni',
+                label: 'Miejsce zbrodni'
+            },
+            {
+                value: 'po_remoncie',
+                label: 'Po remoncie'
+            },
+            {
+                value: 'po_imprezie',
+                label: 'Po imprezie'
+            },
+            {
+                value: 'zwierzece_zabrudzenia',
+                label: 'Zwierzęce zabrudzenia'
+            },
+            {
+                value: 'sprzatanie_po_psie',
+                label: 'Sprzątanie po psie'
+            },
+            {
+                value: 'kuweta_kota',
+                label: 'Kuweta kota'
+            },
+            {
+                value: 'mycie_okien',
+                label: 'Mycie okien'
+            },
+            {
+                value: 'garaz_piwnica',
+                label: 'Garaż / piwnica'
+            },
+            {
+                value: 'ogrod_tarasy',
+                label: 'Ogród / tarasy'
+            },
+            {
+                value: 'dezynfekcja',
+                label: 'Dezynfekcja'
+            }
+        ];
+
+        function openModal_editOffer(oferta) {
+            document.getElementById('edit_offer_id').value = oferta.id_oferty;
+            document.getElementById('edit_adres').value = oferta.adres;
+            document.getElementById('edit_cena').value = oferta.cena;
+            document.getElementById('edit_do_kiedy_wazne').value = oferta.do_kiedy_wazne;
+            document.getElementById('edit_opis').value = oferta.opis;
+
+            const container = document.getElementById('edit_typ_radio');
+            container.innerHTML = '';
+
+            typy.forEach(t => {
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'typ';
+                input.value = t.value;
+
+                if (t.value === oferta.typ) {
+                    input.checked = true;
+                }
+
+                label.appendChild(input);
+                label.insertAdjacentText('beforeend', ` ${t.label}`);
+                container.appendChild(label);
+                container.appendChild(document.createElement('br'));
+            });
+
+            document.getElementById('modal_edit_offer').style.display = 'block';
+        }
+
+
+        function closeModal_editOffer() {
+            document.getElementById('modal_edit_offer').style.display = 'none';
         }
     </script>
 
