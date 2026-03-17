@@ -23,8 +23,8 @@ class OfertyController extends Controller
                 'oferty.cena',
                 'oferty.do_kiedy_wazne',
                 'oferty.opis',
-                'oferty.stworzone'
-            )->leftjoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->get();
+                'oferty.created_at'
+            )->leftjoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->orderBy('oferty.created_at', 'desc')->get();
             //musi byc bo blad
             $komuch = '';
 
@@ -45,8 +45,8 @@ class OfertyController extends Controller
             'oferty.cena',
             'oferty.do_kiedy_wazne',
             'oferty.opis',
-            'oferty.stworzone'
-        )->leftjoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->where('oferty.id_profil_owner', '!=', $id)->orderBy('oferty.stworzone', 'desc')->get();
+            'oferty.created_at'
+        )->leftjoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->where('oferty.id_profil_owner', '!=', $id)->orderBy('oferty.created_at', 'desc')->get();
 
         //----id do kturych sie zglosil----
         $aktywne = $id ? DB::table('zgloszenia')
@@ -64,7 +64,7 @@ class OfertyController extends Controller
 
         foreach ($dane as $dan) {
             if ($dan->do_kiedy_wazne <= $teraz) {
-                DB::table('profil')->where('id_oferty', $dan->id_oferty)->update([
+                DB::table('oferty')->where('id_oferty', $dan->id_oferty)->update([
                     'status' => 'wygaslo'
                 ]);
             }
@@ -83,6 +83,17 @@ class OfertyController extends Controller
 
         //----zmienne----
         $ofertaId = $request->oferta_id;
+
+
+        //--zabezpieczenie nie mozna sie zglosic do nie aktywnej oferty 
+        $status = DB::table('oferty')
+            ->where('id_oferty', $ofertaId)
+            ->value('status');
+
+        if ($status !== 'aktywna') {
+            return back()->with('error', 'Nie można zgłosić się do tej oferty');
+        }
+
         $id_zatwierdzajacego = Auth::user()->id_profil;
         $wiadomosc = $request->wiadomosc;
 
@@ -111,5 +122,20 @@ class OfertyController extends Controller
         }
 
         return redirect()->route('main')->with('modal_success', $request->oferta_id);
+    }
+
+    public function zakonczOfert(Request $request)
+    {
+        $request->validate([
+            'id_oferty' => 'required|integer'
+        ]);
+
+        DB::table('oferty')
+            ->where('id_oferty', $request->id_oferty)
+            ->update([
+                'status' => 'anulowane'
+            ]);
+
+        return back()->with('success', 'Oferta została zakończona');
     }
 }

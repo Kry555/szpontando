@@ -9,6 +9,10 @@
 </head>
 
 <body>
+    @auth
+    <h1>jetses zalogowany</h1>
+    @endauth
+    @guest
     <h1>Sing_in chuju</h1>
     <form method="POST" action="/login">
         @csrf <!--  to chroni przed atakami tylko niewiem jak -->
@@ -32,13 +36,17 @@
         <button type="submit">Zaloguj się</button>
 
     </form>
-    <a href="{{ route('main') }}">
-        <button type="button">wróc na główną jełopie</button>
-    </a>
+
 
     <a href="{{ route('register.show') }}">
         <button type="button">Nie masz jeszcze konta zjebie, załuż lepiej bo łysy z brazers wyczysci ci dupe</button>
     </a>
+
+    @endguest
+    <a href="{{ route('main') }}">
+        <button type="button">wróc na główną jełopie</button>
+    </a>
+
 </body>
 
 </html>
