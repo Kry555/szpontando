@@ -67,8 +67,17 @@
             @csrf
             <input type="hidden" name="id_oferty" value="{{ $zgloszenie->id_oferty }}">
             <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
-            <button type="submit" @if($zgloszenie->zatwierdzone || $zgloszenie->status == 'anulowane') disabled @endif>
+
+            <button type="submit"
+                @if($zgloszenie->zatwierdzone || $zgloszenie->status != 'aktywna') disabled @endif>
+
+                @if($zgloszenie->zatwierdzone)
+                Już zaakceptowane
+                @elseif($zgloszenie->status != 'aktywna')
+                Niedostępne
+                @else
                 Zakceptuj zgłoszenie
+                @endif
             </button>
         </form>
 
@@ -78,76 +87,69 @@
 
 
     <!-- MODAL PROFIL -->
-
     <div id="modal_profil" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
-
-        <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative; border-radius:10px;">
-
+        <div style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative; border-radius:10px; text-align:center;">
             <button type="button" onclick="closeModal_profil()" style="position:absolute; top:10px; right:10px;">✖</button>
 
-            <div id="modal_profil_body" style="text-align:center;"></div>
-
+            <img id="modal_profil_img" src="" style="width:100px; height:100px; border-radius:50%; margin-bottom:10px;">
+            <h2 id="modal_profil_nick"></h2>
+            <p><strong>Imię i nazwisko:</strong> <span id="modal_profil_imie"></span> <span id="modal_profil_nazwisko"></span></p>
+            <p><strong>Miasto:</strong> <span id="modal_profil_miasto"></span></p>
+            <p><strong>Email:</strong> <span id="modal_profil_email"></span></p>
+            <p><strong>Ocena:</strong> <span id="modal_profil_ocena"></span></p>
         </div>
-
     </div>
-
 
     <!-- MODAL OFERTA -->
-
     <div id="modal_oferta" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
-
         <div style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative; border-radius:10px;">
-
             <button onclick="closeModal_oferta()" style="position:absolute; top:10px; right:10px;">✖</button>
 
-            <div id="modal_oferta_body"></div>
-
+            <div id="modal_oferta_body">
+                <h2>Szczegóły oferty</h2>
+                <p><strong>Adres:</strong> <span id="modal_adres"></span></p>
+                <p><strong>Typ:</strong> <span id="modal_typ"></span></p>
+                <p><strong>Cena:</strong> <span id="modal_cena"></span></p>
+                <p><strong>Ważne do:</strong> <span id="modal_wazne"></span></p>
+                <p><strong>Opis:</strong> <span id="modal_opis"></span></p>
+                <p><strong>Status:</strong> <span id="modal_status"></span></p>
+            </div>
         </div>
-
     </div>
+
 
 
 
 
     <script>
+        // MODAL PROFIL
         function openModal_profil(nick, profilowe, imie, nazwisko, miasto, email, ocena) {
-            const body = document.getElementById('modal_profil_body');
-
-            body.innerHTML = `
-        <img src="${profilowe}" style="width:100px;height:100px;border-radius:50%;margin-bottom:10px;">
-        <h2>${nick}</h2>
-        <p><strong>Imię i nazwisko:</strong> ${imie} ${nazwisko}</p>
-        <p><strong>Miasto:</strong> ${miasto}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Ocena:</strong> ${ocena}</p>
-    `;
+            document.getElementById('modal_profil_img').src = profilowe;
+            document.getElementById('modal_profil_nick').textContent = nick;
+            document.getElementById('modal_profil_imie').textContent = imie ?? '';
+            document.getElementById('modal_profil_nazwisko').textContent = nazwisko ?? '';
+            document.getElementById('modal_profil_miasto').textContent = miasto ?? '';
+            document.getElementById('modal_profil_email').textContent = email ?? '';
+            document.getElementById('modal_profil_ocena').textContent = ocena ?? '';
 
             document.getElementById('modal_profil').style.display = 'block';
         }
-
 
         function closeModal_profil() {
             document.getElementById('modal_profil').style.display = 'none';
         }
 
-
-
+        // MODAL OFERTA
         function openModal_oferta(adres, typ, cena, wazne, opis, status) {
-            const body = document.getElementById('modal_oferta_body');
-
-            body.innerHTML = `
-        <h2>Szczegóły oferty</h2>
-        <p><strong>Adres:</strong> ${adres}</p>
-        <p><strong>Typ:</strong> ${typ}</p>
-        <p><strong>Cena:</strong> ${cena}</p>
-        <p><strong>Ważne do:</strong> ${wazne}</p>
-        <p><strong>Opis:</strong> ${opis}</p>
-        <p><strong>Status:</strong> ${status}</p>
-    `;
+            document.getElementById('modal_adres').textContent = adres;
+            document.getElementById('modal_typ').textContent = typ;
+            document.getElementById('modal_cena').textContent = cena;
+            document.getElementById('modal_wazne').textContent = wazne;
+            document.getElementById('modal_opis').textContent = opis;
+            document.getElementById('modal_status').textContent = status;
 
             document.getElementById('modal_oferta').style.display = 'block';
         }
-
 
         function closeModal_oferta() {
             document.getElementById('modal_oferta').style.display = 'none';
