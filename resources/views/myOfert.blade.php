@@ -39,27 +39,39 @@
     @if($zgloszenie->wiadomosc)
     <div class="zgloszenie">
         <button class="profil-btn" onclick="openModal_profil(
-        '{{ $zgloszenie->nick }}',
-        '{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}',
-        '{{ $zgloszenie->imie ?? '' }}',
-        '{{ $zgloszenie->nazwisko ?? '' }}',
-        '{{ $zgloszenie->miasto ?? '' }}',
-        '{{ $zgloszenie->email_kontaktowy ?? '' }}',
-        '{{ $zgloszenie->ocena ?? '' }}'
-    )">
+            '{{ $zgloszenie->nick }}',
+            '{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}',
+            '{{ $zgloszenie->imie ?? '' }}',
+            '{{ $zgloszenie->nazwisko ?? '' }}',
+            '{{ $zgloszenie->miasto ?? '' }}',
+            '{{ $zgloszenie->email_kontaktowy ?? '' }}',
+            '{{ $zgloszenie->ocena ?? '' }}'
+        )">
             <img src="{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}" alt="Profilowe">
             <span>{{ $zgloszenie->nick }}</span>
         </button>
+        <button type="button" onclick="openModal_oferta(
+            '{{ $zgloszenie->adres }}',
+            '{{ $zgloszenie->typ }}',
+            '{{ $zgloszenie->cena }}',
+            '{{ $zgloszenie->do_kiedy_wazne }}',
+            '{{ $zgloszenie->opis }}',
+            '{{ $zgloszenie->status }}'
+        )">
+            Szczegóły zgłoszenia
+        </button>
+
         <p><strong>Wiadomość:</strong> {{ $zgloszenie->wiadomosc }}</p>
         <p><strong>Zatwierdzone:</strong> {{ $zgloszenie->zatwierdzone ? 'Tak' : 'Nie' }}</p>
         <form method="POST" action="{{ route('acceptOfert.post') }}">
             @csrf
             <input type="hidden" name="id_oferty" value="{{ $zgloszenie->id_oferty }}">
             <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
-            <button type="submit" @if($zgloszenie->zatwierdzone) disabled @endif>
+            <button type="submit" @if($zgloszenie->zatwierdzone || $zgloszenie->status == 'anulowane') disabled @endif>
                 Zakceptuj zgłoszenie
             </button>
         </form>
+
     </div>
     @endif
     @endforeach
@@ -93,6 +105,8 @@
         </div>
 
     </div>
+
+
 
 
     <script>
