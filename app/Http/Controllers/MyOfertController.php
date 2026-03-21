@@ -45,13 +45,12 @@ class MyOfertController extends Controller
                 'oferty.cena',
                 'oferty.do_kiedy_wazne',
                 'oferty.opis',
-                'oferty.status'
+                'oferty.status as oferta_status'
             )
             ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
             ->join('profil', 'profil.id_profil', '=', 'zgloszenia.id_profil_wykonawca')
             ->where('oferty.id_profil_owner', $id)
-            ->where('oferty.status', 'aktywna')
-            ->where('zgloszenia.status', 'aktywne')
+            ->whereIn('zgloszenia.status', ['aktywne', 'zatwierdzone']) // <- jawnie
             ->get();
 
 
@@ -88,7 +87,8 @@ class MyOfertController extends Controller
         DB::table('zgloszenia')
             ->where('id_zgloszenia', $request->id_zgloszenia)
             ->update([
-                'zatwierdzone' => 1
+                'zatwierdzone' => 1,
+                'status' => 'zatwierdzone'
             ]);
 
         // pobierz dane wykonawcy
@@ -122,13 +122,21 @@ class MyOfertController extends Controller
             'id_oferty' => 'required|integer'
         ]);
 
+        // Zaktualizuj status oferty
         DB::table('oferty')
             ->where('id_oferty', $request->id_oferty)
             ->update([
-                'status' => 'anulowane'
+                'status' => 'anulowane'  // lub 'zakończone', jeśli wolisz taką nazwę
             ]);
 
-        return back()->with('success', 'Oferta została zakończona');
+        // Zaktualizuj status wszystkich zgłoszeń powiązanych z tą ofertą
+        DB::table('zgloszenia')
+            ->where('id_oferty', $request->id_oferty)
+            ->update([
+                'status' => 'zakończone'
+            ]);
+
+        return back()->with('success', 'Oferta została zakończona, a zgłoszenia oznaczone jako zakończone.');
     }
     public function editOffer(Request $request)
     {
