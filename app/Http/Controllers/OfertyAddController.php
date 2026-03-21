@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon; // <-- pamiętaj o imporcie
 
 class OfertyAddController extends Controller
 {
@@ -25,6 +25,8 @@ class OfertyAddController extends Controller
         ]);
 
         $idprofil = Auth::user()->id_profil;
+
+        // Wstawienie oferty z timestamps
         DB::table('oferty')->insert([
             'id_profil_owner' => $idprofil,
             'adres' => $request->adres,
@@ -33,6 +35,8 @@ class OfertyAddController extends Controller
             'do_kiedy_wazne' => $request->do_kiedy_wazne,
             'opis' => $request->opis,
             'status' => 'aktywna',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         return redirect()->route('main');
