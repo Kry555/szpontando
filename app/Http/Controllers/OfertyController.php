@@ -111,6 +111,7 @@ class OfertyController extends Controller
                 'id_profil_wykonawca' => $id_zatwierdzajacego,
                 'wiadomosc' => $wiadomosc,
                 'zatwierdzone' => 0,
+                'status' => 'aktywne',
             ]);
 
             DB::table('powiadomienia')->insert([
