@@ -31,6 +31,7 @@ class MyOfertController extends Controller
                 'zgloszenia.id_profil_wykonawca',
                 'zgloszenia.wiadomosc',
                 'zgloszenia.zatwierdzone',
+                'zgloszenia.status',
                 'profil.nick',
                 'profil.imie',
                 'profil.nazwisko',
@@ -49,6 +50,8 @@ class MyOfertController extends Controller
             ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
             ->join('profil', 'profil.id_profil', '=', 'zgloszenia.id_profil_wykonawca')
             ->where('oferty.id_profil_owner', $id)
+            ->where('oferty.status', 'aktywna')
+            ->where('zgloszenia.status', 'aktywne')
             ->get();
 
 

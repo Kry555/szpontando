@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\OfertyAddController;
 use App\Http\Controllers\SetProfilController;
 use App\Http\Controllers\MyOfertController;
+use App\Http\Controllers\WorkOfertController;
+
 
 
 
@@ -47,3 +49,8 @@ Route::get('/my-ofert', [MyOfertController::class, 'showOfert'])->name('my_ofert
 Route::post('/accept-ofert', [MyOfertController::class, 'acceptOfert'])->name('acceptOfert.post');
 Route::post('/oferta-zakoncz', [MyOfertController::class, 'zakonczOfert'])->name('zakonczOfert.post');
 Route::post('/edit-offer', [MyOfertController::class, 'editOffer'])->name('edit_offer.post')->middleware('auth');
+
+Route::get('/work-ofert', [WorkOfertController::class, 'showOfert'])->name('work_ofert');
+Route::post('/cancel-zgloszenie', [WorkOfertController::class, 'cancelZgloszenie'])
+    ->name('cancelZgloszenie.post')
+    ->middleware('auth');
