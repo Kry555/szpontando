@@ -49,8 +49,36 @@ class WorkOfertController extends Controller
             ->get();
 
 
+        $zgloszeniaWybrane = DB::table('zgloszenia')
+            ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
+            ->join('profil', 'profil.id_profil', '=', 'zgloszenia.id_profil_wykonawca')
+            ->where('zgloszenia.id_profil_wykonawca', $id)
+            ->where('zgloszenia.zatwierdzone', 1)
+            ->select(
+                'zgloszenia.id_zgloszenia',
+                'zgloszenia.id_oferty',
+                'zgloszenia.id_profil_wykonawca',
+                'zgloszenia.wiadomosc',
+                'profil.nick',
+                'profil.imie',
+                'profil.nazwisko',
+                'profil.miasto',
+                'profil.email_kontaktowy',
+                'profil.ocena',
+                'profil.profilowe',
+                'profil.sex',
+                'oferty.adres',
+                'oferty.typ',
+                'oferty.cena',
+                'oferty.do_kiedy_wazne',
+                'oferty.opis',
+                'oferty.status'
+            )
+            ->get();
+
         return view('workOfert', [
-            'zgloszenia' => $zgloszenia
+            'zgloszenia' => $zgloszenia,
+            'zgloszeniaWybrane' => $zgloszeniaWybrane
         ]);
     }
     public function cancelZgloszenie(Request $request)
