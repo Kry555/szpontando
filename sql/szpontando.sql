@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2026 at 01:20 PM
+-- Generation Time: Mar 21, 2026 at 02:40 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -143,21 +143,10 @@ CREATE TABLE `oferty` (
 --
 
 INSERT INTO `oferty` (`id_oferty`, `id_profil_owner`, `adres`, `typ`, `cena`, `do_kiedy_wazne`, `opis`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Warszawa, ul. Testowa 5', 'ogrod_tarasy', '2500', '2026-12-31 00:00:00', 'Przytulne mieszkanie 2 pokojowe.', 'aktywna', '2026-03-05 13:42:43', '2026-03-17 19:53:41'),
-(2, 2, 'Kraków, ul. Floriańska 10', 'Pokój', '1200', '2026-11-30 00:00:00', 'Pokój do wynajęcia dla studenta.', 'aktywna', '2026-03-05 13:42:43', '2026-03-05 13:42:43'),
-(3, 3, 'Wrocław, ul. Rynek 3', 'Apartament', '4000', '2026-09-30 00:00:00', 'Apartament w centrum.', 'aktywna', '2026-03-05 13:42:43', '2026-03-05 13:42:43'),
-(4, 4, 'Gdańsk, ul. Długa 7', 'Mieszkanie', '3000', '2026-10-31 00:00:00', 'Mieszkanie przy plaży.', 'aktywna', '2026-03-05 13:42:43', '2026-03-05 13:42:43'),
-(5, 5, 'Poznań, ul. Stary Rynek 2', 'Pokój', '1500', '2026-11-15 00:00:00', 'Pokój w spokojnej okolicy.', 'aktywna', '2026-03-05 13:42:43', '2026-03-05 13:42:43'),
-(6, 6, 'chuj', 'chuj', '2137', '2026-12-31 00:00:00', 'chuj', 'anulowane', '2026-03-07 12:46:05', '2026-03-07 12:46:05'),
-(7, 1, 'chuj cie strzelił 12', 'kutas', '2137', '2026-11-11 21:37:00', 'ktos musi mi wypucowac berło', 'aktywna', '2026-03-06 10:27:42', '2026-03-06 10:27:42'),
-(8, 1, 'chuj cie strzelił 12', 'kutas', '2137', '2026-11-11 21:37:00', 'ktos musi mi wypucowac berło', 'aktywna', '2026-03-06 10:27:47', '2026-03-06 10:27:47'),
-(9, 1, 'chuj cie strzelił 12', 'kutas', '2137', '2026-11-11 21:37:00', 'ktos musi mi wypucowac berło', 'aktywna', '2026-03-06 10:27:58', '2026-03-06 10:27:58'),
-(10, 1, 'chuj cie strzelił 12', 'kutas', '2137', '2026-11-11 21:37:00', 'ktos musi mi wypucowac berło', 'aktywna', '2026-03-06 10:28:40', '2026-03-06 10:28:40'),
-(11, 1, 'kurweska 69', 'kutas', '2137', '2026-10-11 21:37:00', 'ktos musi berlo puscowac', 'zaakceptowana', '2026-03-17 18:31:04', '2026-03-17 18:31:04'),
-(12, 1, 'kurweska 69', 'kutas', '2137', '2026-10-11 21:37:00', 'ktos musi berlo puscowac', 'zaakceptowana', '2026-03-17 19:46:48', '2026-03-17 19:46:48'),
-(13, 1, 'chuj', 'rower', '2136', '2026-03-07 21:21:00', 'chuj', 'wygaslo', '2026-03-17 18:05:40', '2026-03-17 18:05:40'),
-(14, 1, 'dfgh', 'miejsce_zbrodni', '123', '4345-03-12 06:45:00', 'chuj', 'aktywna', '2026-03-06 18:40:30', '2026-03-06 18:40:30'),
-(15, 1, 'burdel makłowicza', 'po_imprezie', '2137', '2026-03-29 16:00:00', '18 eoeoeoeoeeoee', 'aktywna', '2026-03-21 12:00:06', '2026-03-21 12:00:06');
+(1, 1, 'burdel makłowicza', 'po_imprezie', '2137', '2026-03-30 13:35:00', 'impra xd', 'aktywna', '2026-03-21 12:36:13', '2026-03-21 12:36:27'),
+(2, 1, 'dom maxa', 'miejsce_zbrodni', '34', '2026-12-31 23:45:00', 'fajna zabawa z prostytutka', 'aktywna', '2026-03-21 12:37:31', '2026-03-21 12:37:31'),
+(3, 6, 'passat sie wykrzaczył', 'brud_ciezki_przemyslowy', '1997', '2026-11-23 21:00:00', 'passior', 'aktywna', '2026-03-21 12:38:52', '2026-03-21 12:38:52'),
+(4, 6, 'clup chlup', 'rower', '567', '2026-03-28 12:07:00', 'najs', 'aktywna', '2026-03-21 13:11:03', '2026-03-21 13:11:03');
 
 -- --------------------------------------------------------
 
@@ -190,19 +179,8 @@ CREATE TABLE `powiadomienia` (
 --
 
 INSERT INTO `powiadomienia` (`id_powiadomienia`, `tytul`, `text`, `odzcytane`, `id_user`) VALUES
-(1, 'nowe zgloszenie do twojej oferty', 'uzytkownik chuj zglosil sie do twojego zgloszenia', 0, 6),
-(2, 'nowe zgloszenie do twojej oferty', 'uzytkownik chujj zglosil sie do twojego zgloszenia', 0, 1),
-(3, 'nowe zgloszenie do twojej oferty', 'uzytkownik chujj zglosil sie do twojego zgloszenia', 0, 1),
-(4, 'nowe zgloszenie do twojej oferty', 'uzytkownik chujj zglosil sie do twojego zgloszenia', 0, 1),
-(5, 'twoje zgłoszenie zostało zaakceptowane', 'Twoje zgłoszenie do oferty zostało zaakceptowane', 0, 6),
-(6, 'twoje zgłoszenie zostało zaakceptowane', 'Twoje zgłoszenie do oferty zostało zaakceptowane', 0, 1),
-(7, 'twoje zgłoszenie zostało zaakceptowane', 'Twoje zgłoszenie do oferty zostało zaakceptowane', 0, 6),
-(8, 'twoje zgłoszenie zostało zaakceptowane', 'Twoje zgłoszenie do oferty zostało zaakceptowane', 0, 6),
-(9, 'twoje zgłoszenie zostało zaakceptowane', 'Twoje zgłoszenie do oferty zostało zaakceptowane', 0, 6),
-(10, 'twoje zgłoszenie zostało zaakceptowane', 'Twoje zgłoszenie do oferty zostało zaakceptowane', 0, 6),
-(11, 'twoje zgłoszenie zostało zaakceptowane', 'Twoje zgłoszenie do oferty zostało zaakceptowane', 0, 6),
-(12, 'nowe zgloszenie do twojej oferty', 'uzytkownik chuj zglosil sie do twojego zgloszenia', 0, 3),
-(13, 'nowe zgloszenie do twojej oferty', 'uzytkownik chujj zglosil sie do twojego zgloszenia', 0, 1);
+(1, 'nowe zgloszenie do twojej oferty', 'uzytkownik chujj zglosil sie do twojego zgloszenia', 0, 1),
+(2, 'nowe zgloszenie do twojej oferty', 'uzytkownik chuj zglosil sie do twojego zgloszenia', 0, 6);
 
 -- --------------------------------------------------------
 
@@ -229,11 +207,7 @@ CREATE TABLE `profil` (
 
 INSERT INTO `profil` (`id_profil`, `nick`, `imie`, `nazwisko`, `data_ur`, `miasto`, `email_kontaktowy`, `ocena`, `profilowe`, `sex`) VALUES
 (1, 'chuj', 'Jan', 'Kowalski', '2026-03-03', 'opole', 'chujjjjjj@email', NULL, '1773777744_sample_0ce96ff83ae57189afea88c8c883859b.jpg', 'men'),
-(2, 'user2', 'Anna', 'Nowak', NULL, NULL, NULL, NULL, 'profil2.png', NULL),
-(3, 'user3', 'Piotr', 'Wiśniewski', NULL, NULL, NULL, NULL, 'profil3.png', NULL),
-(4, 'user4', 'Katarzyna', 'Wójcik', NULL, NULL, NULL, NULL, 'profil4.png', NULL),
-(5, 'user5', 'Michał', 'Kaczmarek', NULL, NULL, NULL, NULL, 'profil5.png', NULL),
-(6, 'chujj', 'kutas', 'debil', '2026-03-03', 'pizdowice', 'chujjjjjjj@emial.com', NULL, '1772823008_sample_8bf2001baf434ccbb47d0d976c1bc1dc.jpg', 'slup');
+(6, 'chujj', 'adam', 'wkladam i spadam', '2026-03-03', 'pizdowice', 'chujj@emial.com', NULL, '1772823008_sample_8bf2001baf434ccbb47d0d976c1bc1dc.jpg', 'slup');
 
 -- --------------------------------------------------------
 
@@ -255,9 +229,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('dSGV40fPU3ua1LaOE1SXPWwjdiPfTHIB7nmXv0Sv', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoia3FjdXYwZklLQkNRM3UxSzJjVFdjNEpFTEhNTzhnWUh6YnVHeTFRViI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJtYWluIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Njt9', 1773779064),
-('FIrWQMYFmXh8Ef5YLSQC20oPynrz1Rv2iUnitxiA', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiUzBNak9YM2luSk1rWDZmcmQ2Mmx4dGc1eWpPTHFaMFFIeEc2d0c1TSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC93b3JrLW9mZXJ0IjtzOjU6InJvdXRlIjtzOjEwOiJ3b3JrX29mZXJ0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1774038958),
-('uiRHN8p25mt8Dl2igDQHXc2pWA9NIHwTjpS8G1ro', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoicU9vWWREd2dzcG91ZHNqaklxV1oxVUxHaEdSak1JbGhuaHFVNUNHbCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9teS1vZmVydCI7czo1OiJyb3V0ZSI7czo4OiJteV9vZmVydCI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1774094692);
+('xyP6njY2uTdOhCXkH88UQV6Cs3lt4kIfPmeU7Rh7', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQlVoQ3B2VDkxN1REZlF3djYxTWFUOUQ5dkg3eFE1bWRyVGdLSDRNcCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJtYWluIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1774100432);
 
 -- --------------------------------------------------------
 
@@ -283,10 +255,6 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `nick`, `email`, `password`, `czy_admin`, `id_profil`, `created_at`, `updated_at`, `aktywny`) VALUES
 (1, 'chuj', 'chuj@email.com', '$2y$12$O7gCEy/M6rhZzY6QlMXurupyiZWHphm1m3KjvSpU4aGZzq7y6d3XG', 0, 1, NULL, NULL, 1),
-(2, 'user2', 'user2@email.com', '$2y$12$dummyhash2', 0, 2, NULL, NULL, 1),
-(3, 'user3', 'user3@email.com', '$2y$12$dummyhash3', 0, 3, NULL, NULL, 1),
-(4, 'user4', 'user4@email.com', '$2y$12$dummyhash4', 0, 4, NULL, NULL, 1),
-(5, 'user5', 'user5@email.com', '$2y$12$dummyhash5', 0, 5, NULL, NULL, 1),
 (6, 'chujj', 'chujj@email.com', '$2y$12$WyS1etX6/gercTc2nM8az.Exg.QwDMqF7dZ0sKbpiUGQ1BuRheA5i', 0, 6, '2026-03-05 13:56:16', '2026-03-05 13:56:16', 1);
 
 -- --------------------------------------------------------
@@ -309,16 +277,8 @@ CREATE TABLE `zgloszenia` (
 --
 
 INSERT INTO `zgloszenia` (`id_zgloszenia`, `id_oferty`, `id_profil_wykonawca`, `wiadomosc`, `zatwierdzone`, `status`) VALUES
-(1, 2, '1', 'chuj', 0, 'anulowane'),
-(2, 6, '1', 'chuj chuj', 0, NULL),
-(3, 6, '1', 'chuj chuj', 0, NULL),
-(4, 6, '1', 'chuj chuj', 0, NULL),
-(5, 6, '1', 'chuj chuj', 0, NULL),
-(6, 12, '6', 'ta chuja ci wymyje', 1, NULL),
-(7, 11, '6', 'klocejk', 1, NULL),
-(8, 13, '6', 'chujjjjjjj', 0, NULL),
-(9, 3, '1', 'chuj', 0, 'aktywne'),
-(10, 15, '6', 'o ruchanie', 0, 'aktywne');
+(1, 2, '6', 'pomoge', 0, 'aktywne'),
+(2, 3, '1', 'passattttt', 0, 'aktywne');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -433,13 +393,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `oferty`
 --
 ALTER TABLE `oferty`
-  MODIFY `id_oferty` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_oferty` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `powiadomienia`
 --
 ALTER TABLE `powiadomienia`
-  MODIFY `id_powiadomienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_powiadomienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `profil`
@@ -457,7 +417,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `zgloszenia`
 --
 ALTER TABLE `zgloszenia`
-  MODIFY `id_zgloszenia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_zgloszenia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
