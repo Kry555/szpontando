@@ -29,19 +29,16 @@
 
         <div class="men">
             <input type="radio" id="menCheck" name="gender" value="men" {{ old('gender') == 'men' ? 'checked' : '' }}>
-            <label for="menCheck" class="custom-checkbox"></label>
             <span>Men</span>
         </div>
 
         <div class="women">
             <input type="radio" id="womenCheck" name="gender" value="women" {{ old('gender') == 'women' ? 'checked' : '' }}>
-            <label for="womenCheck" class="custom-checkbox"></label>
             <span>Women</span>
         </div>
 
         <div class="slup">
             <input type="radio" id="slupCheck" name="gender" value="slup" {{ old('gender') == 'slup' ? 'checked' : '' }}>
-            <label for="slupCheck" class="custom-checkbox"></label>
             <span>Słup elektryczny</span>
         </div>
         <div class="captcha-box">
@@ -61,11 +58,11 @@
                 Prywatność - bezpieczeństwo
             </div>
         </div>
-        <button type="submit">Zmien profil</button>
+        <button type="submit">utwórz konto</button>
     </form>
 
     <a href="{{ route('login') }}">
-        <button type="button">Sign_in</button>
+        <button type="button">zaloguj się</button>
     </a>
 
     <script>
@@ -85,6 +82,9 @@
 
         });
     </script>
+    <a href="{{ route('main') }}">
+        <button type="button">wróc na strone główną </button>
+    </a>
 </body>
 
 </html>

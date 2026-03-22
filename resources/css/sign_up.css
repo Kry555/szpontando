@@ -157,19 +157,6 @@
         opacity:0;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* dark-mode.css */
 body {
     background-color: black;
@@ -194,3 +181,4 @@ body {
 * {
     box-sizing: border-box;
 }
+/* hide checkbox after animation */

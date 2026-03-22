@@ -50,7 +50,8 @@ class RegisterController extends Controller
                 'password' => Hash::make($request->password),
                 'czy_admin' => 0,
                 'id_profil' => $profil_id,
-                'aktywny' => 0,
+                'aktywny' => 1,
+                //zmien na aktywny na 0 kiedy bedzie weryfikacja email 
             ]);
         });
 
