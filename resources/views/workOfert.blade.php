@@ -23,42 +23,43 @@
 
         <!-- PROFIL -->
         <button class="profil-btn" onclick="openModal_profil(
-    '{{ $zgloszenie->nick }}',
-    '{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}',
-    '{{ $zgloszenie->imie }}',
-    '{{ $zgloszenie->nazwisko }}',
-    '{{ $zgloszenie->data_ur }}',
-    '{{ $zgloszenie->miasto }}',
-    '{{ $zgloszenie->email_kontaktowy }}',
-    '{{ $zgloszenie->ocena }}',
-    '{{ $zgloszenie->sex }}'
-)">
+            '{{ $zgloszenie->nick }}',
+            '{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}',
+            '{{ $zgloszenie->imie ?? '' }}',
+            '{{ $zgloszenie->nazwisko ?? '' }}',
+            '{{ $zgloszenie->data_ur ?? 'brak' }}',
+            '{{ $zgloszenie->miasto ?? '' }}',
+            '{{ $zgloszenie->email_kontaktowy ?? '' }}',
+            '{{ $zgloszenie->ocena ?? '' }}',
+            '{{ $zgloszenie->sex ?? '' }}'
+        )">
             <img src="{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}" alt="Profilowe">
             <span>{{ $zgloszenie->nick }}</span>
         </button>
 
         <!-- OFERTA -->
         <button type="button" onclick="openModal_oferta(
-        '{{ $zgloszenie->adres }}',
-        '{{ $zgloszenie->typ }}',
-        '{{ $zgloszenie->cena }}',
-        '{{ $zgloszenie->do_kiedy_wazne }}',
-        '{{ $zgloszenie->opis }}',
-        '{{ $zgloszenie->oferta_status }}'
-    )">
+            '{{ $zgloszenie->adres ?? '' }}',
+            '{{ $zgloszenie->typ ?? '' }}',
+            '{{ $zgloszenie->cena ?? '' }}',
+            '{{ $zgloszenie->do_kiedy_wazne ?? '' }}',
+            '{{ $zgloszenie->opis ?? '' }}',
+            '{{ $zgloszenie->oferta_status ?? 'brak' }}'
+        )">
             Szczegóły oferty
         </button>
 
         <!-- INFO -->
         <p><strong>Wiadomość:</strong> {{ $zgloszenie->wiadomosc }}</p>
         <p><strong>Zatwierdzone:</strong> {{ $zgloszenie->zatwierdzone ? 'Tak' : 'Nie' }}</p>
+
+        <!-- PRZYCISK ANULUJ ZGŁOSZENIE -->
         <form method="POST" action="{{ route('cancelZgloszenie.post') }}">
             @csrf
             <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
 
             <button type="submit"
                 @if(!in_array($zgloszenie->zgloszenie_status, [null, 'aktywne'])) disabled @endif>
-
                 @if($zgloszenie->zgloszenie_status == 'anulowane')
                 Anulowane
                 @elseif($zgloszenie->zgloszenie_status == 'zatwierdzone')
@@ -68,16 +69,49 @@
                 @else
                 Anuluj zgłoszenie
                 @endif
-
             </button>
         </form>
-
 
     </div>
 
     @endif
     @endforeach
+    @foreach($zgloszeniaWybrane as $zgloszenie)
+    <div class="zgloszenie">
+        <!-- OFERTA -->
+        <button type="button" onclick="openModal_oferta(
+        '{{ $zgloszenie->adres ?? '' }}',
+        '{{ $zgloszenie->typ ?? '' }}',
+        '{{ $zgloszenie->cena ?? '' }}',
+        '{{ $zgloszenie->do_kiedy_wazne ?? '' }}',
+        '{{ $zgloszenie->opis ?? '' }}',
+        '{{ $zgloszenie->status ?? 'brak' }}'
+    )">
+            Szczegóły oferty
+        </button>
 
+        <!-- PROFIL -->
+        <button class="profil-btn" onclick="openModal_profil(
+        '{{ $zgloszenie->nick }}',
+        '{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}',
+        '{{ $zgloszenie->imie ?? '' }}',
+        '{{ $zgloszenie->nazwisko ?? '' }}',
+        '{{ $zgloszenie->data_ur ?? 'brak' }}',
+        '{{ $zgloszenie->miasto ?? '' }}',
+        '{{ $zgloszenie->email_kontaktowy ?? '' }}',
+        '{{ $zgloszenie->ocena ?? '' }}',
+        '{{ $zgloszenie->sex ?? '' }}'
+    )">
+            <img src="{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}" alt="Profilowe">
+            <span>{{ $zgloszenie->nick }}</span>
+        </button>
+
+        <p><strong>Wiadomość:</strong> {{ $zgloszenie->wiadomosc ?? '' }}</p>
+        <p><strong>Status zgłoszenia:</strong> {{ $zgloszenie->status ?? 'brak' }}</p>
+
+        <button type="button">Ustal termin</button>
+    </div>
+    @endforeach
 
     <!-- ================= MODAL PROFIL ================= -->
     <div id="modal_profil" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
