@@ -10,7 +10,7 @@
 
 <body>
     @auth
-    <h1>jetses zalogowany</h1>
+    <h1>jesteś zalogowany</h1>
     @endauth
     @guest
     <h1>Zaloguj się</h1>
