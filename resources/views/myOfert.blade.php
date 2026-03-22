@@ -80,11 +80,11 @@
             <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
 
             <button type="submit"
-                @if($zgloszenie->zatwierdzone || $zgloszenie->status != 'aktywna') disabled @endif>
+                @if($zgloszenie->zatwierdzone || $zgloszenie->status != 'aktywne') disabled @endif>
 
                 @if($zgloszenie->zatwierdzone)
                 Już zaakceptowane
-                @elseif($zgloszenie->status != 'aktywna')
+                @elseif($zgloszenie->status != 'aktywne')
                 Niedostępne
                 @else
                 Zakceptuj zgłoszenie
