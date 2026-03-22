@@ -76,6 +76,7 @@
 
     @endif
     @endforeach
+    <h1>Zgloszenia do których cie wybrano</h1>
     @foreach($zgloszeniaWybrane as $zgloszenie)
     <div class="zgloszenie">
         <!-- OFERTA -->
@@ -109,10 +110,19 @@
         <p><strong>Wiadomość:</strong> {{ $zgloszenie->wiadomosc ?? '' }}</p>
         <p><strong>Status zgłoszenia:</strong> {{ $zgloszenie->status ?? 'brak' }}</p>
 
-        <button type="button">Ustal termin</button>
+        <button type="button" onclick="openModal_termin()">Ustal termin</button>
     </div>
     @endforeach
 
+    <!-- ================= MODAL TERMIN ================= -->
+    <div id="modal_termin" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+        <div style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative; border-radius:10px; text-align:center;">
+            <button onclick="closeModal_termin()" style="position:absolute; top:10px; right:10px;">✖</button>
+
+            <h2>Ustal termin</h2>
+            <p>Work in progress 🚧</p>
+        </div>
+    </div>
     <!-- ================= MODAL PROFIL ================= -->
     <div id="modal_profil" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
         <div style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative; border-radius:10px; text-align:center;">
@@ -153,6 +163,14 @@
 
 
     <script>
+        // ===== TERMIN =====
+        function openModal_termin() {
+            document.getElementById('modal_termin').style.display = 'block';
+        }
+
+        function closeModal_termin() {
+            document.getElementById('modal_termin').style.display = 'none';
+        }
         // ===== PROFIL =====
         function openModal_profil(nick, profilowe, imie, nazwisko, data_ur, miasto, email, ocena, sex) {
             document.getElementById('modal_profil_img').src = profilowe;
