@@ -32,7 +32,7 @@
         <p><strong>Podstawowe:</strong></p>
 
         <label>
-            <input type="radio" name="typ" value="samochod" {{ old('typ') == 'samochod' ? 'checked' : '' }}> Samochód
+            <input type="radio" name="typ" value="samochód" {{ old('typ') == 'samochod' ? 'checked' : '' }}> Samochód
         </label><br>
 
         <label>
@@ -40,7 +40,7 @@
         </label><br>
 
         <label>
-            <input type="radio" name="typ" value="caly_dom" {{ old('typ') == 'caly_dom' ? 'checked' : '' }}> Cały dom
+            <input type="radio" name="typ" value="cały_dom" {{ old('typ') == 'caly_dom' ? 'checked' : '' }}> Cały dom
         </label><br>
 
         <label>
@@ -50,7 +50,7 @@
         <p><strong>Specjalistyczne:</strong></p>
 
         <label>
-            <input type="radio" name="typ" value="brud_ciezki_przemyslowy" {{ old('typ') == 'brud_ciezki_przemyslowy' ? 'checked' : '' }}> Brud ciężki (przemysłowy)
+            <input type="radio" name="typ" value="brud_ciężki_przemysłowy" {{ old('typ') == 'brud_ciezki_przemyslowy' ? 'checked' : '' }}> Brud ciężki (przemysłowy)
         </label><br>
 
         <label>
@@ -68,11 +68,11 @@
         <p><strong>Zwierzęta:</strong></p>
 
         <label>
-            <input type="radio" name="typ" value="zwierzece_zabrudzenia" {{ old('typ') == 'zwierzece_zabrudzenia' ? 'checked' : '' }}> Zwierzęce zabrudzenia
+            <input type="radio" name="typ" value="zwierzęce_zabrudzenia" {{ old('typ') == 'zwierzece_zabrudzenia' ? 'checked' : '' }}> Zwierzęce zabrudzenia
         </label><br>
 
         <label>
-            <input type="radio" name="typ" value="sprzatanie_po_psie" {{ old('typ') == 'sprzatanie_po_psie' ? 'checked' : '' }}> Sprzątanie po psie
+            <input type="radio" name="typ" value="sprzątanie_po_psie" {{ old('typ') == 'sprzatanie_po_psie' ? 'checked' : '' }}> Sprzątanie po psie
         </label><br>
 
         <label>
@@ -86,11 +86,11 @@
         </label><br>
 
         <label>
-            <input type="radio" name="typ" value="garaz_piwnica" {{ old('typ') == 'garaz_piwnica' ? 'checked' : '' }}> Garaż / piwnica
+            <input type="radio" name="typ" value="garaż_piwnica" {{ old('typ') == 'garaz_piwnica' ? 'checked' : '' }}> Garaż / piwnica
         </label><br>
 
         <label>
-            <input type="radio" name="typ" value="ogrod_tarasy" {{ old('typ') == 'ogrod_tarasy' ? 'checked' : '' }}> Ogród / tarasy
+            <input type="radio" name="typ" value="ogród_tarasy" {{ old('typ') == 'ogrod_tarasy' ? 'checked' : '' }}> Ogród / tarasy
         </label><br>
 
         <label>

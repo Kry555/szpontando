@@ -51,10 +51,6 @@ class RegisterController extends Controller
                 'czy_admin' => 0,
                 'id_profil' => $profil_id,
                 'aktywny' => 1,
-<<<<<<< HEAD
-                //zmien na aktywny na 0 kiedy będzie email werf
-=======
->>>>>>> b8dcc5e699c8f918da98d441818d845cae4d14f6
             ]);
         });
 

@@ -60,7 +60,7 @@
     </optgroup>
 
     <optgroup label="Specjalistyczne">
-        <option value="brud_ciężki_przemyslowy" {{ request('typ') == 'brud_ciężki_przemyslowy' ? 'selected' : '' }}>Brud ciężki (przemysłowy)</option>
+        <option value="brud_ciężki_przemysłowy" {{ request('typ') == 'brud_ciężki_przemyslowy' ? 'selected' : '' }}>Brud ciężki (przemysłowy)</option>
         <option value="miejsce_zbrodni" {{ request('typ') == 'miejsce_zbrodni' ? 'selected' : '' }}>Miejsce zbrodni</option>
         <option value="po_remoncie" {{ request('typ') == 'po_remoncie' ? 'selected' : '' }}>Po remoncie</option>
         <option value="po_imprezie" {{ request('typ') == 'po_imprezie' ? 'selected' : '' }}>Po imprezie</option>
@@ -91,6 +91,7 @@
                 <p><strong>Cena:</strong> {{ $oferta->cena }} zł</p>
                 <p><strong>Adres:</strong> {{ $oferta->adres }}</p>
                 <p><strong>Ważne do:</strong> {{ $oferta->do_kiedy_wazne }}</p>
+                <p><strong>Utworzone:</strong> {{ $oferta->created_at }}</p>
                 <hr>
                 <p>
                     <strong>Autor:</strong>

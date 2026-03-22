@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <h1>zrub se konto</h1>
+    <h1>Stwórz konto</h1>
     @if ($errors->any())
     <div style="color:red;">
         <ul>
@@ -22,11 +22,11 @@
 
     <form method="POST" action="{{ route('register.post') }}">
         @csrf
-        <input type="text" name="nick" placeholder="Nicke" value="{{ old('nick') }}" required><br>
+        <input type="text" name="nick" placeholder="Pseudonim" value="{{ old('nick') }}" required><br>
         <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required><br>
         <input type="password" name="password" placeholder="Hasło" required><br>
         <input type="password" name="password_confirmation" placeholder="Powtórz hasło" required><br>
-
+        <p>wybierz płeć:</p>
         <div class="men">
             <input type="radio" id="menCheck" name="gender" value="men" {{ old('gender') == 'men' ? 'checked' : '' }}>
             <span>Men</span>
@@ -48,7 +48,7 @@
 
                 <label for="captchaCheck" class="custom-checkbox"></label>
 
-                <div class="captcha-text">nie jestem robocikiem</div>
+                <div class="captcha-text">Nie jestem robotem</div>
 
             </div>
 
