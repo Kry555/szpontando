@@ -51,7 +51,7 @@ class RegisterController extends Controller
                 'czy_admin' => 0,
                 'id_profil' => $profil_id,
                 'aktywny' => 1,
-                //zmien na aktywny na 0 kiedy będzie weryfikacja email
+                //zmien na aktywny na 0 kiedy będzie email werf
             ]);
         });
 
