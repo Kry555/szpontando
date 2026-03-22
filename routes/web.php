@@ -15,7 +15,6 @@ use App\Http\Controllers\WorkOfertController;
 //     return view('main');
 // })->name('main');
 use App\Http\Controllers\OfertyController;
-
 Route::get('/', [OfertyController::class, 'oferty'])->name('main');
 
 Route::post('/wybierz', [OfertyController::class, 'wybierz'])->name('oferta.wybierz');

@@ -13,7 +13,7 @@
     <h1>jetses zalogowany</h1>
     @endauth
     @guest
-    <h1>Sing_in chuju</h1>
+    <h1>Zaloguj się</h1>
     <form method="POST" action="/login">
         @csrf <!--  to chroni przed atakami tylko niewiem jak -->
         <input type="email" name="email" placeholder="Email" required value="{{ old('email') }}"> <br>
@@ -39,12 +39,12 @@
 
 
     <a href="{{ route('register.show') }}">
-        <button type="button">Nie masz jeszcze konta zjebie, załuż lepiej bo łysy z brazers wyczysci ci dupe</button>
+        <button type="button">Utwórz konto</button>
     </a>
 
     @endguest
     <a href="{{ route('main') }}">
-        <button type="button">wróc na główną jełopie</button>
+        <button type="button">wróc na strone główną </button>
     </a>
 
 </body>

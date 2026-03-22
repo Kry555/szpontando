@@ -15,7 +15,7 @@
     <div class="początek">
         <img src="{{ asset('images/logo.png') }}" alt="logo">
         <div class="napisy">
-            <h2>tutaj poszponcisz sobie i jeszcze zarobisz</h2>
+            <h2 style="color:orange">tutaj poszponcisz sobie i jeszcze zarobisz</h2>
         </div>
     </div>
     @auth
@@ -44,9 +44,44 @@
         Wiadomosci ({{ is_string($notf) ? 0 : $notf->count() }})
     </button>
     @else
-    <p>Loguj sie pało a nie jestes taki incognito fapper <a href="{{ route('login') }}">Zatenteguj się</a> lub <a href="{{ route('register.show') }}">Zajeb konto</a>.</p>
+    <p style="text-align:right">utwórz konto już dziś! <a href="{{ route('login') }}">Zaloguj się</a> lub <a href="{{ route('register.show') }}">Zarejestruj się</a>.</p>
     @endauth
+    <form method="GET" action="{{ route('main') }}">
+    <label for="typ">Filtruj po typie:</label>
 
+    <select name="typ" id="typ">
+    <option value="">-- Wszystkie --</option>
+
+    <optgroup label="Podstawowe">
+        <option value="samochód" {{ request('typ') == 'samochód' ? 'selected' : '' }}>Samochód</option>
+        <option value="rower" {{ request('typ') == 'rower' ? 'selected' : '' }}>Rower</option>
+        <option value="cały_dom" {{ request('typ') == 'cały_dom' ? 'selected' : '' }}>Cały dom</option>
+        <option value="wybrane_pomieszczenia" {{ request('typ') == 'wybrane_pomieszczenia' ? 'selected' : '' }}>Wybrane pomieszczenia</option>
+    </optgroup>
+
+    <optgroup label="Specjalistyczne">
+        <option value="brud_ciężki_przemyslowy" {{ request('typ') == 'brud_ciężki_przemyslowy' ? 'selected' : '' }}>Brud ciężki (przemysłowy)</option>
+        <option value="miejsce_zbrodni" {{ request('typ') == 'miejsce_zbrodni' ? 'selected' : '' }}>Miejsce zbrodni</option>
+        <option value="po_remoncie" {{ request('typ') == 'po_remoncie' ? 'selected' : '' }}>Po remoncie</option>
+        <option value="po_imprezie" {{ request('typ') == 'po_imprezie' ? 'selected' : '' }}>Po imprezie</option>
+    </optgroup>
+
+    <optgroup label="Zwierzęta">
+        <option value="zwierzęce_zabrudzenia" {{ request('typ') == 'zwierzęce_zabrudzenia' ? 'selected' : '' }}>Zwierzęce zabrudzenia</option>
+        <option value="sprzątanie_po_psie" {{ request('typ') == 'sprzatanie_po_psie' ? 'selected' : '' }}>Sprzątanie po psie</option>
+        <option value="kuweta_kota" {{ request('typ') == 'kuweta_kota' ? 'selected' : '' }}>Kuweta kota</option>
+    </optgroup>
+
+    <optgroup label="Inne">
+        <option value="mycie_okien" {{ request('typ') == 'mycie_okien' ? 'selected' : '' }}>Mycie okien</option>
+        <option value="garaż_piwnica" {{ request('typ') == 'garaż_piwnica' ? 'selected' : '' }}>Garaż / piwnica</option>
+        <option value="ogród_tarasy" {{ request('typ') == 'ogród_tarasy' ? 'selected' : '' }}>Ogród / tarasy</option>
+        <option value="dezynfekcja" {{ request('typ') == 'dezynfekcja' ? 'selected' : '' }}>Dezynfekcja</option>
+    </optgroup>
+</select>
+
+    <button type="submit">Filtruj</button>
+</form>
     <div class="oferty">
         @foreach($oferty_przeglandarka as $oferta)
         <div class="oferty_przeglandarka">

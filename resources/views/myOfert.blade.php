@@ -292,13 +292,13 @@
 
     @guest
 
-    <h1>nie zalogowales sie</h1>
+    <h1>nie zalogowałeś się</h1>
 
     @endguest
 
 
     <a href="{{ route('main') }}">
-        <button type="button">wróc na główną jełopie</button>
+        <button type="button">wróc na strone główną </button>
     </a>
 
 

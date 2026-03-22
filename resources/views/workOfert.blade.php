@@ -164,7 +164,7 @@
 
 
     <a href="{{ route('main') }}">
-        <button type="button">Wróć na główną</button>
+        <button type="button">Wróć na strone główną</button>
     </a>
 
 </body>

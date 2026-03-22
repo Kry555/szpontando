@@ -145,7 +145,7 @@
     @endif
     @endauth
     <a href="{{ route('main') }}">
-        <button type="button">wróc na główną jełopie</button>
+        <button type="button">wróc na strone główną </button>
     </a>
 </body>
 

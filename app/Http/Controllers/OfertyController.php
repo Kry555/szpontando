@@ -9,22 +9,29 @@ use Illuminate\Support\Facades\Auth;
 
 class OfertyController extends Controller
 {
-    public function oferty()
+    public function oferty(Request $request)
     {
         //----jesli nie zalogowany to oferty----
         if (!Auth::check()) {
-            $dane = DB::table('oferty')->select(
-                'profil.imie',
-                'oferty.id_oferty',
-                'profil.nazwisko',
-                'profil.profilowe',
-                'oferty.adres',
-                'oferty.typ',
-                'oferty.cena',
-                'oferty.do_kiedy_wazne',
-                'oferty.opis',
-                'oferty.created_at'
-            )->leftjoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->orderBy('oferty.created_at', 'desc')->get();
+            $query = DB::table('oferty')->select(
+    'profil.imie',
+    'oferty.id_oferty',
+    'profil.nazwisko',
+    'profil.profilowe',
+    'oferty.adres',
+    'oferty.typ',
+    'oferty.cena',
+    'oferty.do_kiedy_wazne',
+    'oferty.opis',
+    'oferty.created_at'
+)->leftJoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil');
+
+// 🔽 FILTER
+if ($request->filled('typ')) {
+    $query->where('oferty.typ', $request->typ);
+}
+
+$dane = $query->orderBy('oferty.created_at', 'desc')->get();
             //musi byc bo blad
             $komuch = '';
 
@@ -35,19 +42,26 @@ class OfertyController extends Controller
         //----oferty dla zalogowanego-----
 
         // profil.imie,profil.nazwisko,profil.profilowe,oferty:adres,typ,cena,do_kidey_wazne,opis,stworzone
-        $dane = DB::table('oferty')->select(
-            'profil.imie',
-            'oferty.id_oferty',
-            'profil.nazwisko',
-            'profil.profilowe',
-            'oferty.adres',
-            'oferty.typ',
-            'oferty.cena',
-            'oferty.do_kiedy_wazne',
-            'oferty.opis',
-            'oferty.created_at'
-        )->leftjoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')->where('oferty.id_profil_owner', '!=', $id)->orderBy('oferty.created_at', 'desc')->get();
+        $query = DB::table('oferty')->select(
+    'profil.imie',
+    'oferty.id_oferty',
+    'profil.nazwisko',
+    'profil.profilowe',
+    'oferty.adres',
+    'oferty.typ',
+    'oferty.cena',
+    'oferty.do_kiedy_wazne',
+    'oferty.opis',
+    'oferty.created_at'
+)->leftJoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')
+ ->where('oferty.id_profil_owner', '!=', $id);
 
+//  FILTER
+if ($request->filled('typ')) {
+    $query->where('oferty.typ', $request->typ);
+}
+
+$dane = $query->orderBy('oferty.created_at', 'desc')->get();
         //----id do kturych sie zglosil----
         $aktywne = $id ? DB::table('zgloszenia')
             ->where('id_profil_wykonawca', $id)

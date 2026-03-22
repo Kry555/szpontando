@@ -120,10 +120,10 @@
 
     @endauth
     @guest
-    <h1>Nie jestes zalogoany</h1>
+    <h1>Nie jestes zalogowany</h1>
     @endguest
     <a href="{{ route('main') }}">
-        <button type="button">powrut na strone glowna</button>
+        <button type="button">powrót na strone główną</button>
     </a>
 </body>
 
