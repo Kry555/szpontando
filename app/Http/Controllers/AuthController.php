@@ -24,7 +24,7 @@ class AuthController extends Controller
         $user = \App\Models\User::where('email', $request->email)->first();
         if ($user && $user->aktywny == 0) {
             // Konto istnieje, ale nieaktywne → wyświetlamy komunikat
-            return back()->with('warning', 'Aktywuj konto dildosie pierdolony');
+            return back()->with('warning', 'Aktywuj konto');
         }
 
         //tu sie dzieje magia z sprawdzeniem hasla i emaila czy prawidlowy
@@ -38,7 +38,7 @@ class AuthController extends Controller
             return redirect()->intended('/');
         }
         //jesli sie nie uda
-        return back()->withErrors(['email' => 'Debilu zły email lub haslo jebal cie pies']);
+        return back()->withErrors(['email' => 'Zły email lub haslo']);
     }
 
 
