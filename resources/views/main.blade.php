@@ -31,13 +31,13 @@
         <button type="button">Dodaj ofertę</button>
     </a>
     <a href="{{ route('set_profil') }}">
-        <button type="button">Set profil</button>
+        <button type="button">Ustaw profil</button>
     </a>
     <a href="{{ route('my_ofert') }}">
-        <button type="button">MyOfert</button>
+        <button type="button">Moje oferty</button>
     </a>
     <a href="{{ route('work_ofert') }}">
-        <button type="button">WorkOfert</button>
+        <button type="button">Twoje zgłoszenia</button>
     </a>
 
     <button onclick="openModal_Wiadomosci()">

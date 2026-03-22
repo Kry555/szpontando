@@ -65,6 +65,7 @@
                 @enderror
 
                 <!-- Data urodzenia -->
+                 <p>Data urodzenia:</p>
                 <input type="datetime-local" name="data_ur"
                     value="{{ old('data_ur', optional($profil->data_ur) ? \Carbon\Carbon::parse($profil->data_ur)->format('Y-m-d\TH:i') : '') }}"
                     required><br>

@@ -107,6 +107,7 @@
             min="0"
             step="0.01"
             required> <span>zł</span><br>
+            <p>Data wygaśnięcia:</p>
         <input
             type="datetime-local"
             name="do_kiedy_wazne"
