@@ -51,7 +51,7 @@ class WorkOfertController extends Controller
 
         $zgloszeniaWybrane = DB::table('zgloszenia')
             ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
-            ->join('profil', 'profil.id_profil', '=', 'zgloszenia.id_profil_wykonawca')
+            ->join('profil', 'profil.id_profil', '=', 'oferty.id_profil_owner')
             ->where('zgloszenia.id_profil_wykonawca', $id)
             ->where('zgloszenia.zatwierdzone', 1)
             ->select(
