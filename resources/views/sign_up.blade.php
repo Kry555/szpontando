@@ -37,7 +37,7 @@
             <span>Women</span>
         </div>
 
-        <div class="slup">
+        <div class ="slup">
             <input type="radio" id="slupCheck" name="gender" value="slup" {{ old('gender') == 'slup' ? 'checked' : '' }}>
             <span>Słup elektryczny</span>
         </div>
