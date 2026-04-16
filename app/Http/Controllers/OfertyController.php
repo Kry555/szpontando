@@ -26,11 +26,18 @@ class OfertyController extends Controller
     'oferty.created_at'
 )->leftJoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil');
 
-// 🔽 FILTER
+//  FILTER
 if ($request->filled('typ')) {
     $query->where('oferty.typ', $request->typ);
 }
+//  FILTER CENA
+if ($request->filled('cena_min')) {
+    $query->where('oferty.cena', '>=', $request->cena_min);
+}
 
+if ($request->filled('cena_max')) {
+    $query->where('oferty.cena', '<=', $request->cena_max);
+}
 $dane = $query->orderBy('oferty.created_at', 'desc')->get();
             //musi byc bo blad
             $komuch = '';

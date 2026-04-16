@@ -130,7 +130,7 @@ CREATE TABLE `oferty` (
   `id_profil_owner` int(255) NOT NULL,
   `adres` varchar(255) NOT NULL,
   `typ` varchar(255) NOT NULL,
-  `cena` varchar(6) NOT NULL,
+  `cena` int(6) NOT NULL,
   `do_kiedy_wazne` datetime NOT NULL,
   `opis` text NOT NULL,
   `status` varchar(20) DEFAULT NULL,

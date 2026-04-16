@@ -48,7 +48,15 @@
     <p style="text-align:right">utwórz konto już dziś! <a href="{{ route('login') }}">Zaloguj się</a> lub <a href="{{ route('register.show') }}">Zarejestruj się</a>.</p>
     @endauth
     <form method="GET" action="{{ route('main') }}">
+
+        <label>Cena od:</label>
+    <input type="number" name="cena_min" value="{{ request('cena_min') }}" min="0">
+
+    <label>Cena do:</label>
+    <input type="number" name="cena_max" value="{{ request('cena_max') }}" min="0">
+
     <label for="typ">Filtruj po typie:</label>
+
 
     <select name="typ" id="typ">
     <option value="">-- Wszystkie --</option>
