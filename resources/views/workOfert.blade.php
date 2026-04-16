@@ -23,7 +23,7 @@
     <div class="zgloszenie">
 
         <!-- PROFIL -->
-        <button class="profil-btn" onclick="openModal_profil(
+        <!-- <button class="profil-btn" onclick="openModal_profil(
             '{{ $zgloszenie->nick }}',
             '{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}',
             '{{ $zgloszenie->imie ?? '' }}',
@@ -36,7 +36,7 @@
         )">
             <img src="{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}" alt="Profilowe">
             <span>{{ $zgloszenie->nick }}</span>
-        </button>
+        </button> -->
 
         <!-- OFERTA -->
         <button type="button" onclick="openModal_oferta(
