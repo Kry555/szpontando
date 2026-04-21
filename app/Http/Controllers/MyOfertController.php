@@ -156,12 +156,12 @@ class MyOfertController extends Controller
             ->where('id_profil_owner', $idProfil)
             ->first();
 
-        if (!$oferta) {
-            return back()->with('error', 'Nie masz prawa edytować tej oferty.');
-        }
+
 
         DB::table('oferty')
             ->where('id_oferty', $validated['id_oferty'])
+            ->where('id_profil_owner', $idProfil)
+            ->where('status', 'aktywna')
             ->update([
                 'adres' => $validated['adres'],
                 'typ' => $validated['typ'],

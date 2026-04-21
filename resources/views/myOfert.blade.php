@@ -30,7 +30,8 @@
             cena: '{{ $oferta->cena }}',
             do_kiedy_wazne: '{{ $oferta->do_kiedy_wazne }}',
             opis: '{{ $oferta->opis }}'
-            })">
+            })"
+            @if($oferta->status != 'aktywna') disabled @endif>
             Edytuj ofertę
         </button>
 
@@ -144,7 +145,7 @@
 
                 <input type="text" name="adres" id="edit_adres" placeholder="adres" required><br>
                 <input type="number" name="cena" id="edit_cena" placeholder="cena" min="0" step="0.01" required> <span>zł</span><br>
-                                Ważne do:<br>
+                Ważne do:<br>
                 <input type="datetime-local" name="do_kiedy_wazne" id="edit_do_kiedy_wazne" required><br>
                 <input type="text" name="opis" id="edit_opis" placeholder="opis" required><br>
 
