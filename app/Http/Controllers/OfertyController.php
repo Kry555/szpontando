@@ -70,6 +70,10 @@ class OfertyController extends Controller
         if ($request->filled('typ')) {
             $query->where('oferty.typ', $request->typ);
         }
+        if ($request->filled('miasto')) {
+        $query->where('oferty.adres', 'LIKE', $request->miasto . '%');
+        }
+        //tutaj
         function miasta(Request $request)
         {
             $search = $request->get('q');
