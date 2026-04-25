@@ -54,7 +54,9 @@
 
     <label>Cena do:</label>
     <input type="number" name="cena_max" value="{{ request('cena_max') }}" min="0">
-
+    <label>wybierz miasto:</label>
+    <form method="GET" action="{{ route('main') }}">
+    <input type="text" id="miasto" name="miasto" value="{{ request('miasto') }}" autocomplete="off">
     <label for="typ">Filtruj po typie:</label>
 
 

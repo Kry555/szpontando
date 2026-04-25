@@ -38,6 +38,9 @@ if ($request->filled('cena_min')) {
 if ($request->filled('cena_max')) {
     $query->where('oferty.cena', '<=', $request->cena_max);
 }
+if ($request->filled('miasto')) {
+    $query->where('oferty.adres', 'LIKE', $request->miasto . '%');
+}
 $dane = $query->orderBy('oferty.created_at', 'desc')->get();
             //musi byc bo blad
             $komuch = '';
@@ -67,7 +70,19 @@ $dane = $query->orderBy('oferty.created_at', 'desc')->get();
 if ($request->filled('typ')) {
     $query->where('oferty.typ', $request->typ);
 }
+function miasta(Request $request)
+{
+    $search = $request->get('q');
 
+    $miasta = DB::table('oferty')
+        ->where('adres', 'LIKE', $search . '%')
+        ->distinct()
+        ->orderBy('adres')
+        ->limit(10)
+        ->pluck('adres');
+
+    return response()->json($miasta);
+}
 $dane = $query->orderBy('oferty.created_at', 'desc')->get();
         //----id do kturych sie zglosil----
         $aktywne = $id ? DB::table('zgloszenia')

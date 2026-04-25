@@ -10,7 +10,6 @@ use App\Http\Controllers\WorkOfertController;
 
 
 
-
 // Route::get('/', function () {
 //     return view('main');
 // })->name('main');
@@ -53,3 +52,6 @@ Route::get('/work-ofert', [WorkOfertController::class, 'showOfert'])->name('work
 Route::post('/cancel-zgloszenie', [WorkOfertController::class, 'cancelZgloszenie'])
     ->name('cancelZgloszenie.post')
     ->middleware('auth');
+//sortowanie po miescie
+Route::get('/miasta', [OfertyController::class, 'miasta'])->name('miasta');
+
