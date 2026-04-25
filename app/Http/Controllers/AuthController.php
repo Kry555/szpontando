@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+use App\Mail\ResetPasswordMail;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -53,4 +59,67 @@ class AuthController extends Controller
         //gdzie przekieruje
         return redirect('/');
     }
+    //reset chasla
+public function showForgotForm()
+{
+    return view('forgot-password');
+}
+public function sendResetLink(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email'
+    ]);
+
+    $token = Str::random(64);
+
+    DB::table('password_resets')->updateOrInsert(
+        ['email' => $request->email],
+        [
+            'token' => Hash::make($token),
+            'created_at' => Carbon::now()
+        ]
+    );
+
+    $link = url('/reset-password?token=' . $token . '&email=' . $request->email);
+
+    Mail::to($request->email)->send(new ResetPasswordMail($link));
+
+    return back()->with('status', 'Email wysłany!');
+}
+public function showResetForm(Request $request)
+{
+    return view('auth.reset-password', [
+        'token' => $request->token,
+        'email' => $request->email
+    ]);
+}
+public function resetPassword(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:6|confirmed',
+        'token' => 'required'
+    ]);
+
+    $record = DB::table('password_resets')
+        ->where('email', $request->email)
+        ->first();
+
+    if (!$record || !Hash::check($request->token, $record->token)) {
+        return back()->withErrors(['msg' => 'Nieprawidłowy token']);
+    }
+
+    // update user password
+    DB::table('users')
+        ->where('email', $request->email)
+        ->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+    // delete token
+    DB::table('password_resets')->where('email', $request->email)->delete();
+
+    return redirect('/login')->with('status', 'Hasło zmienione!');
+}
+
 }

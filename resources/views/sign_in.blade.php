@@ -38,7 +38,9 @@
         <button type="submit">Zaloguj się</button>
 
     </form>
-
+<a href="{{ route('password.request') }}">
+    <button type="button">Zapomniałeś hasła?</button>
+</a>
 
     <a href="{{ route('register.show') }}">
         <button type="button">Utwórz konto</button>

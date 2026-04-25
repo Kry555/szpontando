@@ -159,7 +159,7 @@
 }
 /* dark-mode.css */
 body {
-    background-color: black;
+    background-color: #1e1e1e;
     /* ciemnoszary / prawie czarny */
     color: #ffffff;
     /* biały tekst */
@@ -168,7 +168,6 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    height: 100vh;
     /* pełna wysokość widoku */
     display: flex;
     flex-direction: column;
@@ -177,8 +176,3 @@ body {
     align-items: center;
     /* wyśrodkowanie w poziomie */
 }
-
-* {
-    box-sizing: border-box;
-}
-/* hide checkbox after animation */

@@ -68,3 +68,11 @@ Route::post('/work-ofert/change-termin', [WorkOfertController::class, 'changeTer
 
 // Oceny
 Route::post('/wystaw-ocene', [OcenaController::class, 'store'])->name('ocena.store')->middleware('auth');
+//reset chasla
+// forgot password
+Route::get('/forgot-password', [AuthController::class, 'showForgotForm'])->name('password.request');
+Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
+
+// reset password
+Route::get('/reset-password', [AuthController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');

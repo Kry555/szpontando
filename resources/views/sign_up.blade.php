@@ -8,7 +8,7 @@
     <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
 
     @vite('resources/css/sign_up.css')
-
+    
 </head>
 
 <body>
