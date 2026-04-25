@@ -61,6 +61,19 @@ CREATE TABLE `failed_jobs` (
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
+
+CREATE TABLE `oceny` (
+  `id_oceny` int NOT NULL,
+  `id_zgloszenia` int NOT NULL,
+  `id_profil_autor` int NOT NULL,
+  `id_profil_oceniany` int NOT NULL,
+  `gwiazdki` tinyint NOT NULL CHECK (`gwiazdki` BETWEEN 0 AND 5),
+  `opis` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `rola` enum('pracownik','gospodarz') COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 --
@@ -391,6 +404,12 @@ ALTER TABLE `zgloszenia`
   ADD PRIMARY KEY (`id_zgloszenia`);
 
 --
+-- Indexes for table `oceny`
+--
+ALTER TABLE `oceny`
+  ADD PRIMARY KEY (`id_oceny`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -441,6 +460,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `zgloszenia`
   MODIFY `id_zgloszenia` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `oceny`
+--
+ALTER TABLE `oceny`
+  MODIFY `id_oceny` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

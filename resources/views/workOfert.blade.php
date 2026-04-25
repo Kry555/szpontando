@@ -131,7 +131,7 @@
             @if(isset($zgloszenie->proponowany_termin) && $zgloszenie->proponowany_termin)
 
             <p><strong>Proponowany termin:</strong>
-                {{ $zgloszenie->proponowany_termin }}
+                {{ \Carbon\Carbon::parse($zgloszenie->proponowany_termin)->format('Y-m-d H:i') }}
             </p>
 
             @if(empty($zgloszenie->ostateczny_termin))
@@ -161,7 +161,24 @@
             </form>
 
             @else
-            <p><strong>✅ Ustalony termin:</strong> {{ $zgloszenie->ostateczny_termin }}</p>
+            <p><strong>✅ Ustalony termin:</strong> {{ \Carbon\Carbon::parse($zgloszenie->ostateczny_termin)->format('Y-m-d H:i') }}</p>
+
+            {{-- Sekcja oceny gospodarza --}}
+            @if(\Carbon\Carbon::parse($zgloszenie->ostateczny_termin)->isPast() && !($zgloszenie->juz_oceniono ?? false))
+            <div style="background: #f0f7ff; padding: 10px; border: 1px dashed blue; margin-top: 10px;">
+                <h4>Oceń gospodarza</h4>
+                <form method="POST" action="{{ route('ocena.store') }}">
+                    @csrf
+                    <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
+                    <input type="hidden" name="id_profil_oceniany" value="{{ $zgloszenie->id_profil_owner ?? '' }}"> {{-- Upewnij się że masz id_profil_owner w select --}}
+                    <input type="hidden" name="rola" value="pracownik">
+                    <label>Gwiazdki (0-5):</label>
+                    <input type="number" name="gwiazdki" min="0" max="5" required><br>
+                    <textarea name="opis" placeholder="Jak oceniasz współpracę z gospodarzem?" maxlength="255"></textarea><br>
+                    <button type="submit">Wystaw opinię gospodarzowi</button>
+                </form>
+            </div>
+            @endif
             @endif
 
             @else

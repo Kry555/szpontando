@@ -86,6 +86,16 @@ class WorkOfertController extends Controller
             )
             ->get();
 
+        // Sprawdź czy wystawiono oceny
+        foreach ($zgloszeniaWybrane as $z) {
+            if ($z->ostateczny_termin && \Carbon\Carbon::parse($z->ostateczny_termin)->isPast()) {
+                $z->juz_oceniono = DB::table('oceny')
+                    ->where('id_zgloszenia', $z->id_zgloszenia)
+                    ->where('id_profil_autor', $id)
+                    ->exists();
+            }
+        }
+
         return view('workOfert', [
             'zgloszenia' => $zgloszenia,
             'zgloszeniaWybrane' => $zgloszeniaWybrane
@@ -144,6 +154,32 @@ class WorkOfertController extends Controller
                 'ostateczny_termin' => $zgloszenie->proponowany_termin // Skoro obie strony akceptują, termin staje się ostateczny
             ]);
 
+        // Pobierz id_profil_owner oferty, do której należy zgłoszenie
+        $oferta = DB::table('oferty')
+            ->join('zgloszenia', 'oferty.id_oferty', '=', 'zgloszenia.id_oferty')
+            ->where('zgloszenia.id_zgloszenia', $request->id_zgloszenia)
+            ->select('oferty.id_profil_owner')
+            ->first();
+
+        if ($oferta) {
+            // Znajdź użytkownika (właściciela)
+            $ownerUser = DB::table('users')
+                ->where('id_profil', $oferta->id_profil_owner)
+                ->first();
+
+            if ($ownerUser) {
+                // Formatowanie daty dla czytelności
+                $dataFormatted = \Carbon\Carbon::parse($zgloszenie->proponowany_termin)->format('Y-m-d H:i');
+
+                DB::table('powiadomienia')->insert([
+                    'tytul' => 'Termin zaakceptowany',
+                    'text' => 'Wykonawca zaakceptował Twój termin: ' . $dataFormatted,
+                    'odzcytane' => 0,
+                    'id_user' => $ownerUser->id,
+                ]);
+            }
+        }
+
         return back()->with('success', 'Termin został zaakceptowany!');
     }
 
@@ -190,14 +226,15 @@ class WorkOfertController extends Controller
             $workerNick = Auth::user()->nick;
 
             if ($ownerUser) {
+                // Formatowanie daty
+                $dataFormatted = \Carbon\Carbon::parse($request->termin)->format('Y-m-d H:i');
+
                 // Dodaj powiadomienie dla właściciela
                 DB::table('powiadomienia')->insert([
                     'tytul' => 'Nowa propozycja terminu',
-                    'text' => 'Wykonawca ' . $workerNick . ' zaproponował nowy termin: ' . $request->termin . '.',
+                    'text' => 'Wykonawca ' . $workerNick . ' zaproponował nowy termin: ' . $dataFormatted . '.',
                     'odzcytane' => 0,
                     'id_user' => $ownerUser->id,
-                    'created_at' => now(),
-                    'updated_at' => now(),
                 ]);
             }
         }

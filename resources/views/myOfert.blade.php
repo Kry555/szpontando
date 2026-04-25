@@ -97,7 +97,7 @@
         <div style="border:1px solid #ccc; padding:10px; margin-top:10px;">
 
             <p><strong>Proponowany termin:</strong>
-                {{ $zgloszenie->proponowany_termin ?? 'brak' }}
+                {{ $zgloszenie->proponowany_termin ? \Carbon\Carbon::parse($zgloszenie->proponowany_termin)->format('Y-m-d H:i') : 'brak' }}
             </p>
 
             @if(empty($zgloszenie->proponowany_termin))
@@ -111,7 +111,15 @@
 
             @elseif(empty($zgloszenie->ostateczny_termin))
 
-            <form method="POST" action="{{ route('changeTerminOwner') }}">
+            @if(!$zgloszenie->termin_zaakceptowany_wlasciciel && $zgloszenie->termin_zaakceptowany_wykonawca)
+            <form method="POST" action="{{ route('acceptTerminOwner') }}" style="display:inline;">
+                @csrf
+                <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
+                <button type="submit">✅ Akceptuj propozycję wykonawcy</button>
+            </form>
+            @endif
+
+            <form method="POST" action="{{ route('changeTerminOwner') }}" style="display:inline;">
                 @csrf
                 <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
                 <input type="datetime-local" name="termin" required>
@@ -120,9 +128,26 @@
 
             @else
             <p><strong>✅ Ostateczny termin:</strong>
-                {{ $zgloszenie->ostateczny_termin }}
+                {{ \Carbon\Carbon::parse($zgloszenie->ostateczny_termin)->format('Y-m-d H:i') }}
             </p>
 
+            @endif
+
+            {{-- Sekcja oceny pracownika --}}
+            @if($zgloszenie->ostateczny_termin && \Carbon\Carbon::parse($zgloszenie->ostateczny_termin)->isPast() && !($zgloszenie->juz_oceniono ?? false))
+            <div style="background: #f9f9f9; padding: 10px; border: 1px dashed orange; margin-top: 10px;">
+                <h4>Oceń pracownika</h4>
+                <form method="POST" action="{{ route('ocena.store') }}">
+                    @csrf
+                    <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
+                    <input type="hidden" name="id_profil_oceniany" value="{{ $zgloszenie->id_profil_wykonawca }}">
+                    <input type="hidden" name="rola" value="gospodarz">
+                    <label>Gwiazdki (0-5):</label>
+                    <input type="number" name="gwiazdki" min="0" max="5" required><br>
+                    <textarea name="opis" placeholder="Krótka opinia słowna..." maxlength="255"></textarea><br>
+                    <button type="submit">Wystaw opinię pracownikowi</button>
+                </form>
+            </div>
             @endif
 
         </div>

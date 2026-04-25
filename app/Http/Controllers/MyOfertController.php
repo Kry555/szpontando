@@ -57,6 +57,16 @@ class MyOfertController extends Controller
             ->whereIn('zgloszenia.status', ['aktywne', 'zatwierdzone']) // <- jawnie
             ->get();
 
+        // Sprawdź czy wystawiono oceny
+        foreach ($zgloszenia as $z) {
+            if ($z->ostateczny_termin && \Carbon\Carbon::parse($z->ostateczny_termin)->isPast()) {
+                $z->juz_oceniono = DB::table('oceny')
+                    ->where('id_zgloszenia', $z->id_zgloszenia)
+                    ->where('id_profil_autor', $id)
+                    ->exists();
+            }
+        }
+
 
         return view('myOfert', [
             'oferty' => $oferty,
@@ -186,13 +196,14 @@ class MyOfertController extends Controller
         ]);
 
         $idProfil = Auth::user()->id_profil;
-        $validOwner = DB::table('zgloszenia')
+        $zgloszenie = DB::table('zgloszenia')
             ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
             ->where('zgloszenia.id_zgloszenia', $request->id_zgloszenia)
             ->where('oferty.id_profil_owner', $idProfil)
-            ->exists();
+            ->select('zgloszenia.*')
+            ->first();
 
-        if (!$validOwner) {
+        if (!$zgloszenie) {
             return back()->with('error', 'Nie masz uprawnień do ustalenia terminu dla tego zgłoszenia.');
         }
 
@@ -203,6 +214,22 @@ class MyOfertController extends Controller
                 'termin_zaakceptowany_wlasciciel' => 1,
                 'termin_zaakceptowany_wykonawca' => 0
             ]);
+
+        // Pobierz dane użytkownika (wykonawcy), aby wysłać powiadomienie
+        $workerUser = DB::table('users')
+            ->where('id_profil', $zgloszenie->id_profil_wykonawca)
+            ->first();
+
+        if ($workerUser) {
+            $dataFormatted = \Carbon\Carbon::parse($request->termin)->format('Y-m-d H:i');
+
+            DB::table('powiadomienia')->insert([
+                'tytul' => 'Zaproponowano termin wykonania',
+                'text' => 'Gospodarz zaproponował termin: ' . $dataFormatted,
+                'odzcytane' => 0,
+                'id_user' => $workerUser->id,
+            ]);
+        }
 
         return back()->with('success', 'Termin został zaproponowany wykonawcy.');
     }
@@ -215,13 +242,14 @@ class MyOfertController extends Controller
         ]);
 
         $idProfil = Auth::user()->id_profil;
-        $validOwner = DB::table('zgloszenia')
+        $zgloszenie = DB::table('zgloszenia')
             ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
             ->where('zgloszenia.id_zgloszenia', $request->id_zgloszenia)
             ->where('oferty.id_profil_owner', $idProfil)
-            ->exists();
+            ->select('zgloszenia.*')
+            ->first();
 
-        if (!$validOwner) {
+        if (!$zgloszenie) {
             return back()->with('error', 'Nie masz uprawnień do zmiany terminu.');
         }
 
@@ -234,6 +262,68 @@ class MyOfertController extends Controller
                 'ostateczny_termin' => null // resetujemy ostateczny, bo negocjujemy od nowa
             ]);
 
+        // Pobierz dane użytkownika (wykonawcy), aby wysłać powiadomienie
+        $workerUser = DB::table('users')
+            ->where('id_profil', $zgloszenie->id_profil_wykonawca)
+            ->first();
+
+        if ($workerUser) {
+            $dataFormatted = \Carbon\Carbon::parse($request->termin)->format('Y-m-d H:i');
+
+            DB::table('powiadomienia')->insert([
+                'tytul' => 'Zmieniono termin wykonania',
+                'text' => 'Gospodarz zmienił propozycję terminu na: ' . $dataFormatted,
+                'odzcytane' => 0,
+                'id_user' => $workerUser->id,
+            ]);
+        }
+
         return back()->with('success', 'Zmieniono propozycję terminu.');
+    }
+
+    public function acceptTerminOwner(Request $request)
+    {
+        $request->validate(['id_zgloszenia' => 'required|integer']);
+        $idProfil = Auth::user()->id_profil;
+
+        $zgloszenie = DB::table('zgloszenia')
+            ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
+            ->where('zgloszenia.id_zgloszenia', $request->id_zgloszenia)
+            ->where('oferty.id_profil_owner', $idProfil)
+            ->select('zgloszenia.*')
+            ->first();
+
+        if (!$zgloszenie) {
+            return back()->with('error', 'Nie masz uprawnień do tego zgłoszenia.');
+        }
+
+        if (empty($zgloszenie->proponowany_termin)) {
+            return back()->with('error', 'Nie zaproponowano jeszcze żadnego terminu.');
+        }
+
+        DB::table('zgloszenia')
+            ->where('id_zgloszenia', $request->id_zgloszenia)
+            ->update([
+                'termin_zaakceptowany_wlasciciel' => 1,
+                'ostateczny_termin' => $zgloszenie->proponowany_termin
+            ]);
+
+        // Pobierz dane użytkownika (wykonawcy) na podstawie id_profil_wykonawca ze zgłoszenia
+        $workerUser = DB::table('users')
+            ->where('id_profil', $zgloszenie->id_profil_wykonawca)
+            ->first();
+
+        if ($workerUser) {
+            $dataFormatted = \Carbon\Carbon::parse($zgloszenie->proponowany_termin)->format('Y-m-d H:i');
+
+            DB::table('powiadomienia')->insert([
+                'tytul' => 'Termin został zaakceptowany',
+                'text' => 'Gospodarz zaakceptował zaproponowany termin: ' . $dataFormatted,
+                'odzcytane' => 0,
+                'id_user' => $workerUser->id,
+            ]);
+        }
+
+        return back()->with('success', 'Termin został zaakceptowany!');
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\OfertyAddController;
 use App\Http\Controllers\SetProfilController;
 use App\Http\Controllers\MyOfertController;
 use App\Http\Controllers\WorkOfertController;
+use App\Http\Controllers\OcenaController;
 
 
 
@@ -59,7 +60,11 @@ Route::get('/miasta', [OfertyController::class, 'miasta'])->name('miasta');
 // Negocjacje terminów - Właściciel (Moje Oferty)
 Route::post('/my-ofert/set-termin', [MyOfertController::class, 'setTerminOwner'])->name('setTerminOwner');
 Route::post('/my-ofert/change-termin', [MyOfertController::class, 'changeTerminOwner'])->name('changeTerminOwner');
+Route::post('/my-ofert/accept-termin', [MyOfertController::class, 'acceptTerminOwner'])->name('acceptTerminOwner');
 
 // Negocjacje terminów - Wykonawca (Twoje Zgłoszenia)
 Route::post('/work-ofert/accept-termin', [WorkOfertController::class, 'acceptTerminWorker'])->name('acceptTerminWorker');
 Route::post('/work-ofert/change-termin', [WorkOfertController::class, 'changeTerminWorker'])->name('changeTerminWorker');
+
+// Oceny
+Route::post('/wystaw-ocene', [OcenaController::class, 'store'])->name('ocena.store')->middleware('auth');
