@@ -116,7 +116,7 @@
         '{{ $zgloszenie->miasto ?? '' }}',
         '{{ $zgloszenie->email_kontaktowy ?? '' }}',
         '{{ $zgloszenie->ocena ?? '' }}',
-        '{{ $zgloszenie->sex ?? '' }}'
+        '{{ $zgloszenie->sex ?? '' }}'enia ?? 'Brak' }}'
     )">
             <img src="{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}" alt="Profilowe">
             <span>{{ $zgloszenie->nick }}</span>
@@ -155,19 +155,21 @@
             @endif
 
             <!-- ZMIEŃ -->
+            @if(!$zgloszenie->termin_zaakceptowany_wykonawca)
             <form method="POST" action="{{ route('changeTerminWorker') }}" style="display:inline;">
                 @csrf
                 <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
                 <input type="datetime-local" name="termin" required>
                 <button type="submit">✏️ Zaproponuj inny</button>
             </form>
+            @endif
 
             @else
             <p><strong>✅ Ustalony termin:</strong> {{ \Carbon\Carbon::parse($zgloszenie->ostateczny_termin)->format('Y-m-d H:i') }}</p>
 
             {{-- Sekcja oceny gospodarza --}}
             @if(!empty($zgloszenie->ostateczny_termin) && !($zgloszenie->juz_oceniono ?? false))
-            <div style="background: #f0f7ff; padding: 10px; border: 1px dashed blue; margin-top: 10px;">
+            <div style="background: #f0f7ff; padding: 10px; border: 1px dashed blue; margin-top: 10px; color: #1e1e1e;">
                 <h4>Oceń gospodarza</h4>
                 <form method="POST" action="{{ route('ocena.store') }}">
                     @csrf
@@ -218,6 +220,7 @@
             <p><strong>Ocena:</strong> <span id="modal_profil_ocena"></span></p>
             <p><strong>Data urodzenia:</strong> <span id="modal_profil_data"></span></p>
             <p><strong>Płeć:</strong> <span id="modal_profil_sex"></span></p>
+            <p><strong>Ostatnie aktywności:</strong> <span id="modal_profil_zlecenia" style="color: blue;"></span></p>
         </div>
     </div>
 
@@ -249,18 +252,18 @@
             document.getElementById('modal_termin').style.display = 'none';
         }
         // ===== PROFIL =====
-        function openModal_profil(nick, profilowe, imie, nazwisko, data_ur, miasto, email, ocena, sex) {
-            document.getElementById('modal_profil_img').src = profilowe;
-            document.getElementById('modal_profil_nick').textContent = nick;
-            document.getElementById('modal_profil_imie').textContent = imie ?? '';
-            document.getElementById('modal_profil_nazwisko').textContent = nazwisko ?? '';
-            document.getElementById('modal_profil_data').textContent = data_ur ?? 'brak';
-            document.getElementById('modal_profil_miasto').textContent = miasto ?? '';
-            document.getElementById('modal_profil_email').textContent = email ?? '';
-            document.getElementById('modal_profil_ocena').textContent = ocena ?? 'brak';
-            document.getElementById('modal_profil_sex').textContent = sex ?? 'brak';
+        function openModal_pr
+        document.getElementById('modal_profil_nick').textContent = nick;
+        document.getElementById('modal_profil_imie').textContent = imie ?? '';
+        document.getElementById('modal_profil_nazwisko').textContent = nazwisko ?? '';
+        document.getElementById('modal_profil_data').textContent = data_ur ?? 'brak';
+        document.getElementById('modal_profil_miasto').textContent = miasto ?? '';
+        document.getElementById('modal_profil_email').textContent = email ?? '';
+        document.getElementById('modal_profil_ocena').textContent = ocena ?? 'brak';
+        document.getElementById('modal_profil_sex').textContent = sex ?? 'brak';
+        document.getElementById('modal_profil_zlecenia').textContent = zlecenia ?? 'brak';
 
-            document.getElementById('modal_profil').style.display = 'block';
+        document.getElementById('modal_profil').style.display = 'block';
         }
 
         function closeModal_profil() {

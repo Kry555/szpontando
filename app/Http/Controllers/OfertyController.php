@@ -71,7 +71,7 @@ class OfertyController extends Controller
             $query->where('oferty.typ', $request->typ);
         }
         if ($request->filled('miasto')) {
-        $query->where('oferty.adres', 'LIKE', $request->miasto . '%');
+            $query->where('oferty.adres', 'LIKE', $request->miasto . '%');
         }
         //tutaj
         function miasta(Request $request)
@@ -180,5 +180,16 @@ class OfertyController extends Controller
             ]);
 
         return back()->with('success', 'Oferta została zakończona');
+    }
+
+    public function ranking()
+    {
+        // Pobieramy profile, które mają jakąkolwiek ocenę, sortując od najwyższej
+        $wykonawcy = DB::table('profil')
+            ->whereNotNull('ocena')
+            ->orderBy('ocena', 'desc')
+            ->get();
+
+        return view('ranking', ['wykonawcy' => $wykonawcy]);
     }
 }

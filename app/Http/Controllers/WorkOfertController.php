@@ -69,6 +69,7 @@ class WorkOfertController extends Controller
                 'zgloszenia.ostateczny_termin',
                 'zgloszenia.termin_zaakceptowany_wlasciciel',
                 'zgloszenia.termin_zaakceptowany_wykonawca',
+                'oferty.id_profil_owner',
                 'profil.nick',
                 'profil.imie',
                 'profil.nazwisko',
@@ -94,6 +95,17 @@ class WorkOfertController extends Controller
                     ->where('id_profil_autor', $id)
                     ->exists();
             }
+
+            // Pobranie 3 ostatnich zakończonych (ustalonych) zleceń gospodarza
+            $z->ostatnie_zlecenia = DB::table('zgloszenia')
+                ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
+                ->where('oferty.id_profil_owner', $z->id_profil_owner)
+                ->whereNotNull('zgloszenia.ostateczny_termin')
+                ->orderBy('zgloszenia.ostateczny_termin', 'desc')
+                ->limit(3)
+                ->pluck('oferty.typ')
+                ->map(fn($t) => '🧹 ' . str_replace('_', ' ', $t))
+                ->implode(', ') ?: 'Brak ukończonych współprac';
         }
 
         return view('workOfert', [
