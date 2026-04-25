@@ -14,6 +14,7 @@ use App\Http\Controllers\WorkOfertController;
 //     return view('main');
 // })->name('main');
 use App\Http\Controllers\OfertyController;
+
 Route::get('/', [OfertyController::class, 'oferty'])->name('main');
 
 Route::post('/wybierz', [OfertyController::class, 'wybierz'])->name('oferta.wybierz');
@@ -55,3 +56,10 @@ Route::post('/cancel-zgloszenie', [WorkOfertController::class, 'cancelZgloszenie
 //sortowanie po miescie
 Route::get('/miasta', [OfertyController::class, 'miasta'])->name('miasta');
 
+// Negocjacje terminów - Właściciel (Moje Oferty)
+Route::post('/my-ofert/set-termin', [MyOfertController::class, 'setTerminOwner'])->name('setTerminOwner');
+Route::post('/my-ofert/change-termin', [MyOfertController::class, 'changeTerminOwner'])->name('changeTerminOwner');
+
+// Negocjacje terminów - Wykonawca (Twoje Zgłoszenia)
+Route::post('/work-ofert/accept-termin', [WorkOfertController::class, 'acceptTerminWorker'])->name('acceptTerminWorker');
+Route::post('/work-ofert/change-termin', [WorkOfertController::class, 'changeTerminWorker'])->name('changeTerminWorker');

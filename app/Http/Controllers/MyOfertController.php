@@ -32,6 +32,10 @@ class MyOfertController extends Controller
                 'zgloszenia.wiadomosc',
                 'zgloszenia.zatwierdzone',
                 'zgloszenia.status',
+                'zgloszenia.proponowany_termin',
+                'zgloszenia.ostateczny_termin',
+                'zgloszenia.termin_zaakceptowany_wlasciciel',
+                'zgloszenia.termin_zaakceptowany_wykonawca',
                 'profil.nick',
                 'profil.imie',
                 'profil.nazwisko',
@@ -172,5 +176,64 @@ class MyOfertController extends Controller
             ]);
 
         return back()->with('success', 'Oferta została zaktualizowana.');
+    }
+
+    public function setTerminOwner(Request $request)
+    {
+        $request->validate([
+            'id_zgloszenia' => 'required|integer',
+            'termin' => 'required|date|after:now'
+        ]);
+
+        $idProfil = Auth::user()->id_profil;
+        $validOwner = DB::table('zgloszenia')
+            ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
+            ->where('zgloszenia.id_zgloszenia', $request->id_zgloszenia)
+            ->where('oferty.id_profil_owner', $idProfil)
+            ->exists();
+
+        if (!$validOwner) {
+            return back()->with('error', 'Nie masz uprawnień do ustalenia terminu dla tego zgłoszenia.');
+        }
+
+        DB::table('zgloszenia')
+            ->where('id_zgloszenia', $request->id_zgloszenia)
+            ->update([
+                'proponowany_termin' => $request->termin,
+                'termin_zaakceptowany_wlasciciel' => 1,
+                'termin_zaakceptowany_wykonawca' => 0
+            ]);
+
+        return back()->with('success', 'Termin został zaproponowany wykonawcy.');
+    }
+
+    public function changeTerminOwner(Request $request)
+    {
+        $request->validate([
+            'id_zgloszenia' => 'required|integer',
+            'termin' => 'required|date|after:now'
+        ]);
+
+        $idProfil = Auth::user()->id_profil;
+        $validOwner = DB::table('zgloszenia')
+            ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
+            ->where('zgloszenia.id_zgloszenia', $request->id_zgloszenia)
+            ->where('oferty.id_profil_owner', $idProfil)
+            ->exists();
+
+        if (!$validOwner) {
+            return back()->with('error', 'Nie masz uprawnień do zmiany terminu.');
+        }
+
+        DB::table('zgloszenia')
+            ->where('id_zgloszenia', $request->id_zgloszenia)
+            ->update([
+                'proponowany_termin' => $request->termin,
+                'termin_zaakceptowany_wlasciciel' => 1,
+                'termin_zaakceptowany_wykonawca' => 0,
+                'ostateczny_termin' => null // resetujemy ostateczny, bo negocjujemy od nowa
+            ]);
+
+        return back()->with('success', 'Zmieniono propozycję terminu.');
     }
 }

@@ -28,6 +28,11 @@ class WorkOfertController extends Controller
                 'zgloszenia.zatwierdzone',
                 'zgloszenia.status as zgloszenie_status',
 
+                'zgloszenia.termin_zaakceptowany_wlasciciel',
+                'zgloszenia.termin_zaakceptowany_wykonawca',
+                'zgloszenia.proponowany_termin',
+                'zgloszenia.ostateczny_termin',
+
                 'oferty.id_oferty',
                 'oferty.adres',
                 'oferty.typ',
@@ -59,6 +64,11 @@ class WorkOfertController extends Controller
                 'zgloszenia.id_oferty',
                 'zgloszenia.id_profil_wykonawca',
                 'zgloszenia.wiadomosc',
+                'zgloszenia.status',
+                'zgloszenia.proponowany_termin',
+                'zgloszenia.ostateczny_termin',
+                'zgloszenia.termin_zaakceptowany_wlasciciel',
+                'zgloszenia.termin_zaakceptowany_wykonawca',
                 'profil.nick',
                 'profil.imie',
                 'profil.nazwisko',
@@ -107,5 +117,91 @@ class WorkOfertController extends Controller
             ]);
 
         return back()->with('success', 'Zgłoszenie anulowane');
+    }
+
+    public function acceptTerminWorker(Request $request)
+    {
+        $request->validate(['id_zgloszenia' => 'required|integer']);
+
+        $idProfil = Auth::user()->id_profil;
+        $zgloszenie = DB::table('zgloszenia')
+            ->where('id_zgloszenia', $request->id_zgloszenia)
+            ->where('id_profil_wykonawca', $idProfil)
+            ->first();
+
+        if (!$zgloszenie) {
+            return back()->with('error', 'Zgłoszenie nie istnieje lub nie należy do Ciebie.');
+        }
+
+        if (empty($zgloszenie->proponowany_termin)) {
+            return back()->with('error', 'Właściciel nie zaproponował jeszcze terminu.');
+        }
+
+        DB::table('zgloszenia')
+            ->where('id_zgloszenia', $request->id_zgloszenia)
+            ->update([
+                'termin_zaakceptowany_wykonawca' => 1,
+                'ostateczny_termin' => $zgloszenie->proponowany_termin // Skoro obie strony akceptują, termin staje się ostateczny
+            ]);
+
+        return back()->with('success', 'Termin został zaakceptowany!');
+    }
+
+    public function changeTerminWorker(Request $request)
+    {
+        $request->validate([
+            'id_zgloszenia' => 'required|integer',
+            'termin' => 'required|date|after:now'
+        ]);
+
+        $idProfil = Auth::user()->id_profil;
+        $zgloszenie = DB::table('zgloszenia')
+            ->where('id_zgloszenia', $request->id_zgloszenia)
+            ->where('id_profil_wykonawca', $idProfil)
+            ->first();
+
+        if (!$zgloszenie) {
+            return back()->with('error', 'Nie masz uprawnień do zmiany tego zgłoszenia.');
+        }
+
+        DB::table('zgloszenia')
+            ->where('id_zgloszenia', $request->id_zgloszenia)
+            ->update([
+                'proponowany_termin' => $request->termin,
+                'termin_zaakceptowany_wykonawca' => 1,
+                'termin_zaakceptowany_wlasciciel' => 0, // Teraz właściciel musi zaakceptować nową datę
+                'ostateczny_termin' => null
+            ]);
+
+        // Pobierz id_profil_owner oferty, do której należy zgłoszenie
+        $oferta = DB::table('oferty')
+            ->join('zgloszenia', 'oferty.id_oferty', '=', 'zgloszenia.id_oferty')
+            ->where('zgloszenia.id_zgloszenia', $request->id_zgloszenia)
+            ->select('oferty.id_profil_owner')
+            ->first();
+
+        if ($oferta) {
+            // Pobierz id użytkownika (właściciela) na podstawie id_profil_owner
+            $ownerUser = DB::table('users')
+                ->where('id_profil', $oferta->id_profil_owner)
+                ->first();
+
+            // Pobierz nick wykonawcy, który zaproponował termin
+            $workerNick = Auth::user()->nick;
+
+            if ($ownerUser) {
+                // Dodaj powiadomienie dla właściciela
+                DB::table('powiadomienia')->insert([
+                    'tytul' => 'Nowa propozycja terminu',
+                    'text' => 'Wykonawca ' . $workerNick . ' zaproponował nowy termin: ' . $request->termin . '.',
+                    'odzcytane' => 0,
+                    'id_user' => $ownerUser->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+
+        return back()->with('success', 'Zaproponowałeś inny termin właścicielowi.');
     }
 }

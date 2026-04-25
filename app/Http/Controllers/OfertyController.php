@@ -14,34 +14,34 @@ class OfertyController extends Controller
         //----jesli nie zalogowany to oferty----
         if (!Auth::check()) {
             $query = DB::table('oferty')->select(
-    'profil.imie',
-    'oferty.id_oferty',
-    'profil.nazwisko',
-    'profil.profilowe',
-    'oferty.adres',
-    'oferty.typ',
-    'oferty.cena',
-    'oferty.do_kiedy_wazne',
-    'oferty.opis',
-    'oferty.created_at'
-)->leftJoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil');
+                'profil.imie',
+                'oferty.id_oferty',
+                'profil.nazwisko',
+                'profil.profilowe',
+                'oferty.adres',
+                'oferty.typ',
+                'oferty.cena',
+                'oferty.do_kiedy_wazne',
+                'oferty.opis',
+                'oferty.created_at'
+            )->leftJoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil');
 
-//  FILTER
-if ($request->filled('typ')) {
-    $query->where('oferty.typ', $request->typ);
-}
-//  FILTER CENA
-if ($request->filled('cena_min')) {
-    $query->where('oferty.cena', '>=', $request->cena_min);
-}
+            //  FILTER
+            if ($request->filled('typ')) {
+                $query->where('oferty.typ', $request->typ);
+            }
+            //  FILTER CENA
+            if ($request->filled('cena_min')) {
+                $query->where('oferty.cena', '>=', $request->cena_min);
+            }
 
-if ($request->filled('cena_max')) {
-    $query->where('oferty.cena', '<=', $request->cena_max);
-}
-if ($request->filled('miasto')) {
-    $query->where('oferty.adres', 'LIKE', $request->miasto . '%');
-}
-$dane = $query->orderBy('oferty.created_at', 'desc')->get();
+            if ($request->filled('cena_max')) {
+                $query->where('oferty.cena', '<=', $request->cena_max);
+            }
+            if ($request->filled('miasto')) {
+                $query->where('oferty.adres', 'LIKE', $request->miasto . '%');
+            }
+            $dane = $query->orderBy('oferty.created_at', 'desc')->get();
             //musi byc bo blad
             $komuch = '';
 
@@ -53,37 +53,37 @@ $dane = $query->orderBy('oferty.created_at', 'desc')->get();
 
         // profil.imie,profil.nazwisko,profil.profilowe,oferty:adres,typ,cena,do_kidey_wazne,opis,stworzone
         $query = DB::table('oferty')->select(
-    'profil.imie',
-    'oferty.id_oferty',
-    'profil.nazwisko',
-    'profil.profilowe',
-    'oferty.adres',
-    'oferty.typ',
-    'oferty.cena',
-    'oferty.do_kiedy_wazne',
-    'oferty.opis',
-    'oferty.created_at'
-)->leftJoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')
- ->where('oferty.id_profil_owner', '!=', $id);
+            'profil.imie',
+            'oferty.id_oferty',
+            'profil.nazwisko',
+            'profil.profilowe',
+            'oferty.adres',
+            'oferty.typ',
+            'oferty.cena',
+            'oferty.do_kiedy_wazne',
+            'oferty.opis',
+            'oferty.created_at'
+        )->leftJoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')
+            ->where('oferty.id_profil_owner', '!=', $id);
 
-//  FILTER
-if ($request->filled('typ')) {
-    $query->where('oferty.typ', $request->typ);
-}
-function miasta(Request $request)
-{
-    $search = $request->get('q');
+        //  FILTER
+        if ($request->filled('typ')) {
+            $query->where('oferty.typ', $request->typ);
+        }
+        function miasta(Request $request)
+        {
+            $search = $request->get('q');
 
-    $miasta = DB::table('oferty')
-        ->where('adres', 'LIKE', $search . '%')
-        ->distinct()
-        ->orderBy('adres')
-        ->limit(10)
-        ->pluck('adres');
+            $miasta = DB::table('oferty')
+                ->where('adres', 'LIKE', $search . '%')
+                ->distinct()
+                ->orderBy('adres')
+                ->limit(10)
+                ->pluck('adres');
 
-    return response()->json($miasta);
-}
-$dane = $query->orderBy('oferty.created_at', 'desc')->get();
+            return response()->json($miasta);
+        }
+        $dane = $query->orderBy('oferty.created_at', 'desc')->get();
         //----id do kturych sie zglosil----
         $aktywne = $id ? DB::table('zgloszenia')
             ->where('id_profil_wykonawca', $id)
@@ -156,6 +156,8 @@ $dane = $query->orderBy('oferty.created_at', 'desc')->get();
                 'odzcytane' => 0,
                 'id_user' => $id_wlasciciel
             ]);
+        } else {
+            return back()->with('error', 'Nie możesz zgłosić się do własnej oferty.');
         }
 
         return redirect()->route('main')->with('modal_success', $request->oferta_id);

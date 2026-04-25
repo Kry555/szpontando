@@ -15,6 +15,20 @@
 
     @auth
 
+    <div class="messages" style="padding: 20px;">
+        @if(session('success'))
+        <div style="color: green; font-weight: bold; border: 1px solid green; padding: 10px;">{{ session('success') }}</div>
+        @endif
+        @if(session('error'))
+        <div style="color: red; font-weight: bold; border: 1px solid red; padding: 10px;">{{ session('error') }}</div>
+        @endif
+        @if($errors->any())
+        <div style="color: red; border: 1px solid red; padding: 10px;">
+            <ul>@foreach($errors->all() as $error) <li>{{ $error }}</li> @endforeach</ul>
+        </div>
+        @endif
+    </div>
+
     <h2>Twoje zgłoszenia</h2>
 
     @foreach($zgloszenia as $zgloszenie)
@@ -87,7 +101,7 @@
         '{{ $zgloszenie->cena ?? '' }}',
         '{{ $zgloszenie->do_kiedy_wazne ?? '' }}',
         '{{ $zgloszenie->opis ?? '' }}',
-        '{{ $zgloszenie->status ?? 'brak' }}'
+        '{{ $zgloszenie->status ?? $zgloszenie->oferta_status ?? 'brak' }}'
     )">
             Szczegóły oferty
         </button>
@@ -109,9 +123,52 @@
         </button>
 
         <p><strong>Wiadomość:</strong> {{ $zgloszenie->wiadomosc ?? '' }}</p>
-        <p><strong>Status zgłoszenia:</strong> {{ $zgloszenie->status ?? 'brak' }}</p>
+        <p><strong>Status:</strong> {{ $zgloszenie->status ?? $zgloszenie->zgloszenie_status ?? 'brak' }}</p>
 
         <button type="button" onclick="openModal_termin()">Ustal termin</button>
+        <div style="border:1px solid #ccc; padding:10px; margin-top:10px;">
+
+            @if(isset($zgloszenie->proponowany_termin) && $zgloszenie->proponowany_termin)
+
+            <p><strong>Proponowany termin:</strong>
+                {{ $zgloszenie->proponowany_termin }}
+            </p>
+
+            @if(empty($zgloszenie->ostateczny_termin))
+
+            <!-- STATUS -->
+            <p>
+                @if(!($zgloszenie->termin_zaakceptowany_wykonawca ?? false))
+                ⚠️ Czeka na Twoją decyzję
+                @elseif(!($zgloszenie->termin_zaakceptowany_wlasciciel ?? false))
+                ⏳ Czeka na właściciela
+                @endif
+            </p>
+
+            <!-- AKCEPTUJ -->
+            <form method="POST" action="{{ route('acceptTerminWorker') }}" style="display:inline;">
+                @csrf
+                <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
+                <button type="submit">✅ Akceptuj</button>
+            </form>
+
+            <!-- ZMIEŃ -->
+            <form method="POST" action="{{ route('changeTerminWorker') }}" style="display:inline;">
+                @csrf
+                <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
+                <input type="datetime-local" name="termin" required>
+                <button type="submit">✏️ Zaproponuj inny</button>
+            </form>
+
+            @else
+            <p><strong>✅ Ustalony termin:</strong> {{ $zgloszenie->ostateczny_termin }}</p>
+            @endif
+
+            @else
+            <p>⏳ Właściciel jeszcze nie ustawił terminu</p>
+            @endif
+
+        </div>
     </div>
     @endforeach
 

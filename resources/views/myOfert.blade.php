@@ -14,6 +14,20 @@
 
     @auth
 
+    <div class="messages" style="padding: 20px;">
+        @if(session('success'))
+        <div style="color: green; font-weight: bold; border: 1px solid green; padding: 10px;">{{ session('success') }}</div>
+        @endif
+        @if(session('error'))
+        <div style="color: red; font-weight: bold; border: 1px solid red; padding: 10px;">{{ session('error') }}</div>
+        @endif
+        @if($errors->any())
+        <div style="color: red; border: 1px solid red; padding: 10px;">
+            <ul>@foreach($errors->all() as $error) <li>{{ $error }}</li> @endforeach</ul>
+        </div>
+        @endif
+    </div>
+
     <h1>Twoje oferty</h1>
     @foreach($oferty as $oferta)
     <div class="oferta">
@@ -48,33 +62,24 @@
 
     <h2>Zgłoszenia do Twoich ofert</h2>
     @foreach($zgloszenia as $zgloszenie)
+
     @if($zgloszenie->wiadomosc)
+
     <div class="zgloszenie">
-        <button class="profil-btn" onclick="openModal_profil(
-            '{{ $zgloszenie->nick }}',
-            '{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}',
-            '{{ $zgloszenie->imie ?? '' }}',
-            '{{ $zgloszenie->nazwisko ?? '' }}',
-            '{{ $zgloszenie->miasto ?? '' }}',
-            '{{ $zgloszenie->email_kontaktowy ?? '' }}',
-            '{{ $zgloszenie->ocena ?? '' }}'
-        )">
-            <img src="{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}" alt="Profilowe">
-            <span>{{ $zgloszenie->nick }}</span>
+
+        <!-- PROFIL -->
+        <button class="profil-btn" onclick="openModal_profil(...)">
+            ...
         </button>
-        <button type="button" onclick="openModal_oferta(
-            '{{ $zgloszenie->adres }}',
-            '{{ $zgloszenie->typ }}',
-            '{{ $zgloszenie->cena }}',
-            '{{ $zgloszenie->do_kiedy_wazne }}',
-            '{{ $zgloszenie->opis }}',
-            '{{ $zgloszenie->status }}'
-        )">
+
+        <!-- OFERTA -->
+        <button onclick="openModal_oferta(...)">
             Szczegóły zgłoszenia
         </button>
 
         <p><strong>Wiadomość:</strong> {{ $zgloszenie->wiadomosc }}</p>
-        <p><strong>Zatwierdzone:</strong> {{ $zgloszenie->zatwierdzone ? 'Tak' : 'Nie' }}</p>
+
+        <!-- AKCEPTACJA -->
         <form method="POST" action="{{ route('acceptOfert.post') }}">
             @csrf
             <input type="hidden" name="id_oferty" value="{{ $zgloszenie->id_oferty }}">
@@ -82,18 +87,50 @@
 
             <button type="submit"
                 @if($zgloszenie->zatwierdzone || $zgloszenie->status != 'aktywne') disabled @endif>
-
-                @if($zgloszenie->zatwierdzone)
-                Już zaakceptowane
-                @elseif($zgloszenie->status != 'aktywne')
-                Niedostępne
-                @else
-                Zakceptuj zgłoszenie
-                @endif
+                Akceptuj zgłoszenie
             </button>
         </form>
 
+        {{-- 🔥 NEGOCJACJA TERMINU (TU MA BYĆ!) --}}
+        @if($zgloszenie->zatwierdzone)
+
+        <div style="border:1px solid #ccc; padding:10px; margin-top:10px;">
+
+            <p><strong>Proponowany termin:</strong>
+                {{ $zgloszenie->proponowany_termin ?? 'brak' }}
+            </p>
+
+            @if(empty($zgloszenie->proponowany_termin))
+
+            <form method="POST" action="{{ route('setTerminOwner') }}">
+                @csrf
+                <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
+                <input type="datetime-local" name="termin" required>
+                <button>Ustal termin</button>
+            </form>
+
+            @elseif(empty($zgloszenie->ostateczny_termin))
+
+            <form method="POST" action="{{ route('changeTerminOwner') }}">
+                @csrf
+                <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
+                <input type="datetime-local" name="termin" required>
+                <button>Zmień termin</button>
+            </form>
+
+            @else
+            <p><strong>✅ Ostateczny termin:</strong>
+                {{ $zgloszenie->ostateczny_termin }}
+            </p>
+
+            @endif
+
+        </div>
+
+        @endif
+
     </div>
+
     @endif
     @endforeach
 
