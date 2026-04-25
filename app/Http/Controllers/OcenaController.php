@@ -14,7 +14,7 @@ class OcenaController extends Controller
             'id_zgloszenia' => 'required|integer',
             'id_profil_oceniany' => 'required|integer',
             'gwiazdki' => 'required|integer|min:0|max:5',
-            'opis' => 'nullable|string|max:255',
+            'opis' => 'nullable|string|max:255', // Zabezpieczenie limitu 255 znaków
             'rola' => 'required|in:pracownik,gospodarz',
         ]);
 
@@ -39,6 +39,15 @@ class OcenaController extends Controller
             'rola' => $request->rola,
             'created_at' => now(),
         ]);
+
+        // Automatyczne wyliczenie średniej i aktualizacja profilu
+        $srednia = DB::table('oceny')
+            ->where('id_profil_oceniany', $request->id_profil_oceniany)
+            ->avg('gwiazdki');
+
+        DB::table('profil')
+            ->where('id_profil', $request->id_profil_oceniany)
+            ->update(['ocena' => (int)round($srednia)]);
 
         return back()->with('success', 'Dziękujemy za wystawienie opinii!');
     }

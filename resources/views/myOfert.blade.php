@@ -68,8 +68,18 @@
     <div class="zgloszenie">
 
         <!-- PROFIL -->
-        <button class="profil-btn" onclick="openModal_profil(...)">
-            ...
+        <button class="profil-btn" onclick="openModal_profil(
+            '{{ $zgloszenie->nick }}',
+            '{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}',
+            '{{ $zgloszenie->imie }}',
+            '{{ $zgloszenie->nazwisko }}',
+            '{{ $zgloszenie->miasto }}',
+            '{{ $zgloszenie->email_kontaktowy }}',
+            '{{ $zgloszenie->ocena ?? '0' }}',
+            '{{ $zgloszenie->ostatnie_zlecenia }}'
+        )">
+            <img src="{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}" alt="Profilowe" width="30">
+            <span>{{ $zgloszenie->nick }}</span>
         </button>
 
         <!-- OFERTA -->
@@ -131,12 +141,14 @@
             </form>
             @endif
 
+            @if(!$zgloszenie->termin_zaakceptowany_wlasciciel)
             <form method="POST" action="{{ route('changeTerminOwner') }}">
                 @csrf
                 <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
                 <input type="datetime-local" name="termin" required>
                 <button>Zmień termin</button>
             </form>
+            @endif
 
             @else
             <p><strong>✅ Ostateczny termin:</strong>
@@ -147,7 +159,7 @@
 
             {{-- Sekcja oceny pracownika --}}
             @if($zgloszenie->ostateczny_termin && !($zgloszenie->juz_oceniono ?? false))
-            <div style="background: #f9f9f9; padding: 10px; border: 1px dashed orange; margin-top: 10px;">
+            <div style="background: #f9f9f9; padding: 10px; border: 1px dashed orange; margin-top: 10px; color: #1e1e1e;">
                 <h4>Oceń pracownika</h4>
                 <form method="POST" action="{{ route('ocena.store') }}">
                     @csrf
@@ -182,7 +194,8 @@
             <p><strong>Imię i nazwisko:</strong> <span id="modal_profil_imie"></span> <span id="modal_profil_nazwisko"></span></p>
             <p><strong>Miasto:</strong> <span id="modal_profil_miasto"></span></p>
             <p><strong>Email:</strong> <span id="modal_profil_email"></span></p>
-            <p><strong>Ocena:</strong> <span id="modal_profil_ocena"></span></p>
+            <p><strong>Średnia ocena:</strong> <span id="modal_profil_ocena"></span> / 5 ⭐</p>
+            <p><strong>Ostatnie zlecenia:</strong> <span id="modal_profil_zlecenia" style="color: blue;"></span></p>
         </div>
     </div>
 
@@ -232,7 +245,7 @@
 
     <script>
         // MODAL PROFIL
-        function openModal_profil(nick, profilowe, imie, nazwisko, miasto, email, ocena) {
+        function openModal_profil(nick, profilowe, imie, nazwisko, miasto, email, ocena, zlecenia) {
             document.getElementById('modal_profil_img').src = profilowe;
             document.getElementById('modal_profil_nick').textContent = nick;
             document.getElementById('modal_profil_imie').textContent = imie ?? '';
@@ -240,6 +253,7 @@
             document.getElementById('modal_profil_miasto').textContent = miasto ?? '';
             document.getElementById('modal_profil_email').textContent = email ?? '';
             document.getElementById('modal_profil_ocena').textContent = ocena ?? '';
+            document.getElementById('modal_profil_zlecenia').textContent = zlecenia ?? 'Brak historii';
 
             document.getElementById('modal_profil').style.display = 'block';
         }

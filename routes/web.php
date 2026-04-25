@@ -68,3 +68,4 @@ Route::post('/work-ofert/change-termin', [WorkOfertController::class, 'changeTer
 
 // Oceny
 Route::post('/wystaw-ocene', [OcenaController::class, 'store'])->name('ocena.store')->middleware('auth');
+Route::get('/ranking', [OfertyController::class, 'ranking'])->name('ranking');

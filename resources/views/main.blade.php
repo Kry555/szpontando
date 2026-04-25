@@ -40,6 +40,9 @@
     <a href="{{ route('work_ofert') }}">
         <button type="button">Twoje zgłoszenia</button>
     </a>
+    <a href="{{ route('ranking') }}">
+        <button type="button" style="background: gold; color: black; font-weight: bold;">Ranking Wykonawców 🏆</button>
+    </a>
 
     <button onclick="openModal_Wiadomosci()">
         Wiadomosci ({{ is_string($notf) ? 0 : $notf->count() }})
@@ -50,143 +53,143 @@
     <form method="GET" action="{{ route('main') }}">
 
         <label>Cena od:</label>
-    <input type="number" name="cena_min" value="{{ request('cena_min') }}" min="0">
+        <input type="number" name="cena_min" value="{{ request('cena_min') }}" min="0">
 
-    <label>Cena do:</label>
-    <input type="number" name="cena_max" value="{{ request('cena_max') }}" min="0">
-    <label>wybierz miasto:</label>
-    <form method="GET" action="{{ route('main') }}">
-    <input type="text" id="miasto" name="miasto" value="{{ request('miasto') }}" autocomplete="off">
-    <label for="typ">Filtruj po typie:</label>
+        <label>Cena do:</label>
+        <input type="number" name="cena_max" value="{{ request('cena_max') }}" min="0">
+        <label>wybierz miasto:</label>
+        <form method="GET" action="{{ route('main') }}">
+            <input type="text" id="miasto" name="miasto" value="{{ request('miasto') }}" autocomplete="off">
+            <label for="typ">Filtruj po typie:</label>
 
 
-    <select name="typ" id="typ">
-    <option value="">-- Wszystkie --</option>
+            <select name="typ" id="typ">
+                <option value="">-- Wszystkie --</option>
 
-    <optgroup label="Podstawowe">
-        <option value="samochód" {{ request('typ') == 'samochód' ? 'selected' : '' }}>Samochód</option>
-        <option value="rower" {{ request('typ') == 'rower' ? 'selected' : '' }}>Rower</option>
-        <option value="cały_dom" {{ request('typ') == 'cały_dom' ? 'selected' : '' }}>Cały dom</option>
-        <option value="wybrane_pomieszczenia" {{ request('typ') == 'wybrane_pomieszczenia' ? 'selected' : '' }}>Wybrane pomieszczenia</option>
-    </optgroup>
+                <optgroup label="Podstawowe">
+                    <option value="samochód" {{ request('typ') == 'samochód' ? 'selected' : '' }}>Samochód</option>
+                    <option value="rower" {{ request('typ') == 'rower' ? 'selected' : '' }}>Rower</option>
+                    <option value="cały_dom" {{ request('typ') == 'cały_dom' ? 'selected' : '' }}>Cały dom</option>
+                    <option value="wybrane_pomieszczenia" {{ request('typ') == 'wybrane_pomieszczenia' ? 'selected' : '' }}>Wybrane pomieszczenia</option>
+                </optgroup>
 
-    <optgroup label="Specjalistyczne">
-        <option value="brud_ciężki_przemysłowy" {{ request('typ') == 'brud_ciężki_przemyslowy' ? 'selected' : '' }}>Brud ciężki (przemysłowy)</option>
-        <option value="miejsce_zbrodni" {{ request('typ') == 'miejsce_zbrodni' ? 'selected' : '' }}>Miejsce zbrodni</option>
-        <option value="po_remoncie" {{ request('typ') == 'po_remoncie' ? 'selected' : '' }}>Po remoncie</option>
-        <option value="po_imprezie" {{ request('typ') == 'po_imprezie' ? 'selected' : '' }}>Po imprezie</option>
-    </optgroup>
+                <optgroup label="Specjalistyczne">
+                    <option value="brud_ciężki_przemysłowy" {{ request('typ') == 'brud_ciężki_przemyslowy' ? 'selected' : '' }}>Brud ciężki (przemysłowy)</option>
+                    <option value="miejsce_zbrodni" {{ request('typ') == 'miejsce_zbrodni' ? 'selected' : '' }}>Miejsce zbrodni</option>
+                    <option value="po_remoncie" {{ request('typ') == 'po_remoncie' ? 'selected' : '' }}>Po remoncie</option>
+                    <option value="po_imprezie" {{ request('typ') == 'po_imprezie' ? 'selected' : '' }}>Po imprezie</option>
+                </optgroup>
 
-    <optgroup label="Zwierzęta">
-        <option value="zwierzęce_zabrudzenia" {{ request('typ') == 'zwierzęce_zabrudzenia' ? 'selected' : '' }}>Zwierzęce zabrudzenia</option>
-        <option value="sprzątanie_po_psie" {{ request('typ') == 'sprzatanie_po_psie' ? 'selected' : '' }}>Sprzątanie po psie</option>
-        <option value="kuweta_kota" {{ request('typ') == 'kuweta_kota' ? 'selected' : '' }}>Kuweta kota</option>
-    </optgroup>
+                <optgroup label="Zwierzęta">
+                    <option value="zwierzęce_zabrudzenia" {{ request('typ') == 'zwierzęce_zabrudzenia' ? 'selected' : '' }}>Zwierzęce zabrudzenia</option>
+                    <option value="sprzątanie_po_psie" {{ request('typ') == 'sprzatanie_po_psie' ? 'selected' : '' }}>Sprzątanie po psie</option>
+                    <option value="kuweta_kota" {{ request('typ') == 'kuweta_kota' ? 'selected' : '' }}>Kuweta kota</option>
+                </optgroup>
 
-    <optgroup label="Inne">
-        <option value="mycie_okien" {{ request('typ') == 'mycie_okien' ? 'selected' : '' }}>Mycie okien</option>
-        <option value="garaż_piwnica" {{ request('typ') == 'garaż_piwnica' ? 'selected' : '' }}>Garaż / piwnica</option>
-        <option value="ogród_tarasy" {{ request('typ') == 'ogród_tarasy' ? 'selected' : '' }}>Ogród / tarasy</option>
-        <option value="dezynfekcja" {{ request('typ') == 'dezynfekcja' ? 'selected' : '' }}>Dezynfekcja</option>
-    </optgroup>
-</select>
+                <optgroup label="Inne">
+                    <option value="mycie_okien" {{ request('typ') == 'mycie_okien' ? 'selected' : '' }}>Mycie okien</option>
+                    <option value="garaż_piwnica" {{ request('typ') == 'garaż_piwnica' ? 'selected' : '' }}>Garaż / piwnica</option>
+                    <option value="ogród_tarasy" {{ request('typ') == 'ogród_tarasy' ? 'selected' : '' }}>Ogród / tarasy</option>
+                    <option value="dezynfekcja" {{ request('typ') == 'dezynfekcja' ? 'selected' : '' }}>Dezynfekcja</option>
+                </optgroup>
+            </select>
 
-    <button type="submit">Filtruj</button>
-</form>
-    <div class="oferty">
-        @foreach($oferty_przeglandarka as $oferta)
-        <div class="oferty_przeglandarka">
-            <div class="informacje">
-                <h3>{{ $oferta->typ }}</h3>
-                <p><strong>Opis:</strong> {{ $oferta->opis }}</p>
-                <p><strong>Cena:</strong> {{ $oferta->cena }} zł</p>
-                <p><strong>Adres:</strong> {{ $oferta->adres }}</p>
-                <p><strong>Ważne do:</strong> {{ $oferta->do_kiedy_wazne }}</p>
-                <p><strong>Utworzone:</strong> {{ $oferta->created_at }}</p>
-                <hr>
-                <p>
-                    <strong>Autor:</strong>
-                    {{ $oferta->imie }} {{ $oferta->nazwisko }}
-                </p>
+            <button type="submit">Filtruj</button>
+        </form>
+        <div class="oferty">
+            @foreach($oferty_przeglandarka as $oferta)
+            <div class="oferty_przeglandarka">
+                <div class="informacje">
+                    <h3>{{ $oferta->typ }}</h3>
+                    <p><strong>Opis:</strong> {{ $oferta->opis }}</p>
+                    <p><strong>Cena:</strong> {{ $oferta->cena }} zł</p>
+                    <p><strong>Adres:</strong> {{ $oferta->adres }}</p>
+                    <p><strong>Ważne do:</strong> {{ $oferta->do_kiedy_wazne }}</p>
+                    <p><strong>Utworzone:</strong> {{ $oferta->created_at }}</p>
+                    <hr>
+                    <p>
+                        <strong>Autor:</strong>
+                        {{ $oferta->imie }} {{ $oferta->nazwisko }}
+                    </p>
+                </div>
+                <div class="guziki">
+                    @php
+                    $zgloszony = in_array($oferta->id_oferty, $Zgloszenia_aktywne ?? []);
+                    @endphp
+
+                    @auth
+                    @if($zgloszony)
+                    <button disabled style="background: #ccc; cursor: not-allowed;">
+                        Już zgłoszony
+                    </button>
+                    @else
+                    <button onclick="openModal_zglos({{ $oferta->id_oferty }})">
+                        Zgłoś się
+                    </button>
+                    @endif
+                    @endauth
+
+                    @guest
+                    <button disabled style="background:#ccc; cursor:not-allowed;">
+                        Zaloguj się aby zgłosić
+                    </button>
+                    @endguest
+                </div>
             </div>
-            <div class="guziki">
-                @php
-                $zgloszony = in_array($oferta->id_oferty, $Zgloszenia_aktywne ?? []);
-                @endphp
-
-                @auth
-                @if($zgloszony)
-                <button disabled style="background: #ccc; cursor: not-allowed;">
-                    Już zgłoszony
-                </button>
-                @else
-                <button onclick="openModal_zglos({{ $oferta->id_oferty }})">
-                    Zgłoś się
-                </button>
-                @endif
-                @endauth
-
-                @guest
-                <button disabled style="background:#ccc; cursor:not-allowed;">
-                    Zaloguj się aby zgłosić
-                </button>
-                @endguest
-            </div>
+            @endforeach
         </div>
-        @endforeach
-    </div>
-    <div class="komentarze">
-        <!-- trzeba przeniesc te butony  -->
-        <!-- <a href="{{ route('login') }}">
+        <div class="komentarze">
+            <!-- trzeba przeniesc te butony  -->
+            <!-- <a href="{{ route('login') }}">
             <button type="button">Sign_in</button>
             </a> -->
-        <!-- <a href="{{ route('logoutt') }}">
+            <!-- <a href="{{ route('logoutt') }}">
             <button type="button">logout</button>
             </a> -->
-    </div>
-    <div class="modale">
-        <!-- modale_wyskakujące okienka -->
-        <div id="modal_zglos" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
-            <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
-                <h2>Wyślij wiadomość</h2>
-
-                <form id="modal_form" method="POST" action="{{ route('oferta.wybierz') }}">
-                    @csrf
-                    <input type="hidden" name="oferta_id" id="modal_oferta_id" value="">
-
-                    <label>Wiadomość:</label>
-                    <textarea name="wiadomosc" required style="width:100%; height:100px;"></textarea>
-
-                    <br><br>
-                    <button type="submit">Wyślij</button>
-                    <button type="button" onclick="closeModal_zglos()">Anuluj</button>
-                </form>
-            </div>
         </div>
-        <div id="modal_Wiadomosci" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
-            <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
-                <h2>Wiadomosci</h2>
-                @if(is_string($notf))
-                <p>{{ $notf }}</p>
-                @else
+        <div class="modale">
+            <!-- modale_wyskakujące okienka -->
+            <div id="modal_zglos" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+                <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
+                    <h2>Wyślij wiadomość</h2>
 
-                @if($notf->isEmpty())
-                <p>Brak nowych powiadomień</p>
-                @else
+                    <form id="modal_form" method="POST" action="{{ route('oferta.wybierz') }}">
+                        @csrf
+                        <input type="hidden" name="oferta_id" id="modal_oferta_id" value="">
 
-                @foreach($notf as $wiadomosc)
-                <div style="border-bottom:1px solid #ccc; margin-bottom:10px;">
-                    <strong>{{ $wiadomosc->tytul }}</strong>
-                    <p>{{ $wiadomosc->text }}</p>
+                        <label>Wiadomość:</label>
+                        <textarea name="wiadomosc" required style="width:100%; height:100px;"></textarea>
+
+                        <br><br>
+                        <button type="submit">Wyślij</button>
+                        <button type="button" onclick="closeModal_zglos()">Anuluj</button>
+                    </form>
                 </div>
-                @endforeach
-
-                @endif
-                @endif
-                <button type="button" onclick="closeModal_Wiadomosci()">Anuluj</button>
-                </form>
             </div>
-        </div>
+            <div id="modal_Wiadomosci" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+                <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
+                    <h2>Wiadomosci</h2>
+                    @if(is_string($notf))
+                    <p>{{ $notf }}</p>
+                    @else
+
+                    @if($notf->isEmpty())
+                    <p>Brak nowych powiadomień</p>
+                    @else
+
+                    @foreach($notf as $wiadomosc)
+                    <div style="border-bottom:1px solid #ccc; margin-bottom:10px;">
+                        <strong>{{ $wiadomosc->tytul }}</strong>
+                        <p>{{ $wiadomosc->text }}</p>
+                    </div>
+                    @endforeach
+
+                    @endif
+                    @endif
+                    <button type="button" onclick="closeModal_Wiadomosci()">Anuluj</button>
+    </form>
+    </div>
+    </div>
     </div>
     <script>
         function openModal_zglos(ofertaId) {

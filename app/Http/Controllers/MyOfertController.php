@@ -65,6 +65,17 @@ class MyOfertController extends Controller
                     ->where('id_profil_autor', $id)
                     ->exists();
             }
+
+            // Pobranie 3 ostatnich zakończonych (ustalonych) zleceń pracownika
+            $z->ostatnie_zlecenia = DB::table('zgloszenia')
+                ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
+                ->where('zgloszenia.id_profil_wykonawca', $z->id_profil_wykonawca)
+                ->whereNotNull('zgloszenia.ostateczny_termin')
+                ->orderBy('zgloszenia.ostateczny_termin', 'desc')
+                ->limit(3)
+                ->pluck('oferty.typ')
+                ->map(fn($t) => '✨ ' . str_replace('_', ' ', $t))
+                ->implode(', ') ?: 'Brak ukończonych zleceń';
         }
 
 
