@@ -138,19 +138,21 @@
 
             <!-- STATUS -->
             <p>
-                @if(!($zgloszenie->termin_zaakceptowany_wykonawca ?? false))
-                ⚠️ Czeka na Twoją decyzję
-                @elseif(!($zgloszenie->termin_zaakceptowany_wlasciciel ?? false))
-                ⏳ Czeka na właściciela
+                @if(!$zgloszenie->termin_zaakceptowany_wykonawca)
+                ⚠️ <strong>Status:</strong> Właściciel zaproponował termin - Twoja decyzja.
+                @elseif(!$zgloszenie->termin_zaakceptowany_wlasciciel)
+                ⏳ <strong>Status:</strong> Oczekiwanie na decyzję właściciela.
                 @endif
             </p>
 
             <!-- AKCEPTUJ -->
+            @if(!$zgloszenie->termin_zaakceptowany_wykonawca)
             <form method="POST" action="{{ route('acceptTerminWorker') }}" style="display:inline;">
                 @csrf
                 <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
                 <button type="submit">✅ Akceptuj</button>
             </form>
+            @endif
 
             <!-- ZMIEŃ -->
             <form method="POST" action="{{ route('changeTerminWorker') }}" style="display:inline;">
@@ -164,7 +166,7 @@
             <p><strong>✅ Ustalony termin:</strong> {{ \Carbon\Carbon::parse($zgloszenie->ostateczny_termin)->format('Y-m-d H:i') }}</p>
 
             {{-- Sekcja oceny gospodarza --}}
-            @if(\Carbon\Carbon::parse($zgloszenie->ostateczny_termin)->isPast() && !($zgloszenie->juz_oceniono ?? false))
+            @if(!empty($zgloszenie->ostateczny_termin) && !($zgloszenie->juz_oceniono ?? false))
             <div style="background: #f0f7ff; padding: 10px; border: 1px dashed blue; margin-top: 10px;">
                 <h4>Oceń gospodarza</h4>
                 <form method="POST" action="{{ route('ocena.store') }}">

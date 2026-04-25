@@ -88,7 +88,7 @@ class WorkOfertController extends Controller
 
         // Sprawdź czy wystawiono oceny
         foreach ($zgloszeniaWybrane as $z) {
-            if ($z->ostateczny_termin && \Carbon\Carbon::parse($z->ostateczny_termin)->isPast()) {
+            if ($z->ostateczny_termin) {
                 $z->juz_oceniono = DB::table('oceny')
                     ->where('id_zgloszenia', $z->id_zgloszenia)
                     ->where('id_profil_autor', $id)
@@ -147,12 +147,18 @@ class WorkOfertController extends Controller
             return back()->with('error', 'Właściciel nie zaproponował jeszcze terminu.');
         }
 
+        $updateData = [
+            'termin_zaakceptowany_wykonawca' => 1,
+        ];
+
+        // Sprawdzamy czy właściciel już zaakceptował ten termin
+        if ($zgloszenie->termin_zaakceptowany_wlasciciel == 1) {
+            $updateData['ostateczny_termin'] = $zgloszenie->proponowany_termin;
+        }
+
         DB::table('zgloszenia')
             ->where('id_zgloszenia', $request->id_zgloszenia)
-            ->update([
-                'termin_zaakceptowany_wykonawca' => 1,
-                'ostateczny_termin' => $zgloszenie->proponowany_termin // Skoro obie strony akceptują, termin staje się ostateczny
-            ]);
+            ->update($updateData);
 
         // Pobierz id_profil_owner oferty, do której należy zgłoszenie
         $oferta = DB::table('oferty')

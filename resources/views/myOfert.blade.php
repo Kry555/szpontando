@@ -100,6 +100,18 @@
                 {{ $zgloszenie->proponowany_termin ? \Carbon\Carbon::parse($zgloszenie->proponowany_termin)->format('Y-m-d H:i') : 'brak' }}
             </p>
 
+            @if(empty($zgloszenie->ostateczny_termin))
+            <p>
+                @if(empty($zgloszenie->proponowany_termin))
+                🔴 <strong>Status:</strong> Musisz zaproponować termin, aby rozpocząć ustalenia.
+                @elseif(!$zgloszenie->termin_zaakceptowany_wlasciciel && $zgloszenie->termin_zaakceptowany_wykonawca)
+                ⚠️ <strong>Status:</strong> Wykonawca zaproponował/zmienił termin - Twoja decyzja.
+                @elseif($zgloszenie->termin_zaakceptowany_wlasciciel && !$zgloszenie->termin_zaakceptowany_wykonawca)
+                ⏳ <strong>Status:</strong> Oczekiwanie na decyzję wykonawcy.
+                @endif
+            </p>
+            @endif
+
             @if(empty($zgloszenie->proponowany_termin))
 
             <form method="POST" action="{{ route('setTerminOwner') }}">
@@ -111,15 +123,15 @@
 
             @elseif(empty($zgloszenie->ostateczny_termin))
 
-            @if(!$zgloszenie->termin_zaakceptowany_wlasciciel && $zgloszenie->termin_zaakceptowany_wykonawca)
+            @if(!$zgloszenie->termin_zaakceptowany_wlasciciel)
             <form method="POST" action="{{ route('acceptTerminOwner') }}" style="display:inline;">
                 @csrf
                 <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
-                <button type="submit">✅ Akceptuj propozycję wykonawcy</button>
+                <button type="submit">✅ Akceptuj</button>
             </form>
             @endif
 
-            <form method="POST" action="{{ route('changeTerminOwner') }}" style="display:inline;">
+            <form method="POST" action="{{ route('changeTerminOwner') }}">
                 @csrf
                 <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
                 <input type="datetime-local" name="termin" required>
@@ -134,7 +146,7 @@
             @endif
 
             {{-- Sekcja oceny pracownika --}}
-            @if($zgloszenie->ostateczny_termin && \Carbon\Carbon::parse($zgloszenie->ostateczny_termin)->isPast() && !($zgloszenie->juz_oceniono ?? false))
+            @if($zgloszenie->ostateczny_termin && !($zgloszenie->juz_oceniono ?? false))
             <div style="background: #f9f9f9; padding: 10px; border: 1px dashed orange; margin-top: 10px;">
                 <h4>Oceń pracownika</h4>
                 <form method="POST" action="{{ route('ocena.store') }}">
