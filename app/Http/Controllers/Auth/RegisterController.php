@@ -68,9 +68,5 @@ class RegisterController extends Controller
 
         Mail::to($request->email)->send(new \App\Mail\VerifyEmailMail($link));
         
-        
-
-        echo " użytkownik utworzony, ID: " . $user->id . "<br>";
-        return redirect('/')->with('success', 'Konto utworzone, oczekuje na aktywację');
-    }
+        return view('activate-account');    }
 }
