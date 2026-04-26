@@ -77,4 +77,5 @@ Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name(
 Route::get('/reset-password', [AuthController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 Route::get('/ranking', [OfertyController::class, 'ranking'])->name('ranking');
-// zmiana hasła
+// email weryfikacyjny
+Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verify.email');

@@ -139,5 +139,27 @@ if (!Hash::check($request->token, $record->token)) {
     // redirect
     return redirect('/login')->with('status', 'Hasło zmienione! Zaloguj się ponownie.');
 }
+// emial weryfikacyjny
+public function verifyEmail(Request $request)
+{
+    $record = DB::table('email_verifications')
+        ->where('email', $request->email)
+        ->first();
 
+    if (!$record || !Hash::check($request->token, $record->token)) {
+        return "Nieprawidłowy link";
+    }
+
+    DB::table('users')
+        ->where('email', $request->email)
+        ->update([
+            'aktywny' => 1
+        ]);
+
+    DB::table('email_verifications')
+        ->where('email', $request->email)
+        ->delete();
+
+    return redirect('/login')->with('status', 'Konto aktywowane!');
+}
 }
