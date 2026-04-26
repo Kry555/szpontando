@@ -40,9 +40,6 @@
     <a href="{{ route('work_ofert') }}">
         <button type="button">Twoje zgłoszenia</button>
     </a>
-    <a href="{{ route('ranking') }}">
-        <button type="button" style="background: gold; color: black; font-weight: bold;">Ranking Wykonawców 🏆</button>
-    </a>
 
     <button onclick="openModal_Wiadomosci()">
         Wiadomosci ({{ is_string($notf) ? 0 : $notf->count() }})
@@ -50,6 +47,11 @@
     @else
     <p style="text-align:right">utwórz konto już dziś! <a href="{{ route('login') }}">Zaloguj się</a> lub <a href="{{ route('register.show') }}">Zarejestruj się</a>.</p>
     @endauth
+
+    <a href="{{ route('ranking') }}">
+        <button type="button" style="background: gold; color: black; font-weight: bold;">Ranking Wykonawców 🏆</button>
+    </a>
+
     <form method="GET" action="{{ route('main') }}">
 
         <label>Cena od:</label>
@@ -138,6 +140,10 @@
             </div>
             @endforeach
         </div>
+
+        <!-- na chuj to jest tu dodane -->
+
+
         <div class="komentarze">
             <!-- trzeba przeniesc te butony  -->
             <!-- <a href="{{ route('login') }}">

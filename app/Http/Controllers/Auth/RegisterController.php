@@ -40,7 +40,7 @@ class RegisterController extends Controller
             // Tworzymy profil (AUTO_INCREMENT id_profil)
             $profil_id = DB::table('profil')->insertGetId([
                 'nick' => $request->nick,
-                // reszta pól może zostać NULL
+                'profilowe' => 'default.jpg',
             ]);
 
             // Tworzymy użytkownika powiązanego z tym id_profil

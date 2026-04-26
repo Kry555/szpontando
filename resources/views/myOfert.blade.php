@@ -8,6 +8,40 @@
     <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
     @vite('resources/css/stop_z_wypalaniem_gał.css')
     @vite('resources/css/myOfert.css')
+
+    <style>
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+            padding: 5px;
+        }
+
+        .tile {
+            background: #2a2a2a;
+            color: white;
+            border: 1px solid orange;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 13px;
+            transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+        }
+
+        .tile:hover {
+            transform: translateY(-3px);
+            background: #333;
+            box-shadow: 0 4px 8px rgba(255, 165, 0, 0.3);
+        }
+
+        .tile strong {
+            display: block;
+            color: orange;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 
 <body>
@@ -70,7 +104,7 @@
         <!-- PROFIL -->
         <button class="profil-btn" onclick="openModal_profil(
             '{{ $zgloszenie->nick }}',
-            '{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}',
+            '{{ asset('images/profilowe/' . $zgloszenie->profilowe) }}',
             '{{ $zgloszenie->imie }}',
             '{{ $zgloszenie->nazwisko }}',
             '{{ $zgloszenie->miasto }}',
@@ -78,12 +112,19 @@
             '{{ $zgloszenie->ocena ?? '0' }}',
             '{{ $zgloszenie->ostatnie_zlecenia }}'
         )">
-            <img src="{{ asset('images/profilowe/' . ($zgloszenie->profilowe ?? 'default.png')) }}" alt="Profilowe" width="30">
+            <img src="{{ asset('images/profilowe/' . $zgloszenie->profilowe) }}" alt="Profilowe" width="30">
             <span>{{ $zgloszenie->nick }}</span>
         </button>
 
         <!-- OFERTA -->
-        <button onclick="openModal_oferta(...)">
+        <button onclick="openModal_oferta(
+            '{{ $zgloszenie->adres }}',
+            '{{ $zgloszenie->typ }}',
+            '{{ $zgloszenie->cena }}',
+            '{{ $zgloszenie->do_kiedy_wazne }}',
+            '{{ $zgloszenie->opis }}',
+            '{{ $zgloszenie->oferta_status }}'
+        )">
             Szczegóły zgłoszenia
         </button>
 
@@ -183,21 +224,37 @@
     @endif
     @endforeach
 
-
     <!-- MODAL PROFIL -->
-    <div id="modal_profil" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
-        <div style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative; border-radius:10px; text-align:center;">
-            <button type="button" onclick="closeModal_profil()" style="position:absolute; top:10px; right:10px;">✖</button>
+    <div id="modal_profil_standard" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); z-index: 9998;">
+        <div style="background:#fff; color:black; padding:25px; width:450px; margin:50px auto; position:relative; border-radius:12px; text-align:center; box-shadow: 0 5px 25px rgba(0,0,0,0.4);">
+            <button type="button" onclick="closeModal_profil()" style="position:absolute; top:15px; right:15px; border:none; background:none; font-size:22px; cursor:pointer;">✖</button>
 
-            <img id="modal_profil_img" src="" style="width:100px; height:100px; border-radius:50%; margin-bottom:10px;">
-            <h2 id="modal_profil_nick"></h2>
-            <p><strong>Imię i nazwisko:</strong> <span id="modal_profil_imie"></span> <span id="modal_profil_nazwisko"></span></p>
-            <p><strong>Miasto:</strong> <span id="modal_profil_miasto"></span></p>
-            <p><strong>Email:</strong> <span id="modal_profil_email"></span></p>
-            <p><strong>Średnia ocena:</strong> <span id="modal_profil_ocena"></span> / 5 ⭐</p>
-            <p><strong>Ostatnie zlecenia:</strong> <span id="modal_profil_zlecenia" style="color: blue;"></span></p>
+            <img id="modal_profil_img" src="" style="width:110px; height:110px; border-radius:50%; margin-bottom:15px; border: 3px solid orange; object-fit: cover;">
+            <h2 id="modal_profil_nick" style="margin-top:0; color: #333;"></h2>
+
+            <div style="text-align: left; background: #fdfdfd; border: 1px solid #eee; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <p style="margin: 5px 0;"><strong>Imię i nazwisko:</strong> <span id="modal_profil_imie"></span> <span id="modal_profil_nazwisko"></span></p>
+                <p style="margin: 5px 0;"><strong>Miasto:</strong> <span id="modal_profil_miasto"></span></p>
+                <p style="margin: 5px 0;"><strong>Email:</strong> <span id="modal_profil_email"></span></p>
+                <p style="margin: 5px 0;"><strong>Średnia ocena:</strong> <span id="modal_profil_ocena" style="color: #d4af37; font-weight: bold;"></span> / 5 ⭐</p>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+            <h3 style="margin-bottom: 10px; font-size: 1.1em;">Ostatnie zlecenia (kliknij kafel)</h3>
+            <div id="modal_profil_zlecenia_container" class="tiles-grid"></div>
         </div>
     </div>
+
+    <!-- MODAL SZCZEGÓŁY ZLECENIA -->
+    <div id="modal_history_detail" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); z-index: 9999;">
+        <div style="background:#fff; color:black; padding:25px; width:380px; margin:130px auto; position:relative; border-radius:12px; border-top: 5px solid orange; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            <button type="button" onclick="closeModal_historyDetail()" style="position:absolute; top:15px; right:15px; border:none; background:none; font-size:22px; cursor:pointer;">✖</button>
+            <h2 id="history_detail_title" style="color: orange; margin-top: 0;"></h2>
+            <div id="history_detail_content" style="line-height: 1.6; color: #444;"></div>
+            <button onclick="closeModal_historyDetail()" style="width:100%; margin-top:20px; padding:10px; background: orange; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Zamknij</button>
+        </div>
+    </div>
+
 
     <!-- MODAL OFERTA -->
     <div id="modal_oferta" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
@@ -244,24 +301,6 @@
 
 
     <script>
-        // MODAL PROFIL
-        function openModal_profil(nick, profilowe, imie, nazwisko, miasto, email, ocena, zlecenia) {
-            document.getElementById('modal_profil_img').src = profilowe;
-            document.getElementById('modal_profil_nick').textContent = nick;
-            document.getElementById('modal_profil_imie').textContent = imie ?? '';
-            document.getElementById('modal_profil_nazwisko').textContent = nazwisko ?? '';
-            document.getElementById('modal_profil_miasto').textContent = miasto ?? '';
-            document.getElementById('modal_profil_email').textContent = email ?? '';
-            document.getElementById('modal_profil_ocena').textContent = ocena ?? '';
-            document.getElementById('modal_profil_zlecenia').textContent = zlecenia ?? 'Brak historii';
-
-            document.getElementById('modal_profil').style.display = 'block';
-        }
-
-        function closeModal_profil() {
-            document.getElementById('modal_profil').style.display = 'none';
-        }
-
         // MODAL OFERTA
         function openModal_oferta(adres, typ, cena, wazne, opis, status) {
             document.getElementById('modal_adres').textContent = adres;
@@ -374,6 +413,57 @@
 
         function closeModal_editOffer() {
             document.getElementById('modal_edit_offer').style.display = 'none';
+        }
+
+        function openModal_profil(nick, profilowe, imie, nazwisko, miasto, email, ocena, zleceniaRaw) {
+            document.getElementById('modal_profil_img').src = profilowe;
+            document.getElementById('modal_profil_nick').textContent = nick;
+            document.getElementById('modal_profil_imie').textContent = imie || 'Brak';
+            document.getElementById('modal_profil_nazwisko').textContent = nazwisko || '';
+            document.getElementById('modal_profil_miasto').textContent = miasto || 'Brak lokalizacji';
+            document.getElementById('modal_profil_email').textContent = email || 'Brak kontaktu';
+            document.getElementById('modal_profil_ocena').textContent = ocena || '0';
+
+            const container = document.getElementById('modal_profil_zlecenia_container');
+            container.innerHTML = '';
+
+            const zleceniaArray = (zleceniaRaw && zleceniaRaw.length > 5 && !zleceniaRaw.includes('Brak ukończonych')) ?
+                zleceniaRaw.split(', ') : [];
+
+            if (zleceniaArray.length > 0) {
+                zleceniaArray.forEach(z => {
+                    const tile = document.createElement('div');
+                    tile.className = 'tile';
+                    tile.innerHTML = `<strong>Zlecenie</strong>${z}`;
+                    tile.onclick = (e) => {
+                        e.stopPropagation();
+                        openModal_historyDetail(z);
+                    };
+                    container.appendChild(tile);
+                });
+            } else {
+                container.innerHTML = '<p style="grid-column: 1/-1; color: #999; font-style: italic;">Użytkownik nie posiada jeszcze historii zleceń.</p>';
+            }
+
+            document.getElementById('modal_profil_standard').style.display = 'block';
+        }
+
+        function closeModal_profil() {
+            document.getElementById('modal_profil_standard').style.display = 'none';
+        }
+
+        function openModal_historyDetail(title) {
+            document.getElementById('history_detail_title').textContent = title;
+            document.getElementById('history_detail_content').innerHTML = `
+                <p><strong>Typ usługi:</strong> ${title.replace('✨ ', '').replace('🧹 ', '')}</p>
+                <p>To zlecenie zostało zrealizowane pomyślnie i otrzymało pozytywną weryfikację w systemie Sprzontando.</p>
+                <p style="font-size: 0.9em; color: #666; margin-top: 10px;">Szczegóły historyczne są archiwizowane dla zachowania przejrzystości ocen.</p>
+            `;
+            document.getElementById('modal_history_detail').style.display = 'block';
+        }
+
+        function closeModal_historyDetail() {
+            document.getElementById('modal_history_detail').style.display = 'none';
         }
     </script>
 

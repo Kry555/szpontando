@@ -73,14 +73,13 @@
 
             <div class="rank-item {{ $klasa }}">
                 <div class="rank-number">{{ $ikona }}</div>
-                <img src="{{ asset('images/profilowe/' . ($w->profilowe ?? 'default.png')) }}" class="rank-photo">
-
+                <img src="{{ asset('images/profilowe/' . $w->profilowe) }}" class="rank-photo">
                 <div class="rank-info">
                     <h3 style="margin: 0;">{{ $w->nick }} @if($miejsce == 1) 👑 @endif</h3>
                     <small>{{ $w->miasto ?? 'Brak lokalizacji' }}</small>
                 </div>
 
-                <div class="rank-score">
+                <div class=" rank-score">
                     {{ $w->ocena }} / 5 ⭐
                 </div>
             </div>
