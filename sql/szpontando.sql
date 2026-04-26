@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 25, 2026 at 09:50 PM
+-- Generation Time: Apr 26, 2026 at 04:13 PM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.30
 
@@ -255,8 +255,8 @@ CREATE TABLE `profil` (
 INSERT INTO `profil` (`id_profil`, `nick`, `imie`, `nazwisko`, `data_ur`, `miasto`, `email_kontaktowy`, `ocena`, `profilowe`, `sex`) VALUES
 (1, 'jan321', 'jan', 'kowalski', '2008-03-22', 'goglin', 'janpv@email.com', NULL, '1774188185_kmicic.jpg', 'men'),
 (2, 'ala321', 'ala', 'berewiczówna', '2000-03-22', 'zawada', 'alapv@email.com', NULL, '1774188489_bb8f3b58a545b4436a036bc91b135dd5.jpg', 'women'),
-(3, 'chuj', 'chuj', 'chuj', '1000-04-25', 'opole', 'chujjjj@email', 4, NULL, 'women'),
-(4, 'chujj', 'chujj', 'chujj', '1000-04-25', 'opole', 'chujjjjjj@email', 4, NULL, 'women');
+(3, 'chuj', 'chuj', 'chuj', '1000-04-25', 'opole', 'chujjjj@email', 4, 'default.jpg', 'women'),
+(4, 'chujj', 'chujj', 'chujj', '1000-04-25', 'opole', 'chujjjjjj@email', 4, 'default.jpg', 'women');
 
 -- --------------------------------------------------------
 
@@ -278,7 +278,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('2DwxNA0cfoUapGp6T07NnnL5GtuoohYsNIHJYHD4', 4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiYmtuOGtqdTNtandWRjR6YXI2dzJKNkxMaEJCRVRJTFFUZ00yRnpOUyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJtYWluIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6NDt9', 1777153039);
+('EBqJKT5U96igNJMXkIjGTzAURmuM3o87fOCwwaQk', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiNmNjMm5mM2laOGZuZjE0cmxlRGpEVUp6YVBpUUgwQkRJVGhGODFsRiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC93b3JrLW9mZXJ0IjtzOjU6InJvdXRlIjtzOjEwOiJ3b3JrX29mZXJ0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mzt9', 1777219546);
 
 -- --------------------------------------------------------
 

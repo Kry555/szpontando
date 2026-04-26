@@ -99,15 +99,30 @@ class WorkOfertController extends Controller
             // Pobranie 3 ostatnich zakończonych (ustalonych) zleceń gospodarza
             $z->ostatnie_zlecenia = DB::table('zgloszenia')
                 ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
-                ->where('oferty.id_profil_owner', $z->id_profil_owner)
+                ->leftJoin('oceny', function ($join) {
+                    $join->on('oceny.id_zgloszenia', '=', 'zgloszenia.id_zgloszenia')
+                        ->where('oceny.rola', '=', 'pracownik'); // Opinia OD pracownika DLA gospodarza
+                })
+                ->leftJoin('profil as autor_opinii', 'oceny.id_profil_autor', '=', 'autor_opinii.id_profil')
+                ->join('profil as owner_oferty', 'oferty.id_profil_owner', '=', 'owner_oferty.id_profil')
+                ->where('oferty.id_profil_owner', $z->id_profil_owner) // Zmieniono na $z->id_profil_owner
                 ->whereNotNull('zgloszenia.ostateczny_termin')
                 ->orderBy('zgloszenia.ostateczny_termin', 'desc')
                 ->limit(3)
-                ->pluck('oferty.typ')
-                ->map(fn($t) => '🧹 ' . str_replace('_', ' ', $t))
-                ->implode(', ') ?: 'Brak ukończonych współprac';
+                ->select(
+                    'oferty.typ',
+                    'oferty.adres',
+                    'oferty.cena',
+                    'oferty.do_kiedy_wazne',
+                    'oferty.opis as oferta_opis',
+                    'oceny.gwiazdki',
+                    'oceny.opis as opinia_tekst',
+                    'autor_opinii.nick as autor_nick',
+                    'autor_opinii.profilowe as autor_foto'
+                )
+                ->get()
+                ->toJson(JSON_HEX_APOS | JSON_HEX_QUOT);
         }
-
         return view('workOfert', [
             'zgloszenia' => $zgloszenia,
             'zgloszeniaWybrane' => $zgloszeniaWybrane
