@@ -19,5 +19,9 @@
 @if(session('status'))
     <div>{{ session('status') }}</div>
 @endif
+<br>
+    <a href="{{ route('main') }}">
+        <button type="button">wróc na strone główną </button>
+    </a>
 </body>
 </html>

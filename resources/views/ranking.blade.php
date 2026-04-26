@@ -86,7 +86,7 @@
             @endforeach
 
             <div style="text-align: center; margin-top: 30px;">
-                <a href="{{ route('main') }}"><button>Wróć do ofert</button></a>
+                <a href="{{ route('main') }}"><button>Wróć na strone główną </button></a>
             </div>
     </div>
 </body>

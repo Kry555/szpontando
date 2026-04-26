@@ -88,13 +88,14 @@ public function sendResetLink(Request $request)
 }
 public function showResetForm(Request $request)
 {
-    return view('auth.reset-password', [
+    return view('reset-password', [
         'token' => $request->token,
         'email' => $request->email
     ]);
 }
 public function resetPassword(Request $request)
 {
+    $expires = 60; // minuty ważności tokena
     $request->validate([
         'email' => 'required|email',
         'password' => 'required|min:6|confirmed',
@@ -104,10 +105,18 @@ public function resetPassword(Request $request)
     $record = DB::table('password_resets')
         ->where('email', $request->email)
         ->first();
+$expires = 60; // minuty ważności tokena
+if (!$record) {
+    return back()->withErrors(['msg' => 'Nieprawidłowy token']);
+}
 
-    if (!$record || !Hash::check($request->token, $record->token)) {
-        return back()->withErrors(['msg' => 'Nieprawidłowy token']);
-    }
+if (Carbon::parse($record->created_at)->addMinutes($expires)->isPast()) {
+    return back()->withErrors(['msg' => 'Token wygasł']);
+}
+
+if (!Hash::check($request->token, $record->token)) {
+    return back()->withErrors(['msg' => 'Nieprawidłowy token']);
+}
 
     // update user password
     DB::table('users')
@@ -119,7 +128,16 @@ public function resetPassword(Request $request)
     // delete token
     DB::table('password_resets')->where('email', $request->email)->delete();
 
-    return redirect('/login')->with('status', 'Hasło zmienione!');
+    // wylogowanie innych sesji 
+    Auth::logoutOtherDevices($request->password);
+
+    // wylogowanie aktualnej sesji
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    // redirect
+    return redirect('/login')->with('status', 'Hasło zmienione! Zaloguj się ponownie.');
 }
 
 }

@@ -29,7 +29,7 @@ class RegisterController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'tapczan' => 'accepted',
         ], [
-            'tapczan.accepted' => 'Jesteś ruskim botem wypierdalaj',
+            'tapczan.accepted' => 'skibidi ',
         ]);
 
 
@@ -49,16 +49,12 @@ class RegisterController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'czy_admin' => 0,
-                'id_profil' => $profil_id,
-                'aktywny' => 1,
+                'id_profil' => $profil_id, 
+                'aktywny' => 0, // Konto nieaktywne do czasu aktywacji
             ]);
         });
 
-        echo " debil utworzony, ID: " . $user->id . "<br>";
-        // auth()->login($user) podswietla mi blad na tym
-        //Auth::login($user);
-        //echo "chuj zalogowany<br>";
-
-        return redirect('/')->with('success', 'Konto jebnięte wariacie');
+        echo " użytkownik utworzony, ID: " . $user->id . "<br>";
+        return redirect('/')->with('success', 'Konto utworzone, oczekuje na aktywację');
     }
 }
