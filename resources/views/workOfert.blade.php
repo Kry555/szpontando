@@ -57,7 +57,7 @@
         @endif
     </div>
 
-    <h2>Twoje zgłoszenia</h2>
+    <h2>Twoje zgłoszenia które oczekuja na zatwierdzenie</h2>
 
     @foreach($zgloszenia as $zgloszenie)
     @if($zgloszenie->wiadomosc)
@@ -120,15 +120,15 @@
 
         <!-- PROFIL -->
         <button class="profil-btn" onclick="openModal_profil(
-        '{{ $zgloszenie->nick }}',
-        '{{ asset('images/profilowe/' . $zgloszenie->profilowe) }}',
-        '{{ $zgloszenie->imie ?? '' }}',
-        '{{ $zgloszenie->nazwisko ?? '' }}',
-        '{{ $zgloszenie->miasto ?? '' }}',
-        '{{ $zgloszenie->email_kontaktowy ?? '' }}',
-        '{{ $zgloszenie->ocena ?? '' }}',
-        '{{ $zgloszenie->ostatnie_zlecenia ?? '' }}'
-    )">
+            '{{ $zgloszenie->nick }}',
+            '{{ asset('images/profilowe/' . $zgloszenie->profilowe) }}',
+            '{{ $zgloszenie->imie ?? "" }}',
+            '{{ $zgloszenie->nazwisko ?? "" }}',
+            '{{ $zgloszenie->miasto ?? "" }}',
+            '{{ $zgloszenie->email_kontaktowy ?? "" }}',
+            '{{ $zgloszenie->ocena ?? '0' }}',
+            '{{ $zgloszenie->ostatnie_zlecenia ?? "[]" }}'
+            )">
             <img src="{{ asset('images/profilowe/' . $zgloszenie->profilowe) }}" alt="Profilowe">
             <span>{{ $zgloszenie->nick }}</span>
         </button>
@@ -136,7 +136,7 @@
         <p><strong>Wiadomość:</strong> {{ $zgloszenie->wiadomosc ?? '' }}</p>
         <p><strong>Status:</strong> {{ $zgloszenie->status ?? $zgloszenie->zgloszenie_status ?? 'brak' }}</p>
 
-        <button type="button" onclick="openModal_termin()">Ustal termin</button>
+
         <div style="border:1px solid #ccc; padding:10px; margin-top:10px;">
 
             @if(isset($zgloszenie->proponowany_termin) && $zgloszenie->proponowany_termin)
@@ -204,15 +204,6 @@
     </div>
     @endforeach
 
-    <!-- ================= MODAL TERMIN ================= -->
-    <div id="modal_termin" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
-        <div style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative; border-radius:10px; text-align:center;">
-            <button onclick="closeModal_termin()" style="position:absolute; top:10px; right:10px;">✖</button>
-
-            <h2>Ustal termin</h2>
-            <p>Work in progress 🚧</p>
-        </div>
-    </div>
 
     <!-- MODAL PROFIL -->
     <div id="modal_profil_standard" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); z-index: 9998;">
@@ -264,15 +255,6 @@
 
 
     <script>
-        // ===== TERMIN =====
-        function openModal_termin() {
-            document.getElementById('modal_termin').style.display = 'block';
-        }
-
-        function closeModal_termin() {
-            document.getElementById('modal_termin').style.display = 'none';
-        }
-
         // ===== OFERTA =====
         function openModal_oferta(adres, typ, cena, wazne, opis, status) {
             document.getElementById('modal_adres').textContent = adres;
@@ -302,14 +284,18 @@
             const container = document.getElementById('modal_profil_zlecenia_container');
             container.innerHTML = '';
 
-            const zleceniaArray = (zleceniaRaw && zleceniaRaw.length > 5 && !zleceniaRaw.includes('Brak ukończonych')) ?
-                zleceniaRaw.split(', ') : [];
+            let zleceniaArray = [];
+            try {
+                zleceniaArray = JSON.parse(zleceniaRaw);
+            } catch (e) {
+                zleceniaArray = [];
+            }
 
             if (zleceniaArray.length > 0) {
                 zleceniaArray.forEach(z => {
                     const tile = document.createElement('div');
                     tile.className = 'tile';
-                    tile.innerHTML = `<strong>Zlecenie</strong>${z}`;
+                    tile.innerHTML = `<strong>Zlecenie</strong>${z.typ.replace('_', ' ')}`;
                     tile.onclick = (e) => {
                         e.stopPropagation();
                         openModal_historyDetail(z);
@@ -327,12 +313,35 @@
             document.getElementById('modal_profil_standard').style.display = 'none';
         }
 
-        function openModal_historyDetail(title) {
-            document.getElementById('history_detail_title').textContent = title;
+        function openModal_historyDetail(data) { // Przyjmuje cały obiekt danych
+            document.getElementById('history_detail_title').textContent = data.typ.replace('_', ' ');
+
+            let reviewHtml = '';
+            if (data.autor_nick) {
+                reviewHtml = `
+                    <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border-radius: 8px; border-left: 4px solid orange;">
+                        <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                            <img src="/images/profilowe/${data.autor_foto}" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px; border: 1px solid #ddd; object-fit: cover;">
+                            <strong>${data.autor_nick}</strong>
+                        </div>
+                        <p style="margin: 5px 0; color: #d4af37; font-weight: bold;">Ocena: ${data.gwiazdki} / 5 ⭐</p>
+                        <p style="margin: 5px 0; font-style: italic; color: #555;">"${data.opinia_tekst || 'Brak komentarza słownego'}"</p>
+                    </div>
+                `;
+            } else {
+                reviewHtml = `<p style="color: #999; font-style: italic; margin-top: 15px;">To zlecenie nie otrzymało jeszcze opinii.</p>`;
+            }
+
             document.getElementById('history_detail_content').innerHTML = `
-                <p><strong>Typ usługi:</strong> ${title.replace('✨ ', '').replace('🧹 ', '')}</p>
-                <p>To zlecenie zostało zrealizowane pomyślnie i otrzymało pozytywną weryfikację w systemie Sprzontando.</p>
-                <p style="font-size: 0.9em; color: #666; margin-top: 10px;">Szczegóły historyczne są archiwizowane dla zachowania przejrzystości ocen.</p>
+                <div style="text-align: left; background: #fdfdfd; padding: 15px; border: 1px solid #eee; border-radius: 8px;">
+                    <p style="margin: 5px 0;"><strong>Adres:</strong> ${data.adres || 'Brak'}</p>
+                    <p style="margin: 5px 0;"><strong>Cena:</strong> ${data.cena || '0'} zł</p>
+                    <p style="margin: 5px 0;"><strong>Ważne do:</strong> ${data.do_kiedy_wazne || 'Brak'}</p>
+                    <p style="margin: 5px 0;"><strong>Opis:</strong> ${data.oferta_opis || 'Brak opisu'}</p>
+                </div>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+                <p><strong>Opinia o tym użytkowniku:</strong></p>
+                ${reviewHtml}
             `;
             document.getElementById('modal_history_detail').style.display = 'block';
         }
