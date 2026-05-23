@@ -192,4 +192,28 @@ class OfertyController extends Controller
 
         return view('ranking', ['wykonawcy' => $wykonawcy]);
     }
+
+    public function zglosOferte(Request $request)
+    {
+        // Użytkownik musi być zalogowany
+        if (!Auth::check()) {
+            return back()->with('error', 'Musisz być zalogowany, aby zgłosić ofertę.');
+        }
+
+        $request->validate([
+            'id_oferty' => 'required|integer|exists:oferty,id_oferty',
+            'powod' => 'required|string|max:500'
+        ]);
+
+        $id_zgloszenia = DB::table('zgloszenia_naduzyc')->insertGetId([
+            'id_oferty' => $request->id_oferty,
+            'id_user_zgloszajacy' => Auth::id(),
+            'powod' => $request->powod,
+            'status' => 'nowe',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return back()->with('success', 'Oferta została zgłoszona do moderatora.');
+    }
 }

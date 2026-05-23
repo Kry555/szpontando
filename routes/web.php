@@ -8,6 +8,7 @@ use App\Http\Controllers\SetProfilController;
 use App\Http\Controllers\MyOfertController;
 use App\Http\Controllers\WorkOfertController;
 use App\Http\Controllers\OcenaController;
+use App\Http\Controllers\AdminController;
 
 
 
@@ -79,3 +80,17 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('
 Route::get('/ranking', [OfertyController::class, 'ranking'])->name('ranking');
 // email weryfikacyjny
 Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verify.email');
+
+// Grupa tras administratora
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/niskie-oceny', [AdminController::class, 'niskieOceny'])->name('niskie_oceny');
+    Route::post('/ban-user', [AdminController::class, 'banujUzytkownika'])->name('ban_user');
+    Route::post('/unban-user', [AdminController::class, 'odbanujUzytkownika'])->name('unban_user');
+    Route::get('/zgloszenia', [AdminController::class, 'zgloszoneOferty'])->name('zgloszenia');
+    Route::post('/rozpatrz-zgloszenie', [AdminController::class, 'rozpatrzZgloszenie'])->name('rozpatrz_zgloszenie');
+    Route::get('/user-stats', [AdminController::class, 'statystykiUzytkownika'])->name('user_stats');
+    Route::post('/ban-oferta', [AdminController::class, 'banujOferte'])->name('ban_oferta');
+    Route::post('/zglos-oferte', [OfertyController::class, 'zglosOferte'])->name('zglos_oferte');
+    Route::get('/logs', [AdminController::class, 'dziennikZdarzen'])->name('logs');
+});

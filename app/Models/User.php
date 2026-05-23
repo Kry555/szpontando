@@ -16,6 +16,8 @@ class User extends Authenticatable
         'czy_admin',
         'id_profil',
         'aktywny',
+        'zbanowany_do',
+        'powod_bana',
     ];
 
     protected $hidden = [
