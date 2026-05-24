@@ -484,77 +484,96 @@
     <!-- MODALE -->
     <div class="modale">
 
-        <!-- MODAL BAN -->
         <div id="modal_banuj"
-             style="
-                display:none;
-                position:fixed;
-                top:0;
-                left:0;
-                width:100%;
-                height:100%;
-                background:rgba(0,0,0,0.5);
-                z-index:1000;
-             ">
+    style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.5); z-index:1000;">
 
-            <div style="
-                background:#fff;
-                color:black;
-                padding:20px;
-                width:400px;
-                margin:100px auto;
-                border-radius:8px;
-            ">
+    <div style="background:#fff; color:black; padding:20px; width:400px;
+        margin:100px auto; border-radius:8px;">
 
-                <h2>
-                    Zbanuj ofertę
-                </h2>
+        <h2>Zbanuj ofertę</h2>
 
-                <form method="POST"
-                      action="{{ route('admin.banuj_oferte') }}">
+        <form method="POST" action="{{ route('admin.banuj_oferte') }}">
+            @csrf
 
-                    @csrf
+            <input type="hidden" name="id_oferty" id="banuj_oferta_id">
 
-                    <input type="hidden"
-                           name="id_oferty"
-                           id="banuj_oferta_id">
+            <label>Powód bana:</label>
 
-                    <label>
-                        Powód bana:
-                    </label>
+            <textarea
+                name="powod"
+                required
+                style="width:100%; height:100px; margin-top:10px;"
+                placeholder="Podaj powód zbanowania oferty..."></textarea>
 
-                    <textarea
-                        name="powod"
-                        required
-                        style="
-                            width:100%;
-                            height:100px;
-                            margin-top:10px;
-                        "
-                    ></textarea>
+            <br><br>
 
-                    <br><br>
+            <button type="submit"
+                style="background:black; color:white;">
+                Zbanuj ofertę
+            </button>
 
-                    <button type="submit"
-                            style="background:black; color:white;">
+            <button type="button" onclick="closeModal_banuj()">
+                Anuluj
+            </button>
+        </form>
+    </div>
+</div>
+            <div id="modal_zglos" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+                <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
+                    <h2>Wyślij wiadomość</h2>
 
-                        Zbanuj ofertę
+                    <form id="modal_form" method="POST" action="{{ route('oferta.wybierz') }}">
+                        @csrf
+                        <input type="hidden" name="oferta_id" id="modal_oferta_id" value="">
 
-                    </button>
+                        <label>Wiadomość:</label>
+                        <textarea name="wiadomosc" required style="width:100%; height:100px;"></textarea>
 
-                    <button type="button"
-                            onclick="closeModal_banuj()">
-
-                        Anuluj
-
-                    </button>
-
-                </form>
-
+                        <br><br>
+                        <button type="submit">Wyślij</button>
+                        <button type="button" onclick="closeModal_zglos()">Anuluj</button>
+                    </form>
+                </div>
             </div>
+            <div id="modal_Wiadomosci" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+                <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
+                    <h2>Wiadomosci</h2>
+                    @if(is_string($notf))
+                    <p>{{ $notf }}</p>
+                    @else
 
+                    @if($notf->isEmpty())
+                    <p>Brak nowych powiadomień</p>
+                    @else
+
+                    @foreach($notf as $wiadomosc)
+                    <div style="border-bottom:1px solid #ccc; margin-bottom:10px;">
+                        <strong>{{ $wiadomosc->tytul }}</strong>
+                        <p>{{ $wiadomosc->text }}</p>
+                    </div>
+                    @endforeach
+
+                    @endif
+                    @endif
+                    <button type="button" onclick="closeModal_Wiadomosci()">Anuluj</button>
+    </div>
         </div>
 
+        <div id="modal_naduzycie" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+                <div style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative; border-radius: 8px;">
+                    <h2>Zgłoś naruszenie oferty</h2>
+                    <form method="POST" action="{{ route('admin.zglos_oferte') }}">
+                        @csrf
+                        <input type="hidden" name="id_oferty" id="naduzycie_oferta_id">
+                        <label>Powód zgłoszenia:</label>
+                        <textarea name="powod" required style="width:100%; height:100px; margin-top:10px;" placeholder="Opisz dlaczego zgłaszasz tę ofertę..."></textarea>
+                        <br><br>
+                        <button type="submit" style="background: #dc3545; color: white;">Wyślij zgłoszenie</button>
+                        <button type="button" onclick="closeModal_naduzycie()">Anuluj</button>
+                    </form>
+                </div>
+            </div>
     </div>
 
     <!-- JS -->
