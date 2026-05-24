@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 24, 2026 at 12:31 PM
+-- Generation Time: May 24, 2026 at 02:05 PM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.30
 
@@ -216,7 +216,8 @@ INSERT INTO `oferty` (`id_oferty`, `id_profil_owner`, `adres`, `typ`, `cena`, `d
 (3, 2, 'opole', 'kuweta_kota', 150, '2067-02-22 12:00:00', 'mam kota', 'zaakceptowana', '2026-03-22 14:09:17', '2026-03-22 14:09:17'),
 (4, 2, 'opole', 'rower', 200, '2028-05-14 11:50:00', 'rower ryszarda, mocno ubłocony', 'zaakceptowana', '2026-03-22 14:10:54', '2026-03-22 14:10:54'),
 (10, 1, 'pawel', 'miejsce_zbrodni', 12344, '4567-03-21 07:09:00', '1234566', 'aktywna', '2026-05-24 11:33:20', '2026-05-24 11:33:20'),
-(11, 1, 'gliwice', 'miejsce_zbrodni', 132, '5678-04-01 09:56:00', '34567', 'zbanowana', '2026-05-24 12:26:48', '2026-05-24 12:26:48');
+(11, 1, 'gliwice', 'miejsce_zbrodni', 132, '5678-04-01 09:56:00', '34567', 'zbanowana', '2026-05-24 12:26:48', '2026-05-24 12:26:48'),
+(12, 2, 'asdfghjkl,', 'po_imprezie', 2137, '4567-03-12 08:06:00', 'asdfghjkl', 'aktywna', '2026-05-24 13:53:59', '2026-05-24 13:53:59');
 
 -- --------------------------------------------------------
 
@@ -309,7 +310,7 @@ CREATE TABLE `sessions` (
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
 ('a3gkzr2F7sLHHls8lFBW0TCmqgLctO2cmUhBCeJT', NULL, '192.168.5.26', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiazBFSXdXamFscnpFemZGM0hLbXNieXpQRG5hZzVpQ0VhMG12aEVqRCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjk6Imh0dHA6Ly8xOTIuMTY4LjUuNTo4MDAwL2xvZ2luIjtzOjU6InJvdXRlIjtzOjU6ImxvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1779624374),
 ('C6e9dJBxW7fd1NGkAee8n4EKWImdx6WNUhFX8eLl', 2, '192.168.5.26', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoia1BpVkdSeWdiOTJWSVZseXlQWFlPN0ZZMDV2MzJLZ0Qxdkdqdm5jaCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjM6Imh0dHA6Ly8xOTIuMTY4LjUuNTo4MDAwIjtzOjU6InJvdXRlIjtzOjQ6Im1haW4iO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToyO30=', 1779624273),
-('vdNOntxiYNG1ARVRRVVK3GW4pgBLbo79YskLFXz8', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiYWxjN2EyNjBIWkx2bUE3OVlKSlZmbzNJeXNnVHQ1VERMUW4xcDNUbiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi91c2VyLXN0YXRzIjtzOjU6InJvdXRlIjtzOjE2OiJhZG1pbi51c2VyX3N0YXRzIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1779625796);
+('q5L87aZAdyqbbjKDqMeMVQaKZqFK3Unzag9NEvtv', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiZXJkNDJmMDJENVRXUWs2c0xrSUlYT0JBTzJuRUFreFdnS1RMeDhUUiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi91c2VyLXN0YXRzIjtzOjU6InJvdXRlIjtzOjE2OiJhZG1pbi51c2VyX3N0YXRzIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1779631398);
 
 -- --------------------------------------------------------
 
@@ -390,7 +391,9 @@ CREATE TABLE `zgloszenia_naduzyc` (
 --
 
 INSERT INTO `zgloszenia_naduzyc` (`id_zgloszenia`, `id_oferty`, `id_user_zgloszajacy`, `powod`, `status`, `created_at`, `updated_at`) VALUES
-(1, 11, 2, 'pisze a czyszczeniu chuja', 'rozpatrzone', '2026-05-24 10:27:11', '2026-05-24 12:27:32');
+(1, 11, 2, 'pisze a czyszczeniu chuja', 'rozpatrzone', '2026-05-24 10:27:11', '2026-05-24 12:27:32'),
+(2, 11, 2, 'plascki', 'nowe', '2026-05-24 11:52:58', '2026-05-24 11:52:58'),
+(3, 12, 1, 'cycki', 'nowe', '2026-05-24 11:54:16', '2026-05-24 11:54:16');
 
 --
 -- Indexes for dumped tables
@@ -542,7 +545,7 @@ ALTER TABLE `oceny`
 -- AUTO_INCREMENT for table `oferty`
 --
 ALTER TABLE `oferty`
-  MODIFY `id_oferty` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_oferty` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `powiadomienia`
@@ -572,7 +575,7 @@ ALTER TABLE `zgloszenia`
 -- AUTO_INCREMENT for table `zgloszenia_naduzyc`
 --
 ALTER TABLE `zgloszenia_naduzyc`
-  MODIFY `id_zgloszenia` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_zgloszenia` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

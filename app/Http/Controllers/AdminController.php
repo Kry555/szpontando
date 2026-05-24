@@ -38,7 +38,14 @@ class AdminController extends Controller implements HasMiddleware
             ->orderBy('date', 'ASC')
             ->get();
 
-        return view('admin.dashboard', compact('stats', 'ofertyData'));
+        $usersStats = DB::table('users')
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as aggregate'))
+            ->where('created_at', '>=', now()->subDays(6)->startOfDay())
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get();
+
+        return view('admin.dashboard', compact('stats', 'ofertyData', 'usersStats'));
     }
 
     // Banowanie ogłoszenia z widoku ogłoszenia
@@ -79,6 +86,12 @@ class AdminController extends Controller implements HasMiddleware
             'dni' => 'required|integer|min:1',
             'powod' => 'required|string|max:255'
         ]);
+
+        // Blokada banowania adminów
+        $uzytkownik = DB::table('users')->where('id', $request->id_user)->first();
+        if ($uzytkownik && $uzytkownik->czy_admin) {
+            return back()->with('error', 'Nie można zbanować administratora!');
+        }
 
         // Uwaga: Zakładam istnienie kolumny 'zbanowany_do' w tabeli users
         DB::table('users')
@@ -164,13 +177,37 @@ class AdminController extends Controller implements HasMiddleware
     public function statystykiUzytkownika(Request $request)
     {
         $search = $request->input('search');
-        $user = DB::table('users')
-            ->join('profil', 'users.id_profil', '=', 'profil.id_profil')
-            ->where('users.nick', 'LIKE', "%$search%")
-            ->orWhere('users.id', $search)
-            ->select('users.*', 'profil.ocena')
-            ->first();
+        $query = DB::table('users')
+            ->leftJoin('profil', 'users.id_profil', '=', 'profil.id_profil')
+            ->select('users.id as id', 'users.nick', 'users.email', 'users.aktywny', 'users.zbanowany_do', 'users.created_at', 'users.id_profil', 'profil.ocena', 'profil.profilowe', 'profil.imie', 'profil.nazwisko', 'profil.miasto', 'profil.email_kontaktowy');
 
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('users.nick', 'LIKE', "%$search%")
+                  ->orWhere('users.id', '=', is_numeric($search) ? $search : null);
+            });
+        }
+
+        $allUsers = $query->get();
+
+        foreach ($allUsers as $u) {
+            $u->ostatnie_zlecenia = DB::table('zgloszenia')
+                ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
+                ->leftJoin('oceny', function ($join) {
+                    $join->on('oceny.id_zgloszenia', '=', 'zgloszenia.id_zgloszenia')
+                        ->where('oceny.rola', '=', 'gospodarz'); 
+                })
+                ->leftJoin('profil as autor_opinii', 'oceny.id_profil_autor', '=', 'autor_opinii.id_profil')
+                ->where('zgloszenia.id_profil_wykonawca', '=', $u->id_profil)
+                ->whereNotNull('zgloszenia.ostateczny_termin')
+                ->orderBy('zgloszenia.ostateczny_termin', 'desc')
+                ->limit(3)
+                ->select('oferty.typ', 'oferty.adres', 'oferty.cena', 'oferty.do_kiedy_wazne', 'oferty.opis as oferta_opis', 'oceny.gwiazdki', 'oceny.opis as opinia_tekst', 'autor_opinii.nick as autor_nick', 'autor_opinii.profilowe as autor_foto')
+                ->get()
+                ->toJson(JSON_HEX_APOS | JSON_HEX_QUOT);
+        }
+
+        $user = $search ? $allUsers->first() : null;
         $iloscOfert = $user ? DB::table('oferty')->where('id_profil_owner', $user->id_profil)->count() : 0;
         $zaakceptowaneOferty = $user ? DB::table('oferty')->where('id_profil_owner', $user->id_profil)->where('status', 'zaakceptowana')->count() : 0;
 
@@ -178,23 +215,62 @@ class AdminController extends Controller implements HasMiddleware
         if ($user) {
             $userLogs = DB::table('admin_logs')
                 ->join('users', 'admin_logs.admin_id', '=', 'users.id')
-                ->where('admin_logs.details', 'LIKE', '%ID: ' . $user->id . '%')
+                ->where('admin_logs.details', 'LIKE', '%Użytkownik ID: ' . $user->id . ' %')
                 ->select('admin_logs.*', 'users.nick as admin_nick')
                 ->orderBy('admin_logs.created_at', 'desc')
                 ->get();
         }
 
-        return view('admin.user_stats', compact('user', 'iloscOfert', 'zaakceptowaneOferty', 'userLogs'));
+        return view('admin.user_stats', compact('allUsers', 'user', 'iloscOfert', 'zaakceptowaneOferty', 'userLogs'));
     }
 
-    public function dziennikZdarzen()
-    {
-        $logi = DB::table('admin_logs')
-            ->join('users', 'admin_logs.admin_id', '=', 'users.id')
-            ->select('admin_logs.*', 'users.nick as admin_nick')
-            ->orderBy('admin_logs.created_at', 'desc')
-            ->get();
+public function dziennikZdarzen()
+{
+    $logi = DB::table('admin_logs')
 
-        return view('admin.logs', compact('logi'));
-    }
+        // admin wykonujący akcję
+        ->join('users as admins', 'admin_logs.admin_id', '=', 'admins.id')
+        ->leftJoin('profil as admin_profil', 'admins.id_profil', '=', 'admin_profil.id_profil')
+
+        // wyciąganie ID użytkownika z tekstu loga
+        ->leftJoin('users as target_user', DB::raw("
+            CAST(
+                SUBSTRING_INDEX(
+                    SUBSTRING_INDEX(admin_logs.details, 'Użytkownik ID: ', -1),
+                    ' ',
+                    1
+                ) AS UNSIGNED
+            )
+        "), '=', 'target_user.id')
+
+        ->leftJoin('profil as target_profil', 'target_user.id_profil', '=', 'target_profil.id_profil')
+
+        ->select(
+
+            'admin_logs.*',
+
+            // admin
+            'admins.nick as admin_nick',
+            'admin_profil.imie as admin_imie',
+            'admin_profil.nazwisko as admin_nazwisko',
+            'admin_profil.miasto as admin_miasto',
+            'admin_profil.profilowe as admin_profilowe',
+
+            // target user
+            'target_user.id as target_id',
+            'target_user.nick as target_nick',
+            'target_user.email',
+
+            'target_profil.imie',
+            'target_profil.nazwisko',
+            'target_profil.miasto',
+            'target_profil.profilowe',
+            'target_profil.ocena'
+        )
+
+        ->orderBy('admin_logs.created_at', 'desc')
+        ->get();
+
+    return view('admin.logs', compact('logi'));
+}
 }
