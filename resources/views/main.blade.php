@@ -130,14 +130,16 @@
             @foreach($oferty_przeglandarka as $oferta)
             <div class="oferty_przeglandarka">
                 <div class="informacje">
-                    <h3>{{ $oferta->typ }}</h3>
-                    <p><strong>Opis:</strong> {{ $oferta->opis }}</p>
-                    <p><strong>Cena:</strong> {{ $oferta->cena }} zł</p>
-                    <p><strong>Adres:</strong> {{ $oferta->adres }}</p>
-                    <p><strong>Ważne do:</strong> {{ $oferta->do_kiedy_wazne }}</p>
-                    <p><strong>Utworzone:</strong> {{ $oferta->created_at }}</p>
-                    <p><strong>Status:</strong> <span style="color: {{ $oferta->status == 'zbanowana' ? 'red' : ($oferta->status == 'aktywna' ? 'green' : 'orange') }}">{{ $oferta->status }}</span></p>
-                    <hr>
+                    <a href="{{ route('oferta.show', $oferta->id_oferty) }}" style="text-decoration: none; color: inherit;">
+                        <h3>{{ $oferta->typ }}</h3>
+                        <p><strong>Opis:</strong> {{ Str::limit($oferta->opis, 100) }}</p>
+                        <p><strong>Cena:</strong> {{ $oferta->cena }} zł</p>
+                        <p><strong>Adres:</strong> {{ $oferta->adres }}</p>
+                        <p><strong>Ważne do:</strong> {{ $oferta->do_kiedy_wazne }}</p>
+                        <p><strong>Utworzone:</strong> {{ $oferta->created_at }}</p>
+                        <p><strong>Status:</strong> <span style="color: {{ $oferta->status == 'zbanowana' ? 'red' : ($oferta->status == 'aktywna' ? 'green' : 'orange') }}">{{ $oferta->status }}</span></p>
+                        <hr>
+                    </a>
                     <p>
                         <strong>Autor:</strong>
                         {{ $oferta->imie }} {{ $oferta->nazwisko }}

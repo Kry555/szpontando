@@ -229,4 +229,126 @@ if ($request->filled('status')) {
 
         return back()->with('success', 'Oferta została zgłoszona do moderatora.');
     }
+
+    public function pokazOferte($id)
+    {
+        // Pobieramy dane oferty i profil właściciela
+        $oferta = DB::table('oferty')
+            ->join('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')
+            ->where('oferty.id_oferty', $id)
+            ->select(
+                'oferty.*',
+                'profil.nick as owner_nick',
+                'profil.imie as owner_imie',
+                'profil.nazwisko as owner_nazwisko',
+                'profil.miasto as owner_miasto',
+                'profil.email_kontaktowy as owner_email',
+                'profil.ocena as owner_ocena',
+                'profil.profilowe as owner_foto',
+                'profil.sex as owner_sex'
+            )
+            ->first();
+
+        if (!$oferta) {
+            return redirect()->route('main')->with('error', 'Oferta nie istnieje.');
+        }
+
+        $ownerIdProfil = $oferta->id_profil_owner; // Pobieramy ID profilu właściciela
+
+        // Pobieramy oferty stworzone przez tego właściciela
+        $ownerCreatedOffers = DB::table('oferty')
+            ->where('id_profil_owner', $ownerIdProfil)
+            ->orderBy('created_at', 'desc')
+            ->limit(5) // Ograniczamy do kilku ostatnich ofert
+            ->select(
+                'oferty.typ',
+                'oferty.adres',
+                'oferty.cena',
+                'oferty.do_kiedy_wazne',
+                'oferty.opis as oferta_opis' // Alias, aby pasowało do struktury z completed jobs
+            )
+            ->get()
+            ->toJson(JSON_HEX_APOS | JSON_HEX_QUOT); // Kodujemy do JSON dla łatwego przekazania do JS
+
+        // Pobieramy zlecenia wykonane przez tego właściciela jako wykonawcę
+        $ownerCompletedJobs = DB::table('zgloszenia')
+            ->join('oferty', 'zgloszenia.id_oferty', '=', 'oferty.id_oferty')
+            ->leftJoin('oceny', function ($join) {
+                $join->on('oceny.id_zgloszenia', '=', 'zgloszenia.id_zgloszenia')
+                    ->where('oceny.rola', '=', 'gospodarz'); // Opinia OD gospodarza DLA pracownika
+            })
+            ->leftJoin('profil as autor_opinii', 'oceny.id_profil_autor', '=', 'autor_opinii.id_profil')
+            ->where('zgloszenia.id_profil_wykonawca', $ownerIdProfil)
+            ->whereNotNull('zgloszenia.ostateczny_termin')
+            ->orderBy('zgloszenia.ostateczny_termin', 'desc')
+            ->limit(5) // Ograniczamy do kilku ostatnich wykonanych zleceń
+            ->select(
+                'oferty.typ',
+                'oferty.adres',
+                'oferty.cena',
+                'oferty.do_kiedy_wazne',
+                'oferty.opis as oferta_opis',
+                'oceny.gwiazdki',
+                'oceny.opis as opinia_tekst',
+                'autor_opinii.nick as autor_nick',
+                'autor_opinii.profilowe as autor_foto'
+            )
+            ->get()
+            ->toJson(JSON_HEX_APOS | JSON_HEX_QUOT); // Kodujemy do JSON dla łatwego przekazania do JS
+
+        // Sprawdzamy, czy zalogowany użytkownik już wysłał zgłoszenie do tej oferty
+        $juz_zgloszony = false;
+        if (Auth::check()) {
+            $juz_zgloszony = DB::table('zgloszenia')
+                ->where('id_oferty', $id)
+                ->where('id_profil_wykonawca', Auth::user()->id_profil)
+                ->exists();
+        }
+
+        // Pobieramy listę osób, które się zgłosiły do tej konkretnej oferty
+        $zgloszenia = DB::table('zgloszenia')
+            ->join('profil', 'zgloszenia.id_profil_wykonawca', '=', 'profil.id_profil')
+            ->where('zgloszenia.id_oferty', $id)
+            ->select(
+                'zgloszenia.*',
+                'profil.nick',
+                'profil.imie',
+                'profil.nazwisko',
+                'profil.profilowe',
+                'profil.ocena',
+                'profil.miasto'
+            )
+            ->get();
+
+        return view('oferta_details', compact('oferta', 'zgloszenia', 'juz_zgloszony', 'ownerCreatedOffers', 'ownerCompletedJobs'));
+    }
+
+    /**
+     * Wysyła wiadomość do innego użytkownika.
+     */
+    public function sendMessage(Request $request)
+    {
+        $request->validate([
+            'recipient_id_profil' => 'required|integer|exists:profil,id_profil',
+            'message_content' => 'required|string|max:1000',
+        ]);
+
+        $senderIdProfil = Auth::user()->id_profil;
+        $recipientIdProfil = $request->recipient_id_profil;
+        $messageContent = $request->message_content;
+
+        // Zabezpieczenie przed wysłaniem wiadomości do samego siebie
+        if ($senderIdProfil == $recipientIdProfil) {
+            return back()->with('error', 'Nie możesz wysłać wiadomości do samego siebie.');
+        }
+
+        // Na potrzeby tego zadania, wiadomość zostanie zapisana jako powiadomienie.
+        DB::table('powiadomienia')->insert([
+            'tytul' => 'Nowa wiadomość od ' . Auth::user()->nick,
+            'text' => $messageContent,
+            'odzcytane' => 0,
+            'id_user' => DB::table('users')->where('id_profil', $recipientIdProfil)->value('id'), // Pobieramy ID użytkownika z tabeli 'users' na podstawie 'id_profil'
+        ]);
+        return back()->with('success', 'Wiadomość została wysłana!');
+    }
 }
