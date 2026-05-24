@@ -9,7 +9,7 @@
     <!-- <link rel="stylesheet" href="{{ asset('css/stop_z_wypalaniem_gał.css') }}"> -->
     @vite('resources/css/stop_z_wypalaniem_gał.css')
     @vite('resources/css/main.css')
-    <!-- to jest do css tylko pamiętaj npm tun dev -->
+    <!-- to jest do css tylko pamiętaj npm tun dev -->      
 </head>
 
 <body>
