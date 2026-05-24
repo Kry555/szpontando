@@ -97,9 +97,11 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/ban-user', [AdminController::class, 'banujUzytkownika'])->name('ban_user');
     Route::post('/unban-user', [AdminController::class, 'odbanujUzytkownika'])->name('unban_user');
     Route::get('/zgloszenia', [AdminController::class, 'zgloszoneOferty'])->name('zgloszenia');
+    Route::get('/zbanowane-oferty', [AdminController::class, 'zbanowaneOferty'])->name('zbanowane_oferty');
     Route::post('/rozpatrz-zgloszenie', [AdminController::class, 'rozpatrzZgloszenie'])->name('rozpatrz_zgloszenie');
     Route::get('/user-stats', [AdminController::class, 'statystykiUzytkownika'])->name('user_stats');
-    Route::post('/ban-oferta', [AdminController::class, 'banujOferte'])->name('ban_oferta');
+    Route::post('/ban-oferta', [AdminController::class, 'banujOferte'])->name('banuj_oferte');
+    Route::post('/odbanuj-oferta', [AdminController::class, 'odbanujOferte'])->name('odbanuj_oferte');
     Route::post('/zglos-oferte', [OfertyController::class, 'zglosOferte'])->name('zglos_oferte');
     Route::get('/logs', [AdminController::class, 'dziennikZdarzen'])->name('logs');
 });

@@ -23,7 +23,8 @@ class OfertyController extends Controller
                 'oferty.cena',
                 'oferty.do_kiedy_wazne',
                 'oferty.opis',
-                'oferty.created_at'
+                'oferty.created_at',
+                'oferty.status'
             )->leftJoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil');
 
             //  FILTER
@@ -62,7 +63,8 @@ class OfertyController extends Controller
             'oferty.cena',
             'oferty.do_kiedy_wazne',
             'oferty.opis',
-            'oferty.created_at'
+            'oferty.created_at',
+            'oferty.status'
         )->leftJoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')
             ->where('oferty.id_profil_owner', '!=', $id);
 

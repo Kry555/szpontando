@@ -114,6 +114,7 @@
                     <p><strong>Adres:</strong> {{ $oferta->adres }}</p>
                     <p><strong>Ważne do:</strong> {{ $oferta->do_kiedy_wazne }}</p>
                     <p><strong>Utworzone:</strong> {{ $oferta->created_at }}</p>
+                    <p><strong>Status:</strong> <span style="color: {{ $oferta->status == 'zbanowana' ? 'red' : ($oferta->status == 'aktywna' ? 'green' : 'orange') }}">{{ $oferta->status }}</span></p>
                     <hr>
                     <p>
                         <strong>Autor:</strong>
@@ -127,16 +128,35 @@
 
                     @auth
                     @if($zgloszony)
-                    <button disabled style="background: #ccc; cursor: not-allowed;">
-                        Już zgłoszony
-                    </button>
+                        <button disabled style="background: #ccc; cursor: not-allowed;">
+                            Już zgłoszony
+                        </button>
+                    @elseif($oferta->status === 'aktywna')
+                        <button onclick="openModal_zglos({{ $oferta->id_oferty }})">
+                            Zgłoś się
+                        </button>
+                    @endif
+
+                    @if(auth()->user()->czy_admin)
+                        @if($oferta->status !== 'zbanowana')
+                            <button onclick="openModal_banuj({{ $oferta->id_oferty }})"
+                                style="background: black; color: white;">
+                                Zbanuj ofertę
+                            </button>
+                        @else
+                            <form action="{{ route('admin.odbanuj_oferte') }}" method="POST" style="display:inline;">
+                                @csrf
+                                <input type="hidden" name="id_oferty" value="{{ $oferta->id_oferty }}">
+                                <button type="submit" style="background: #28a745; color: white;">Odbanuj ofertę</button>
+                            </form>
+                        @endif
                     @else
-                    <button onclick="openModal_zglos({{ $oferta->id_oferty }})">
-                        Zgłoś się
-                    </button>
-                    <button onclick="openModal_naduzycie({{ $oferta->id_oferty }})" style="background: #dc3545; color: white;">
-                        Zgłoś naruszenie
-                    </button>
+                        @if($oferta->status === 'aktywna')
+                            <button onclick="openModal_naduzycie({{ $oferta->id_oferty }})"
+                                style="background: #dc3545; color: white;">
+                                Zgłoś naruszenie
+                            </button>
+                        @endif
                     @endif
                     @endauth
 
@@ -164,6 +184,42 @@
         </div>
         <div class="modale">
             <!-- modale_wyskakujące okienka -->
+             <!-- Modal banowania oferty -->
+<div id="modal_banuj"
+    style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.5); z-index:1000;">
+
+    <div style="background:#fff; color:black; padding:20px; width:400px;
+        margin:100px auto; border-radius:8px;">
+
+        <h2>Zbanuj ofertę</h2>
+
+        <form method="POST" action="{{ route('admin.banuj_oferte') }}">
+            @csrf
+
+            <input type="hidden" name="id_oferty" id="banuj_oferta_id">
+
+            <label>Powód bana:</label>
+
+            <textarea
+                name="powod"
+                required
+                style="width:100%; height:100px; margin-top:10px;"
+                placeholder="Podaj powód zbanowania oferty..."></textarea>
+
+            <br><br>
+
+            <button type="submit"
+                style="background:black; color:white;">
+                Zbanuj ofertę
+            </button>
+
+            <button type="button" onclick="closeModal_banuj()">
+                Anuluj
+            </button>
+        </form>
+    </div>
+</div>
             <div id="modal_zglos" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
                 <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
                     <h2>Wyślij wiadomość</h2>
@@ -222,6 +278,14 @@
             </div>
         </div>
     <script>
+        function openModal_banuj(ofertaId) {
+    document.getElementById('modal_banuj').style.display = 'block';
+    document.getElementById('banuj_oferta_id').value = ofertaId;
+}
+
+function closeModal_banuj() {
+    document.getElementById('modal_banuj').style.display = 'none';
+}
         function openModal_zglos(ofertaId) {
             document.getElementById('modal_zglos').style.display = 'block';
             document.getElementById('modal_oferta_id').value = ofertaId;

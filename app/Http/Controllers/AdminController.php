@@ -51,19 +51,105 @@ class AdminController extends Controller implements HasMiddleware
     // Banowanie ogłoszenia z widoku ogłoszenia
     public function banujOferte(Request $request)
     {
-        $request->validate(['id_oferty' => 'required|integer']);
+        $request->validate([
+            'id_oferty' => 'required|integer|exists:oferty,id_oferty',
+            'powod' => 'required|string|max:500'
+        ]);
+
+        $oferta = DB::table('oferty')->where('id_oferty', $request->id_oferty)->first();
+
+        if ($oferta->status === 'zbanowana') {
+            return back()->with('error', 'Ta oferta jest już zbanowana.');
+        }
 
         DB::table('oferty')
             ->where('id_oferty', $request->id_oferty)
-            ->update(['status' => 'zbanowana']);
+            ->update([
+                'status' => 'zbanowana',
+                'updated_at' => now()
+            ]);
+
+        // Powiadomienie właściciela
+        DB::table('powiadomienia')->insert([
+            'tytul' => 'Twoja oferta została zbanowana',
+            'text' => 'Oferta: ' . $oferta->typ . ' została zablokowana. Powód: ' . $request->powod,
+            'odzcytane' => 0,
+            'id_user' => DB::table('users')->where('id_profil', $oferta->id_profil_owner)->value('id')
+        ]);
 
         DB::table('admin_logs')->insert([
             'admin_id' => Auth::id(),
             'action' => 'Ban ogłoszenia',
-            'details' => 'Zbanowano ofertę o ID: ' . $request->id_oferty,
+            'details' => 'Zbanowano ofertę ID: ' . $request->id_oferty . '. Powód: ' . $request->powod,
         ]);
 
         return back()->with('success', 'Ogłoszenie zostało zbanowane.');
+    }
+
+    // Odbanowanie ogłoszenia
+    public function odbanujOferte(Request $request)
+    {
+        $request->validate([
+            'id_oferty' => 'required|integer|exists:oferty,id_oferty'
+        ]);
+
+        $oferta = DB::table('oferty')->where('id_oferty', $request->id_oferty)->first();
+
+        if ($oferta->status !== 'zbanowana') {
+            return back()->with('error', 'Ta oferta nie jest zbanowana.');
+        }
+
+        DB::table('oferty')
+            ->where('id_oferty', $request->id_oferty)
+            ->update([
+                'status' => 'aktywna',
+                'updated_at' => now()
+            ]);
+
+        DB::table('admin_logs')->insert([
+            'admin_id' => Auth::id(),
+            'action' => 'Odbanowanie ogłoszenia',
+            'details' => 'Przywrócono ofertę ID: ' . $request->id_oferty,
+        ]);
+
+        return back()->with('success', 'Ogłoszenie zostało przywrócone.');
+    }
+
+    // Widok zbanowanych ofert
+    public function zbanowaneOferty()
+    {
+        $oferty = DB::table('oferty')
+            ->join('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')
+            ->where('oferty.status', 'zbanowana')
+            ->select('oferty.*', 'profil.nick', 'profil.imie', 'profil.nazwisko', 'profil.profilowe', 'profil.miasto', 'profil.email_kontaktowy', 'profil.ocena')
+            ->orderBy('oferty.updated_at', 'desc')
+            ->get(); // Pobieramy oferty z podstawowymi danymi profilu właściciela
+
+        // Dla każdej oferty, pobieramy ostatnie zlecenia właściciela (jako wykonawcy)
+        foreach ($oferty as $o) {
+            $o->ostatnie_zlecenia = DB::table('zgloszenia')
+                ->join('oferty as zlecenia_oferty', 'zgloszenia.id_oferty', '=', 'zlecenia_oferty.id_oferty')
+                ->leftJoin('oceny', function ($join) {
+                    $join->on('oceny.id_zgloszenia', '=', 'zgloszenia.id_zgloszenia')
+                        ->where('oceny.rola', '=', 'gospodarz'); // Opinia OD gospodarza DLA pracownika
+                })
+                ->leftJoin('profil as autor_opinii', 'oceny.id_profil_autor', '=', 'autor_opinii.id_profil')
+                ->where('zgloszenia.id_profil_wykonawca', $o->id_profil_owner) // Szukamy zleceń, gdzie właściciel oferty był wykonawcą
+                ->whereNotNull('zgloszenia.ostateczny_termin')
+                ->orderBy('zgloszenia.ostateczny_termin', 'desc')
+                ->limit(3)
+                ->select(
+                    'zlecenia_oferty.typ',
+                    'zlecenia_oferty.adres',
+                    'zlecenia_oferty.cena',
+                    'zlecenia_oferty.do_kiedy_wazne',
+                    'zlecenia_oferty.opis as oferta_opis',
+                    'oceny.gwiazdki', 'oceny.opis as opinia_tekst', 'autor_opinii.nick as autor_nick', 'autor_opinii.profilowe as autor_foto'
+                )
+                ->get()->toJson(JSON_HEX_APOS | JSON_HEX_QUOT);
+        }
+
+        return view('admin.zbanowane', compact('oferty'));
     }
 
     // Widok z UŻ o niskich ocenach
