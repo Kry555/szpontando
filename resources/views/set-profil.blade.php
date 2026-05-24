@@ -164,7 +164,7 @@
     <button type="submit">Zmień hasło</button>
 </form>
 </button>
-</form>
+</form>s
             <!-- tu bendzie dwa guzki zmien email i zmien haslo -->
 
             <button type="button" onclick="closeModal_change_users()">Anuluj</button>
@@ -227,12 +227,9 @@ function openModal_change_email() {
     });
 </script>
 @endif
-    @endauth
 
     @endauth
-    <a href="{{ route('main') }}">
-        <button type="button">wróc na strone główną </button>
-    </a>
+
 </body>
 
 </html>
