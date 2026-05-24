@@ -9,6 +9,7 @@ use App\Http\Controllers\MyOfertController;
 use App\Http\Controllers\WorkOfertController;
 use App\Http\Controllers\OcenaController;
 use App\Http\Controllers\EmailChangeController;
+use App\Http\Controllers\AdminController;
 
 
 
@@ -86,4 +87,18 @@ Route::post('/change-email/request', [EmailChangeController::class, 'requestChan
 Route::get('/change-email/verify-old', [EmailChangeController::class, 'verifyOldEmail'])->name('email.change.verify.old');
 Route::post('/change-email/send-new', [EmailChangeController::class, 'sendNewEmailVerification'])->name('email.change.send.new');
 Route::get('/change-email/confirm-new', [EmailChangeController::class, 'confirmNewEmail'])->name('email.change.confirm.new');
+});
+
+// Grupa tras administratora
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/niskie-oceny', [AdminController::class, 'niskieOceny'])->name('niskie_oceny');
+    Route::post('/ban-user', [AdminController::class, 'banujUzytkownika'])->name('ban_user');
+    Route::post('/unban-user', [AdminController::class, 'odbanujUzytkownika'])->name('unban_user');
+    Route::get('/zgloszenia', [AdminController::class, 'zgloszoneOferty'])->name('zgloszenia');
+    Route::post('/rozpatrz-zgloszenie', [AdminController::class, 'rozpatrzZgloszenie'])->name('rozpatrz_zgloszenie');
+    Route::get('/user-stats', [AdminController::class, 'statystykiUzytkownika'])->name('user_stats');
+    Route::post('/ban-oferta', [AdminController::class, 'banujOferte'])->name('ban_oferta');
+    Route::post('/zglos-oferte', [OfertyController::class, 'zglosOferte'])->name('zglos_oferte');
+    Route::get('/logs', [AdminController::class, 'dziennikZdarzen'])->name('logs');
 });

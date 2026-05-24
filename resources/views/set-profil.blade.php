@@ -66,6 +66,9 @@
 <div id="modal_change" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
     <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
         <h1>Edytuj profil</h1>
+    <div id="modal_change" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+        <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
+            <h1>Edytuj profil</h1>
             <form method="POST" action="{{ route('set_profil.post') }}" enctype="multipart/form-data">
                 @csrf
 
@@ -144,6 +147,7 @@
 
         </div>
     </div>
+
     <div id="modal_change_users" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
         <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
             <h1>Edytuj dane logowania</h1>
@@ -156,6 +160,11 @@
     <button type="submit">Zmień hasło</button>
 </form>
 
+<form method="GET" action="{{ route('password.request') }}">
+    <button type="submit">Zmień hasło</button>
+</form>
+</button>
+</form>
             <!-- tu bendzie dwa guzki zmien email i zmien haslo -->
 
             <button type="button" onclick="closeModal_change_users()">Anuluj</button>
@@ -203,6 +212,7 @@ function openModal_change_email() {
 }
 
 </script>
+ 
     @if($errors->any())
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -219,6 +229,7 @@ function openModal_change_email() {
 @endif
     @endauth
 
+    @endauth
     <a href="{{ route('main') }}">
         <button type="button">wróc na strone główną </button>
     </a>
