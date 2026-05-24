@@ -27,6 +27,13 @@
         </div>
         @endif
 
+        <!-- Komunikaty o banie -->
+        @if (session('error'))
+        <div style="color:red; font-weight:bold; margin-bottom: 10px;">
+            {{ session('error') }}
+        </div>
+        @endif
+
         <!-- Błędy -->
         @if($errors->any())
         <div class="error">

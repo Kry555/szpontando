@@ -40,6 +40,12 @@
     <a href="{{ route('work_ofert') }}">
         <button type="button">Twoje zgłoszenia</button>
     </a>
+    //test
+    @if(auth()->user()->czy_admin)
+    <a href="{{ route('admin.dashboard') }}">
+        <button type="button" style="background: #dc3545; color: white;">Panel Admina</button>
+    </a>
+    @endif
 
     <button onclick="openModal_Wiadomosci()">
         Wiadomosci ({{ is_string($notf) ? 0 : $notf->count() }})

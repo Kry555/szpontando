@@ -28,27 +28,30 @@ class AuthController extends Controller
         ]);
 
         $user = \App\Models\User::where('email', $request->email)->first();
-        if ($user && $user->aktywny == 0) {
-            // Konto istnieje, ale nieaktywne → wyświetlamy komunikat
-            return back()->with('warning', 'Aktywuj konto');
 
-        // Sprawdzenie czy użytkownik ma czasowego bana
-        if ($user && $user->zbanowany_do && now()->lessThan($user->zbanowany_do)) {
-            $komunikat = 'Twoje konto jest zablokowane do: ' . $user->zbanowany_do;
-            if ($user->powod_bana) $komunikat .= '. Powód: ' . $user->powod_bana;
-            return back()->with('error', $komunikat);
-        }
+        if ($user) {
+            // 1. Najpierw sprawdzamy czy jest aktywny ban (priorytet)
+            if ($user->zbanowany_do && now()->lessThan($user->zbanowany_do)) {
+                $komunikat = 'Twoje konto jest zablokowane do: ' . $user->zbanowany_do;
+                if ($user->powod_bana) {
+                    $komunikat .= '. Powód: ' . $user->powod_bana;
+                }
+                return back()->with('error', $komunikat);
+            }
 
-        // Jeśli ban minął, a konto było nieaktywne (aktywny=0), przywracamy je
-        if ($user && $user->zbanowany_do && now()->greaterThan($user->zbanowany_do) && $user->aktywny == 0) {
-            $user->update(['aktywny' => 1, 'zbanowany_do' => null, 'powod_bana' => null]);
-        }
+            // 2. Jeśli ban minął, przywracamy konto (ustawiamy aktywny na 1)
+            if ($user->zbanowany_do && now()->greaterThan($user->zbanowany_do)) {
+                $user->update([
+                    'aktywny' => 1,
+                    'zbanowany_do' => null,
+                    'powod_bana' => null
+                ]);
+            }
 
-        if ($user && $user->aktywny == 0) {
-            // Konto istnieje, ale nieaktywne → wyświetlamy komunikat
-            $komunikat = 'Twoje konto jest nieaktywne.';
-            if ($user->powod_bana) $komunikat .= ' Powód: ' . $user->powod_bana;
-            return back()->with('warning', $komunikat);
+            // 3. Dopiero teraz sprawdzamy czy konto jest nieaktywne (np. po rejestracji)
+            if ($user->aktywny == 0) {
+                return back()->with('warning', 'Konto nie zostało jeszcze aktywowane. Sprawdź e-mail.');
+            }
         }
 
         //tu sie dzieje magia z sprawdzeniem hasla i emaila czy prawidlowy

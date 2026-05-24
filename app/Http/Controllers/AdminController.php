@@ -85,7 +85,7 @@ class AdminController extends Controller implements HasMiddleware
             ->where('id', $request->id_user)
             ->update([
                 'aktywny' => 0,
-                'zbanowany_do' => now()->addDays($request->dni),
+                'zbanowany_do' => now()->addDays((int) $request->dni),
                 'powod_bana' => $request->powod
             ]);
 
