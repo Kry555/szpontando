@@ -130,7 +130,6 @@ return back()->with('status', 'Email wysłany na stary adres.');
             ->where('id', $record->id)
             ->delete();
 
-        return redirect('/profil')
-            ->with('status', 'Email zmieniony!');
+        return view('email-change-success');
     }
 }

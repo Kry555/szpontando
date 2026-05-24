@@ -86,8 +86,9 @@ Route::middleware('auth')->group(function () {
 Route::post('/change-email/request', [EmailChangeController::class, 'requestChange'])->name('email.change.request');
 Route::get('/change-email/verify-old', [EmailChangeController::class, 'verifyOldEmail'])->name('email.change.verify.old');
 Route::post('/change-email/send-new', [EmailChangeController::class, 'sendNewEmailVerification'])->name('email.change.send.new');
-Route::get('/change-email/confirm-new', [EmailChangeController::class, 'confirmNewEmail'])->name('email.change.confirm.new');
 });
+Route::get('/change-email/confirm-new', [EmailChangeController::class, 'confirmNewEmail'])->name('email.change.confirm.new');
+
 
 // Grupa tras administratora
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
