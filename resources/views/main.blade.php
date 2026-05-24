@@ -109,71 +109,155 @@
     </a>
 
     <!-- FILTRY -->
-    <form method="GET" action="{{ route('main') }}">
+<form method="GET" action="{{ route('main') }}">
 
-        <label>Cena od:</label>
-<input type="number" name="cena_min" value="{{ request('cena_min') }}" min="0"
-       style="width:60px">
-        <label>Cena do:</label>
-        <input type="number" name="cena_max" value="{{ request('cena_max') }}" min="0"style="width:60px">
-        <label>wybierz miasto:</label>
-        <form method="GET" action="{{ route('main') }}"> 
-            <input type="text" id="miasto" name="miasto" value="{{ request('miasto') }}" autocomplete="off"style="width:100px">
-            <label for="typ">Filtruj po typie:</label>
+    <label>Cena od:</label>
+    <input type="number" name="cena_min"
+           value="{{ request('cena_min') }}"
+           min="0"
+           style="width:60px">
 
-        <input type="number"
-               name="cena_max"
-               value="{{ request('cena_max') }}"
-               min="0">
+    <label>Cena do:</label>
+    <input type="number" name="cena_max"
+           value="{{ request('cena_max') }}"
+           min="0"
+           style="width:60px">
 
-            <select name="typ" id="typ"style="width:120px">
-                <option value="">-- Wszystkie --</option>
+    <label>Miasto:</label>
+    <input type="text"
+           name="miasto"
+           value="{{ request('miasto') }}"
+           autocomplete="off"
+           style="width:100px">
+<label for="typ">Typ oferty</label>
 
-        <input type="text"
-               id="miasto"
-               name="miasto"
-               value="{{ request('miasto') }}"
-               autocomplete="off">
+<select name="typ" id="typ">
 
-        <label for="typ">
-            Filtruj po typie:
-        </label>
+    <option value="">-- Wszystkie --</option>
 
-        <select name="typ" id="typ">
+    <optgroup label="Podstawowe">
 
-                <optgroup label="Inne">
-                    <option value="mycie_okien" {{ request('typ') == 'mycie_okien' ? 'selected' : '' }}>Mycie okien</option>
-                    <option value="garaż_piwnica" {{ request('typ') == 'garaż_piwnica' ? 'selected' : '' }}>Garaż / piwnica</option>
-                        <option value="ogród_tarasy" {{ request('typ') == 'ogród_tarasy' ? 'selected' : '' }}>Ogród / tarasy</option>
-                        <option value="dezynfekcja" {{ request('typ') == 'dezynfekcja' ? 'selected' : '' }}>Dezynfekcja</option>
-                    </optgroup>
-                </select>
-            <label for="status">Status:</label>
-
-<label for="status">Status:</label>
-
-<select name="status" id="status">
-<option value="wszystkie" {{ request('status', 'aktywna') == 'wszystkie' ? 'selected' : '' }}>
-    -- Wszystkie --
+<option value="samochod"
+    {{ request('typ') == 'samochod' ? 'selected' : '' }}>
+    Samochód
 </option>
 
-<option value="aktywna" {{ request('status', 'aktywna') == 'aktywna' ? 'selected' : '' }}>
-    Aktywne
-</option>
-    <option value="zaakceptowana" {{ request('status') == 'zaakceptowana' ? 'selected' : '' }}>
-        zaakceptowane
-    </option>
-    <option value="anulowane" {{ request('status') == 'anulowane' ? 'selected' : '' }}>
-        Anulowane
-    </option>
+        <option value="rower"
+            {{ request('typ') == 'rower' ? 'selected' : '' }}>
+            Rower
+        </option>
 
-    <option value="zbanowana" {{ request('status') == 'zbanowana' ? 'selected' : '' }}>
-        Zbanowane
-    </option>
+        <option value="caly_dom"
+            {{ request('typ') == 'caly_dom' ? 'selected' : '' }}>
+            Cały dom
+        </option>
+
+        <option value="wybrane_pomieszczenia"
+            {{ request('typ') == 'wybrane_pomieszczenia' ? 'selected' : '' }}>
+            Wybrane pomieszczenia
+        </option>
+
+    </optgroup>
+
+    <optgroup label="Specjalistyczne">
+
+        <option value="brud_ciezki_przemyslowy"
+            {{ request('typ') == 'brud_ciezki_przemyslowy' ? 'selected' : '' }}>
+            Brud ciężki (przemysłowy)
+        </option>
+
+        <option value="miejsce_zbrodni"
+            {{ request('typ') == 'miejsce_zbrodni' ? 'selected' : '' }}>
+            Miejsce zbrodni
+        </option>
+
+        <option value="po_remoncie"
+            {{ request('typ') == 'po_remoncie' ? 'selected' : '' }}>
+            Po remoncie
+        </option>
+
+        <option value="po_imprezie"
+            {{ request('typ') == 'po_imprezie' ? 'selected' : '' }}>
+            Po imprezie
+        </option>
+
+    </optgroup>
+
+    <optgroup label="Zwierzęta">
+
+        <option value="zwierzece_zabrudzenia"
+            {{ request('typ') == 'zwierzece_zabrudzenia' ? 'selected' : '' }}>
+            Zwierzęce zabrudzenia
+        </option>
+
+        <option value="sprzatanie_po_psie"
+            {{ request('typ') == 'sprzatanie_po_psie' ? 'selected' : '' }}>
+            Sprzątanie po psie
+        </option>
+
+        <option value="kuweta_kota"
+            {{ request('typ') == 'kuweta_kota' ? 'selected' : '' }}>
+            Kuweta kota
+        </option>
+
+    </optgroup>
+
+    <optgroup label="Inne przydatne">
+
+        <option value="mycie_okien"
+            {{ request('typ') == 'mycie_okien' ? 'selected' : '' }}>
+            Mycie okien
+        </option>
+
+        <option value="garaz_piwnica"
+            {{ request('typ') == 'garaz_piwnica' ? 'selected' : '' }}>
+            Garaż / piwnica
+        </option>
+
+        <option value="ogrod_tarasy"
+            {{ request('typ') == 'ogrod_tarasy' ? 'selected' : '' }}>
+            Ogród / tarasy
+        </option>
+
+        <option value="dezynfekcja"
+            {{ request('typ') == 'dezynfekcja' ? 'selected' : '' }}>
+            Dezynfekcja
+        </option>
+
+    </optgroup>
 
 </select>
-            <button type="submit">Filtruj</button>
-        </form>
+
+    <label for="status">Status:</label>
+    <select name="status" id="status">
+
+        <option value="wszystkie"
+            {{ request('status', 'aktywna') == 'wszystkie' ? 'selected' : '' }}>
+            -- Wszystkie --
+        </option>
+
+        <option value="aktywna"
+            {{ request('status', 'aktywna') == 'aktywna' ? 'selected' : '' }}>
+            Aktywne
+        </option>
+
+        <option value="zaakceptowana"
+            {{ request('status') == 'zaakceptowana' ? 'selected' : '' }}>
+            Zaakceptowane
+        </option>
+
+        <option value="anulowane"
+            {{ request('status') == 'anulowane' ? 'selected' : '' }}>
+            Anulowane
+        </option>
+
+        <option value="zbanowana"
+            {{ request('status') == 'zbanowana' ? 'selected' : '' }}>
+            Zbanowane
+        </option>
+    </select>
+    <button type="submit">Filtruj</button>
+</form>
         <div class="oferty">
             @foreach($oferty_przeglandarka as $oferta)
             <div class="oferty_przeglandarka">
