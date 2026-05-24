@@ -86,7 +86,7 @@
         <form method="POST" action="{{ route('zakonczOfert.post') }}">
             @csrf
             <input type="hidden" name="id_oferty" value="{{ $oferta->id_oferty }}">
-            <button type="submit" @if($oferta->status == 'anulowane') disabled @endif>
+            <button type="submit"@if($oferta->status == 'anulowane' || $oferta->status == 'zbanowana')disabled @endif>
                 Zakończ ofertę
             </button>
         </form>
@@ -142,7 +142,7 @@
             </button>
         </form>
 
-        {{-- 🔥 NEGOCJACJA TERMINU (TU MA BYĆ!) --}}
+        {{--  NEGOCJACJA TERMINU (TU MA BYĆ!) --}}
         @if($zgloszenie->zatwierdzone)
 
         <div style="border:1px solid #ccc; padding:10px; margin-top:10px;">
@@ -154,11 +154,11 @@
             @if(empty($zgloszenie->ostateczny_termin))
             <p>
                 @if(empty($zgloszenie->proponowany_termin))
-                🔴 <strong>Status:</strong> Musisz zaproponować termin, aby rozpocząć ustalenia.
+                 <strong>Status:</strong> Musisz zaproponować termin, aby rozpocząć ustalenia.
                 @elseif(!$zgloszenie->termin_zaakceptowany_wlasciciel && $zgloszenie->termin_zaakceptowany_wykonawca)
-                ⚠️ <strong>Status:</strong> Wykonawca zaproponował/zmienił termin - Twoja decyzja.
+                 <strong>Status:</strong> Wykonawca zaproponował/zmienił termin - Twoja decyzja.
                 @elseif($zgloszenie->termin_zaakceptowany_wlasciciel && !$zgloszenie->termin_zaakceptowany_wykonawca)
-                ⏳ <strong>Status:</strong> Oczekiwanie na decyzję wykonawcy.
+                 <strong>Status:</strong> Oczekiwanie na decyzję wykonawcy.
                 @endif
             </p>
             @endif
@@ -178,7 +178,7 @@
             <form method="POST" action="{{ route('acceptTerminOwner') }}" style="display:inline;">
                 @csrf
                 <input type="hidden" name="id_zgloszenia" value="{{ $zgloszenie->id_zgloszenia }}">
-                <button type="submit">✅ Akceptuj</button>
+                <button type="submit">Akceptuj</button>
             </form>
             @endif
 

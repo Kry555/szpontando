@@ -23,14 +23,14 @@ class OfertyController extends Controller
                 'oferty.cena',
                 'oferty.do_kiedy_wazne',
                 'oferty.opis',
-                'oferty.created_at'
+                'oferty.created_at',
+                'oferty.status'
             )->leftJoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil');
 
             //  FILTER
             if ($request->filled('typ')) {
                 $query->where('oferty.typ', $request->typ);
             }
-            //  FILTER CENA
             if ($request->filled('cena_min')) {
                 $query->where('oferty.cena', '>=', $request->cena_min);
             }
@@ -41,6 +41,9 @@ class OfertyController extends Controller
             if ($request->filled('miasto')) {
                 $query->where('oferty.adres', 'LIKE', $request->miasto . '%');
             }
+if ($request->filled('status')) {
+    $query->where('oferty.status', $request->status);
+}
             $dane = $query->orderBy('oferty.created_at', 'desc')->get();
             //musi byc bo blad
             $komuch = '';
@@ -62,17 +65,27 @@ class OfertyController extends Controller
             'oferty.cena',
             'oferty.do_kiedy_wazne',
             'oferty.opis',
-            'oferty.created_at'
+            'oferty.created_at',
+            'oferty.status'
         )->leftJoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')
             ->where('oferty.id_profil_owner', '!=', $id);
 
         //  FILTER
+        if ($request->filled('cena_min')) {
+            $query->where('oferty.cena', '>=', $request->cena_min);
+        }
+        if ($request->filled('cena_max')) {
+            $query->where('oferty.cena', '<=', $request->cena_max);
+        }
         if ($request->filled('typ')) {
             $query->where('oferty.typ', $request->typ);
         }
         if ($request->filled('miasto')) {
             $query->where('oferty.adres', 'LIKE', $request->miasto . '%');
         }
+if ($request->filled('status')) {
+    $query->where('oferty.status', $request->status);
+}
         //tutaj
         function miasta(Request $request)
         {
