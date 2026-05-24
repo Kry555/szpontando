@@ -2,4 +2,4 @@
 
 <p>Kliknij link:</p>
 
-<a href="{{ $link }}">Reset password</a>
+<a href="{{ $link }}">Resetowanie hasła</a>

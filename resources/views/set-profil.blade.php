@@ -32,9 +32,40 @@
         Edytuj dane logowania
     </button>
 
-    <div id="modal_change" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
-        <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
-            <h1>Edytuj profil</h1>
+<div id="modal_change_email"
+     style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+
+    <div style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
+
+        <h1>Zmień email</h1>
+
+        <form id="emailChangeForm" method="POST" action="{{ route('email.change.request') }}">
+            @csrf
+
+            <label>Podaj hasło:</label><br>
+            <input type="password" name="password" required><br><br>
+
+            <button type="submit">Wyślij link potwierdzający na stary email</button>
+        </form>
+        <button type="button" onclick="goBackToUsersModal()">Wróć</button>
+    </div>
+</div>
+<div id="modal_email_sent"
+     style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.5);">
+
+    <div style="background:#fff; color:black; padding:20px; width:400px;
+                margin:100px auto; text-align:center;">
+
+        <p>Link do zmiany email został wysłany na Twój aktualny adres.</p>
+
+        <button onclick="closeEmailSentModal()">Wróć</button>
+    </div>
+</div>
+
+<div id="modal_change" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+    <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
+        <h1>Edytuj profil</h1>
             <form method="POST" action="{{ route('set_profil.post') }}" enctype="multipart/form-data">
                 @csrf
 
@@ -113,23 +144,28 @@
 
         </div>
     </div>
-
     <div id="modal_change_users" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
         <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
             <h1>Edytuj dane logowania</h1>
 
+<button type="button" onclick="openModal_change_email()">
+    Zmień email
+</button>
+
 <form method="GET" action="{{ route('password.request') }}">
     <button type="submit">Zmień hasło</button>
 </form>
-</button>
-</form>
+
             <!-- tu bendzie dwa guzki zmien email i zmien haslo -->
 
             <button type="button" onclick="closeModal_change_users()">Anuluj</button>
         </div>
     </div>
-
     <script>
+    function closeModal_change_email() {
+        document.getElementById('modal_change_email').style.display = 'none';
+    }
+
         function openModal_change() {
             document.getElementById('modal_change').style.display = 'block';
         }
@@ -145,7 +181,28 @@
         function closeModal_change_users() {
             document.getElementById('modal_change_users').style.display = 'none';
         }
-    </script>
+        function openEmailSentModal() {
+    document.getElementById('modal_email_sent').style.display = 'block';
+}
+
+
+function closeEmailSentModal() {
+    document.getElementById('modal_email_sent').style.display = 'none';
+}
+
+    function goBackToUsersModal() {
+        closeModal_change_email();
+        openModal_change_users();
+    }
+
+function openModal_change_email() {
+    closeModal_change_users();
+    document.getElementById('modal_change_email').style.display = 'block';
+
+    document.getElementById('emailChangeForm').reset();
+}
+
+</script>
     @if($errors->any())
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -153,7 +210,15 @@
         });
     </script>
     @endif
+        @if(session('status'))
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        openEmailSentModal();
+    });
+</script>
+@endif
     @endauth
+
     <a href="{{ route('main') }}">
         <button type="button">wróc na strone główną </button>
     </a>

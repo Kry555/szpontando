@@ -102,6 +102,6 @@ class SetProfilController extends Controller
             ]);
         });
 
-        return redirect()->route('set_profil');
+        return back()->with('email_sent', true);
     }
 }

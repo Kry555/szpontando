@@ -8,6 +8,7 @@ use App\Http\Controllers\SetProfilController;
 use App\Http\Controllers\MyOfertController;
 use App\Http\Controllers\WorkOfertController;
 use App\Http\Controllers\OcenaController;
+use App\Http\Controllers\EmailChangeController;
 
 
 
@@ -79,3 +80,10 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('
 Route::get('/ranking', [OfertyController::class, 'ranking'])->name('ranking');
 // email weryfikacyjny
 Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verify.email');
+// zmiana emailu
+Route::middleware('auth')->group(function () {
+Route::post('/change-email/request', [EmailChangeController::class, 'requestChange'])->name('email.change.request');
+Route::get('/change-email/verify-old', [EmailChangeController::class, 'verifyOldEmail'])->name('email.change.verify.old');
+Route::post('/change-email/send-new', [EmailChangeController::class, 'sendNewEmailVerification'])->name('email.change.send.new');
+Route::get('/change-email/confirm-new', [EmailChangeController::class, 'confirmNewEmail'])->name('email.change.confirm.new');
+});
