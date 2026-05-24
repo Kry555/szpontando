@@ -24,7 +24,9 @@ class OfertyController extends Controller
                 'oferty.do_kiedy_wazne',
                 'oferty.opis',
                 'oferty.created_at',
-                'oferty.status'
+                'oferty.status',
+                'oferty.zdjecie_1',
+                'oferty.zdjecie_2'
             )->leftJoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil');
 
             //  FILTER
@@ -66,7 +68,9 @@ if ($request->filled('status')) {
             'oferty.do_kiedy_wazne',
             'oferty.opis',
             'oferty.created_at',
-            'oferty.status'
+            'oferty.status',
+            'oferty.zdjecie_1',
+            'oferty.zdjecie_2'
         )->leftJoin('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')
             ->where('oferty.id_profil_owner', '!=', $id);
 
@@ -124,6 +128,49 @@ if ($request->filled('status')) {
         }
 
         return view('main', ['oferty_przeglandarka' => $dane, 'Zgloszenia_aktywne' => $aktywne, 'notf' => $komuch]);
+    }
+
+    public function storeOfert(Request $request)
+    {
+        $request->validate([
+            'typ' => 'required|string',
+            'adres' => 'required|string|max:255',
+            'cena' => 'required|numeric|min:0',
+            'do_kiedy_wazne' => 'required|date|after:now',
+            'opis' => 'required|string',
+            'zdjecie_1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'zdjecie_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $data = [
+            'id_profil_owner' => Auth::user()->id_profil,
+            'typ' => $request->typ,
+            'adres' => $request->adres,
+            'cena' => $request->cena,
+            'do_kiedy_wazne' => $request->do_kiedy_wazne,
+            'opis' => $request->opis,
+            'status' => 'aktywna',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+
+        if ($request->hasFile('zdjecie_1')) {
+            $file = $request->file('zdjecie_1');
+            $filename = time() . '_o1.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images/oferty'), $filename);
+            $data['zdjecie_1'] = $filename;
+        }
+
+        if ($request->hasFile('zdjecie_2')) {
+            $file = $request->file('zdjecie_2');
+            $filename = time() . '_o2.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images/oferty'), $filename);
+            $data['zdjecie_2'] = $filename;
+        }
+
+        DB::table('oferty')->insert($data);
+
+        return redirect()->route('main')->with('success', 'Oferta została dodana pomyślnie!');
     }
 
     public function wybierz(Request $request)

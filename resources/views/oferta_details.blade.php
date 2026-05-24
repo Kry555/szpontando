@@ -79,6 +79,40 @@
 
                     </div>
 
+                    <!-- DUŻE ZDJĘCIA -->
+                    <div class="oferta-zdjecia-duze my-4 d-flex flex-wrap gap-3 justify-content-center">
+
+                        @if($oferta->zdjecie_1)
+
+                            <img
+                                src="{{ asset('images/oferty/' . $oferta->zdjecie_1) }}"
+                                class="img-fluid rounded border border-warning shadow"
+                                style="
+                                    max-height:350px;
+                                    width:auto;
+                                    object-fit:contain;
+                                "
+                                alt="zdjęcie 1"
+                            >
+
+                        @endif
+
+                        @if($oferta->zdjecie_2)
+
+                            <img
+                                src="{{ asset('images/oferty/' . $oferta->zdjecie_2) }}"
+                                class="img-fluid rounded border border-warning shadow"
+                                style="
+                                    max-height:350px;
+                                    width:auto;
+                                    object-fit:contain;
+                                "
+                                alt="zdjęcie 2"
+                            >
+
+                        @endif
+                    </div>
+
                     <p class="text-muted">
                         Dodano: {{ $oferta->created_at }}
                     </p>
@@ -300,12 +334,6 @@
 
                 </div>
 
-                <div class="card-footer bg-white border-0">
-
-
-
-                </div>
-
             </div>
 
         </div>
@@ -370,100 +398,6 @@
 
 </div>
 
-<!-- MODAL PROFIL -->
-<div id="modal_owner_profil"
-     style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9998;">
-
-    <div style="background:#fff; color:black; padding:25px; width:450px; margin:50px auto; position:relative; border-radius:12px; text-align:center;">
-
-        <button type="button"
-                onclick="closeModal_owner_profil()"
-                style="position:absolute; top:15px; right:15px; border:none; background:none; font-size:22px; cursor:pointer;">
-
-            ✖
-
-        </button>
-
-        <img id="owner_profil_img"
-             src=""
-             style="width:110px; height:110px; border-radius:50%; margin-bottom:15px; border:3px solid orange; object-fit:cover;">
-
-        <h2 id="owner_profil_nick"></h2>
-
-        <div style="text-align:left; background:#fdfdfd; border:1px solid #eee; padding:15px; border-radius:8px; margin-bottom:15px;">
-
-            <p>
-                <strong>Imię:</strong>
-                <span id="owner_profil_imie"></span>
-                <span id="owner_profil_nazwisko"></span>
-            </p>
-
-            <p>
-                <strong>Miasto:</strong>
-                <span id="owner_profil_miasto"></span>
-            </p>
-
-            <p>
-                <strong>Email:</strong>
-                <span id="owner_profil_email"></span>
-            </p>
-
-            <p>
-                <strong>Ocena:</strong>
-
-                <span id="owner_profil_ocena"
-                      style="color:#d4af37; font-weight:bold;"></span>
-
-                / 5 ⭐
-            </p>
-
-        </div>
-
-        <hr>
-
-        <h3 style="font-size:1.1em;">
-            Oferty stworzone
-        </h3>
-
-        <div id="owner_created_offers_container"
-             class="tiles-grid"></div>
-
-        <hr>
-
-        <h3 style="font-size:1.1em;">
-            Zlecenia wykonane
-        </h3>
-
-        <div id="owner_completed_jobs_container"
-             class="tiles-grid"></div>
-
-    </div>
-
-</div>
-
-<!-- MODAL HISTORIA -->
-<div id="modal_history_detail"
-     style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999;">
-
-    <div style="background:#fff; color:black; padding:25px; width:380px; margin:130px auto; position:relative; border-radius:12px;">
-
-        <button type="button"
-                onclick="closeModal_historyDetail()"
-                style="position:absolute; top:15px; right:15px; border:none; background:none; font-size:22px; cursor:pointer;">
-
-            ✖
-
-        </button>
-
-        <h2 id="history_detail_title"
-            style="color:orange;"></h2>
-
-        <div id="history_detail_content"></div>
-
-    </div>
-
-</div>
-
 <script>
 
     function openModal_zglos(ofertaId) {
@@ -478,155 +412,13 @@
         document.getElementById('modal_zglos').style.display = 'none';
     }
 
-    function openModal_owner_profil(
-        nick,
-        profilowe,
-        imie,
-        nazwisko,
-        miasto,
-        email,
-        ocena,
-        createdOffers,
-        completedJobs
-    ) {
-
-        document.getElementById('owner_profil_img').src = profilowe;
-
-        document.getElementById('owner_profil_nick').textContent = nick;
-
-        document.getElementById('owner_profil_imie').textContent = imie || 'Brak';
-
-        document.getElementById('owner_profil_nazwisko').textContent = nazwisko || '';
-
-        document.getElementById('owner_profil_miasto').textContent = miasto || 'Brak';
-
-        document.getElementById('owner_profil_email').textContent = email || 'Brak';
-
-        document.getElementById('owner_profil_ocena').textContent = ocena || '0';
-
-        // OFERTY
-        const createdContainer = document.getElementById('owner_created_offers_container');
-
-        createdContainer.innerHTML = '';
-
-        if (createdOffers && createdOffers.length > 0) {
-
-            createdOffers.forEach(offer => {
-
-                const tile = document.createElement('div');
-
-                tile.className = 'tile';
-
-                tile.innerHTML = `
-                    <strong>Oferta</strong>
-                    ${offer.typ ? offer.typ.replace(/_/g, ' ') : 'Brak'}
-                `;
-
-                tile.onclick = () => openModal_historyDetail(offer);
-
-                createdContainer.appendChild(tile);
-            });
-
-        } else {
-
-            createdContainer.innerHTML =
-                '<p style="grid-column:1/-1;color:#999;">Brak ofert.</p>';
-        }
-
-        // ZLECENIA
-        const completedContainer = document.getElementById('owner_completed_jobs_container');
-
-        completedContainer.innerHTML = '';
-
-        if (completedJobs && completedJobs.length > 0) {
-
-            completedJobs.forEach(job => {
-
-                const tile = document.createElement('div');
-
-                tile.className = 'tile';
-
-                tile.innerHTML = `
-                    <strong>Zlecenie</strong>
-                    ${job.typ ? job.typ.replace(/_/g, ' ') : 'Brak'}
-                `;
-
-                tile.onclick = () => openModal_historyDetail(job);
-
-                completedContainer.appendChild(tile);
-            });
-
-        } else {
-
-            completedContainer.innerHTML =
-                '<p style="grid-column:1/-1;color:#999;">Brak zleceń.</p>';
-        }
-
-        document.getElementById('modal_owner_profil').style.display = 'block';
-    }
-
-    function closeModal_owner_profil() {
-
-        document.getElementById('modal_owner_profil').style.display = 'none';
-    }
-
-    function openModal_historyDetail(data) {
-
-        document.getElementById('history_detail_title').textContent =
-            data.typ
-                ? data.typ.replace(/_/g, ' ')
-                : 'Brak danych';
-
-        document.getElementById('history_detail_content').innerHTML = `
-
-            <p>
-                <strong>Adres:</strong>
-                ${data.adres || 'Brak'}
-            </p>
-
-            <p>
-                <strong>Cena:</strong>
-                ${data.cena || '0'} zł
-            </p>
-
-            <p>
-                <strong>Opis:</strong>
-                ${data.oferta_opis || 'Brak'}
-            </p>
-
-            <p>
-                <strong>Ważne do:</strong>
-                ${data.do_kiedy_wazne || 'Brak'}
-            </p>
-        `;
-
-        document.getElementById('modal_history_detail').style.display = 'block';
-    }
-
-    function closeModal_historyDetail() {
-
-        document.getElementById('modal_history_detail').style.display = 'none';
-    }
-
-    // KLIKNIĘCIE W TŁO
     window.onclick = function(event) {
 
-        const modalZglos = document.getElementById('modal_zglos');
+        const modal = document.getElementById('modal_zglos');
 
-        const modalOwner = document.getElementById('modal_owner_profil');
+        if (event.target == modal) {
 
-        const modalHistory = document.getElementById('modal_history_detail');
-
-        if (event.target == modalZglos) {
             closeModal_zglos();
-        }
-
-        if (event.target == modalOwner) {
-            closeModal_owner_profil();
-        }
-
-        if (event.target == modalHistory) {
-            closeModal_historyDetail();
         }
     }
 

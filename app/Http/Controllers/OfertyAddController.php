@@ -22,12 +22,13 @@ class OfertyAddController extends Controller
             'cena' => 'required|numeric|min:0',
             'do_kiedy_wazne' => 'required|date|after:tomorrow',
             'opis' => 'required|string|max:1000',
+            'zdjecie_1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'zdjecie_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $idprofil = Auth::user()->id_profil;
 
-        // Wstawienie oferty z timestamps
-        DB::table('oferty')->insert([
+        $data = [
             'id_profil_owner' => $idprofil,
             'adres' => $request->adres,
             'typ' => $request->typ,
@@ -37,7 +38,24 @@ class OfertyAddController extends Controller
             'status' => 'aktywna',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-        ]);
+        ];
+
+        // Obsługa zdjęć - zapisujemy w public/images/oferty
+        if ($request->hasFile('zdjecie_1')) {
+            $file = $request->file('zdjecie_1');
+            $filename = time() . '_o1.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images/oferty'), $filename);
+            $data['zdjecie_1'] = $filename;
+        }
+
+        if ($request->hasFile('zdjecie_2')) {
+            $file = $request->file('zdjecie_2');
+            $filename = time() . '_o2.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images/oferty'), $filename);
+            $data['zdjecie_2'] = $filename;
+        }
+
+        DB::table('oferty')->insert($data);
 
         return redirect()->route('main');
     }

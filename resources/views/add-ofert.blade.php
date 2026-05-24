@@ -26,7 +26,7 @@
     </div>
     @endif
 
-    <form method="POST" action="{{ route('add_ofert.post') }}">
+    <form method="POST" action="{{ route('add_ofert.post') }}" enctype="multipart/form-data">
         @csrf
         <p>Rodzaj sprzątania (wybierz jeden):</p>
 
@@ -116,6 +116,11 @@
             min="{{ now()->addDay()->format('Y-m-d\TH:i') }}"
             required><br>
         <input type="text" name="opis" placeholder="opis" value="{{ old('opis') }}" required><br>
+
+        <p>Zdjęcia do ogłoszenia (max 2):</p>
+        <input type="file" name="zdjecie_1" accept="image/*"><br>
+        <input type="file" name="zdjecie_2" accept="image/*"><br>
+        <br>
 
         <button type="submit">Wystaw ogloszenie</button>
     </form>
