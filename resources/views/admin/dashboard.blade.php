@@ -6,7 +6,6 @@
     <title>Panel Administratora - Szpontando</title>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
-        .container { max-width: 1000px; margin: 0 auto; }
         h1 { color: #333; text-align: center; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
         .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; text-decoration: none; color: #333; transition: transform 0.2s; }
@@ -14,7 +13,6 @@
         .card h3 { margin-top: 0; color: #007bff; }
         .card p { font-size: 14px; color: #666; }
         .badge { background: #dc3545; color: white; padding: 3px 8px; border-radius: 10px; font-size: 12px; font-weight: bold; }
-        .nav-back { display: block; text-align: center; margin-top: 40px; color: #666; text-decoration: none; }
         .chart-container { background: white; padding: 20px; border-radius: 8px; margin-top: 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -26,16 +24,13 @@
         <h1>Panel Administratora</h1>
         
         <div class="grid">
-            <!-- Zgłoszenia nadużyć -->
             <a href="{{ route('admin.zgloszenia') }}" class="card">
-                <h3>Zgłoszenia nadużyć</h3>
+                <h3>Zgłoszenia</h3>
                 <p>Przejrzyj zgłoszone ogłoszenia</p>
                 @if($stats['nowe_zgloszenia'] > 0)
                     <span class="badge">{{ $stats['nowe_zgloszenia'] }} nowe</span>
                 @endif
             </a>
-
-            <!-- Niskie oceny -->
             <a href="{{ route('admin.niskie_oceny') }}" class="card">
                 <h3>Niskie oceny</h3>
                 <p>Użytkownicy wymagający uwagi</p>
@@ -43,14 +38,10 @@
                     <span class="badge" style="background: #ffc107; color: #333;">{{ $stats['niskie_oceny'] }} poniżej 2.5</span>
                 @endif
             </a>
-
-            <!-- Statystyki i wyszukiwanie -->
             <a href="{{ route('admin.user_stats') }}" class="card">
                 <h3>Statystyki Użytkowników</h3>
                 <p>Szukaj po ID/Nicku i zarządzaj banami</p>
             </a>
-
-            <!-- Dziennik zdarzeń -->
             <a href="{{ route('admin.logs') }}" class="card">
                 <h3>Dziennik Zdarzeń</h3>
                 <p>Historia akcji administratorów</p>
@@ -65,26 +56,38 @@
 
     <script>
         const ctx = document.getElementById('ofertyChart').getContext('2d');
-        const data = @json($ofertyData);
-        
+        const oferty = @json($ofertyData);
+        const userzy = @json($usersStats);
+
+        // Przygotowanie etykiet dat
+        const labels = oferty.map(row => row.date);
+
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: data.map(row => row.date),
-                datasets: [{
-                    label: 'Liczba nowych ogłoszeń',
-                    data: data.map(row => row.aggregate),
-                    borderColor: '#007bff',
-                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.3
-                }]
+                labels: labels,
+                datasets: [
+                    { 
+                        label: 'Nowe ogłoszenia', 
+                        data: oferty.map(row => row.aggregate), 
+                        borderColor: '#007bff', 
+                        backgroundColor: 'rgba(0, 123, 255, 0.1)', 
+                        borderWidth: 2, 
+                        fill: true, 
+                        tension: 0.3 
+                    },
+                    { 
+                        label: 'Nowi użytkownicy', 
+                        data: userzy.map(row => row.aggregate), 
+                        borderColor: 'red', 
+                        backgroundColor: 'rgba(255, 0, 0, 0.1)', 
+                        borderWidth: 2, 
+                        fill: true, 
+                        tension: 0.3 
+                    }
+                ]
             },
-            options: {
-                responsive: true,
-                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-            }
+            options: { responsive: true, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
         });
     </script>
 </body>
