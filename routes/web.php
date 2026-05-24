@@ -19,7 +19,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OfertyController;
 
 Route::get('/', [OfertyController::class, 'oferty'])->name('main');
+Route::get('/oferta/{id}', [OfertyController::class, 'pokazOferte'])->name('oferta.show');
 
+Route::post('/profil/send-message', [OfertyController::class, 'sendMessage'])->name('profil.send_message')->middleware('auth');
 Route::post('/wybierz', [OfertyController::class, 'wybierz'])->name('oferta.wybierz');
 //do logowania 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
