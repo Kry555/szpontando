@@ -2,7 +2,9 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Statystyki Użytkownika</title>
+    <title>Sprzontando</title>
+        <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
+
     <style>
         .card { border: 1px solid #ccc; padding: 20px; max-width: 500px; margin-top: 20px; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }

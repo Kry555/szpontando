@@ -41,8 +41,10 @@ class OfertyController extends Controller
             if ($request->filled('miasto')) {
                 $query->where('oferty.adres', 'LIKE', $request->miasto . '%');
             }
-if ($request->filled('status')) {
-    $query->where('oferty.status', $request->status);
+$status = $request->input('status', 'aktywna'); // default = aktywne
+
+if ($status !== 'wszystkie') {
+    $query->where('oferty.status', $status);
 }
             $dane = $query->orderBy('oferty.created_at', 'desc')->get();
             //musi byc bo blad
@@ -83,8 +85,10 @@ if ($request->filled('status')) {
         if ($request->filled('miasto')) {
             $query->where('oferty.adres', 'LIKE', $request->miasto . '%');
         }
-if ($request->filled('status')) {
-    $query->where('oferty.status', $request->status);
+$status = $request->input('status', 'aktywna'); // default = aktywne
+
+if ($status !== 'wszystkie') {
+    $query->where('oferty.status', $status);
 }
         //tutaj
         function miasta(Request $request)

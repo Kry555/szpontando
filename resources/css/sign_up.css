@@ -176,3 +176,7 @@ body {
     align-items: center;
     /* wyśrodkowanie w poziomie */
 }
+#captchaCheck:disabled + .custom-checkbox {
+    cursor: default;
+    pointer-events: none;
+}

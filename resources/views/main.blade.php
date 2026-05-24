@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sprzontando</title>
     <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
-    <!-- <link rel="stylesheet" href="{{ asset('css/stop_z_wypalaniem_gał.css') }}"> -->
     @vite('resources/css/stop_z_wypalaniem_gał.css')
     @vite('resources/css/main.css')
     <!-- to jest do css tylko pamiętaj npm tun dev -->      
@@ -55,23 +54,23 @@
     @endauth
 
     <a href="{{ route('ranking') }}">
-        <button type="button" style="background: gold; color: black; font-weight: bold;">Ranking Wykonawców 🏆</button>
+        <button type="button" style="background: gold; color: black; font-weight: bold;">Ranking Wykonawców </button>
     </a>
 
     <form method="GET" action="{{ route('main') }}">
 
         <label>Cena od:</label>
-        <input type="number" name="cena_min" value="{{ request('cena_min') }}" min="0">
-
+<input type="number" name="cena_min" value="{{ request('cena_min') }}" min="0"
+       style="width:60px">
         <label>Cena do:</label>
-        <input type="number" name="cena_max" value="{{ request('cena_max') }}" min="0">
+        <input type="number" name="cena_max" value="{{ request('cena_max') }}" min="0"style="width:60px">
         <label>wybierz miasto:</label>
-        <form method="GET" action="{{ route('main') }}">
-            <input type="text" id="miasto" name="miasto" value="{{ request('miasto') }}" autocomplete="off">
+        <form method="GET" action="{{ route('main') }}"> 
+            <input type="text" id="miasto" name="miasto" value="{{ request('miasto') }}" autocomplete="off"style="width:100px">
             <label for="typ">Filtruj po typie:</label>
 
 
-            <select name="typ" id="typ">
+            <select name="typ" id="typ"style="width:120px">
                 <option value="">-- Wszystkie --</option>
 
                 <optgroup label="Podstawowe">
@@ -97,32 +96,33 @@
                 <optgroup label="Inne">
                     <option value="mycie_okien" {{ request('typ') == 'mycie_okien' ? 'selected' : '' }}>Mycie okien</option>
                     <option value="garaż_piwnica" {{ request('typ') == 'garaż_piwnica' ? 'selected' : '' }}>Garaż / piwnica</option>
-                    <option value="ogród_tarasy" {{ request('typ') == 'ogród_tarasy' ? 'selected' : '' }}>Ogród / tarasy</option>
-                    <option value="dezynfekcja" {{ request('typ') == 'dezynfekcja' ? 'selected' : '' }}>Dezynfekcja</option>
-                </optgroup>
-            </select>
+                        <option value="ogród_tarasy" {{ request('typ') == 'ogród_tarasy' ? 'selected' : '' }}>Ogród / tarasy</option>
+                        <option value="dezynfekcja" {{ request('typ') == 'dezynfekcja' ? 'selected' : '' }}>Dezynfekcja</option>
+                    </optgroup>
+                </select>
             <label for="status">Status:</label>
 
+<label for="status">Status:</label>
+
 <select name="status" id="status">
-    <option value="">-- Wszystkie --</option>
+<option value="wszystkie" {{ request('status', 'aktywna') == 'wszystkie' ? 'selected' : '' }}>
+    -- Wszystkie --
+</option>
 
-    <option value="aktywna"
-        {{ request('status') == 'aktywna' ? 'selected' : '' }}>
-        Aktywne
+<option value="aktywna" {{ request('status', 'aktywna') == 'aktywna' ? 'selected' : '' }}>
+    Aktywne
+</option>
+    <option value="zaakceptowana" {{ request('status') == 'zaakceptowana' ? 'selected' : '' }}>
+        zaakceptowane
     </option>
-    <option value="wygaslo"
-        {{ request('status') == 'wygaslo' ? 'selected' : '' }}>
-        Wygasłe
-    </option>
-
-    <option value="anulowane"
-        {{ request('status') == 'anulowane' ? 'selected' : '' }}>
+    <option value="anulowane" {{ request('status') == 'anulowane' ? 'selected' : '' }}>
         Anulowane
     </option>
-        <option value="zbanowana"
-        {{ request('status') == 'zbanowana' ? 'selected' : '' }}>
-        zbanowane
+
+    <option value="zbanowana" {{ request('status') == 'zbanowana' ? 'selected' : '' }}>
+        Zbanowane
     </option>
+
 </select>
             <button type="submit">Filtruj</button>
         </form>

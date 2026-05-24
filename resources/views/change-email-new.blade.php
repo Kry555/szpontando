@@ -2,8 +2,9 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Nowy email</title>
-@vite('resources/css/stop_z_wypalaniem_gał.css')
+    <title>Sprzontando</title>
+    <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
+    @vite('resources/css/stop_z_wypalaniem_gał.css')
 </head>
 <body>
 

@@ -2,7 +2,9 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Użytkownicy o niskich ocenach</title>
+    <title>Sprzontando</title>
+        <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
+
     <style>
         table { width: 100%; border-collapse: collapse; } 
         th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }

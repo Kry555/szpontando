@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Ranking Wykonawców - Sprzontando</title>
+    <title>Sprzontando</title>
+    <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
     @vite('resources/css/stop_z_wypalaniem_gał.css')
     <style>
         .ranking-container {
@@ -62,20 +63,20 @@
 
 <body>
     <div class="ranking-container">
-        <h1 style="text-align: center;">🏆 Najlepsi Wykonawcy</h1>
+        <h1 style="text-align: center;"> Najlepsi Wykonawcy</h1>
 
         @foreach($wykonawcy as $index => $w)
         @php
         $miejsce = $index + 1;
         $klasa = $miejsce <= 3 ? 'top-' .$miejsce : '' ;
-            $ikona=match($miejsce) { 1=> '🥇', 2 => '🥈', 3 => '🥉', default => '#' . $miejsce };
+            $ikona=match($miejsce) { 1=> '', 2 => '', 3 => '', default => '#' . $miejsce };
             @endphp
 
             <div class="rank-item {{ $klasa }}">
                 <div class="rank-number">{{ $ikona }}</div>
                 <img src="{{ asset('images/profilowe/' . $w->profilowe) }}" class="rank-photo">
                 <div class="rank-info">
-                    <h3 style="margin: 0;">{{ $w->nick }} @if($miejsce == 1) 👑 @endif</h3>
+                    <h3 style="margin: 0;">{{ $w->nick }} @if($miejsce == 1)  @endif</h3>
                     <small>{{ $w->miasto ?? 'Brak lokalizacji' }}</small>
                 </div>
 

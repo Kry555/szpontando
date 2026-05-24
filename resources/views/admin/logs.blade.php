@@ -2,7 +2,8 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Dziennik Zdarzeń Admina</title>
+    <title>Sprzontando</title>
+    <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
 
     <style>
 

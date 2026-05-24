@@ -2,7 +2,8 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Aktywuj konto</title>
+    <title>Sprzontando</title>
+    <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
     @vite('resources/css/stop_z_wypalaniem_gał.css')
 </head>
 <body>

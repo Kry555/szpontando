@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sprzontando</title>
     <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
-
+    @vite('resources/css/stop_z_wypalaniem_gał.css')
     @vite('resources/css/sign_up.css')
     
 </head>
@@ -84,7 +84,21 @@
             }
 
         });
-    </script>
+    document.getElementById("captchaCheck").addEventListener("change", function () {
+        const checkbox = this;
+
+        if (checkbox.checked) {
+
+            // prevent further interaction immediately
+            checkbox.disabled = true;
+
+            setTimeout(() => {
+                checkbox.classList.add("checked");
+            }, 1000);
+
+        }
+    });
+</script>
     <a href="{{ route('main') }}">
         <button type="button">wróc na strone główną </button>
     </a>
