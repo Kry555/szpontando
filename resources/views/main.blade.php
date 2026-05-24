@@ -101,7 +101,29 @@
                     <option value="dezynfekcja" {{ request('typ') == 'dezynfekcja' ? 'selected' : '' }}>Dezynfekcja</option>
                 </optgroup>
             </select>
+            <label for="status">Status:</label>
 
+<select name="status" id="status">
+    <option value="">-- Wszystkie --</option>
+
+    <option value="aktywna"
+        {{ request('status') == 'aktywna' ? 'selected' : '' }}>
+        Aktywne
+    </option>
+    <option value="wygaslo"
+        {{ request('status') == 'wygaslo' ? 'selected' : '' }}>
+        Wygasłe
+    </option>
+
+    <option value="anulowane"
+        {{ request('status') == 'anulowane' ? 'selected' : '' }}>
+        Anulowane
+    </option>
+        <option value="zbanowana"
+        {{ request('status') == 'zbanowana' ? 'selected' : '' }}>
+        zbanowane
+    </option>
+</select>
             <button type="submit">Filtruj</button>
         </form>
         <div class="oferty">
