@@ -77,8 +77,10 @@
             typ: '{{ $oferta->typ }}',
             cena: '{{ $oferta->cena }}',
             do_kiedy_wazne: '{{ $oferta->do_kiedy_wazne }}',
-            opis: '{{ $oferta->opis }}'
-            })"
+            opis: '{{ $oferta->opis }}',
+            zdjecie_1: '{{ $oferta->zdjecie_1 ?? '' }}',
+            zdjecie_2: '{{ $oferta->zdjecie_2 ?? '' }}'
+        })"
             @if($oferta->status != 'aktywna') disabled @endif>
             Edytuj ofertę
         </button>
@@ -278,7 +280,7 @@
         <div style="background:#fff; color:black; padding:20px; width:450px; margin:50px auto; position:relative; border-radius:10px;">
             <button onclick="closeModal_editOffer()" style="position:absolute; top:10px; right:10px;">✖</button>
             <h2>Edytuj ofertę</h2>
-            <form method="POST" action="{{ route('edit_offer.post') }}">
+            <form method="POST" action="{{ route('edit_offer.post') }}" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id_oferty" id="edit_offer_id">
 
@@ -292,6 +294,17 @@
                 Ważne do:<br>
                 <input type="datetime-local" name="do_kiedy_wazne" id="edit_do_kiedy_wazne" required><br>
                 <input type="text" name="opis" id="edit_opis" placeholder="opis" required><br>
+
+                <p>Zdjęcia do ogłoszenia (max 2):</p>
+                <div id="current_zdjecie_1_display"></div>
+                <input type="file" name="zdjecie_1" accept="image/*"><br>
+                <label><input type="checkbox" name="clear_zdjecie_1" value="1"> Usuń zdjęcie 1</label><br>
+                <br>
+
+                <div id="current_zdjecie_2_display"></div>
+                <input type="file" name="zdjecie_2" accept="image/*"><br>
+                <label><input type="checkbox" name="clear_zdjecie_2" value="1"> Usuń zdjęcie 2</label><br>
+                <br>
 
                 <button type="submit">Zapisz zmiany</button>
                 <button type="button" onclick="closeModal_editOffer()">Anuluj</button>
@@ -386,6 +399,25 @@
             document.getElementById('edit_cena').value = oferta.cena;
             document.getElementById('edit_do_kiedy_wazne').value = oferta.do_kiedy_wazne;
             document.getElementById('edit_opis').value = oferta.opis;
+
+            // Wyświetlanie istniejących zdjęć i resetowanie pól input
+            const currentZdjecie1Display = document.getElementById('current_zdjecie_1_display');
+            currentZdjecie1Display.innerHTML = '';
+            if (oferta.zdjecie_1) {
+                currentZdjecie1Display.innerHTML = `<p>Aktualne zdjęcie 1:</p><img src="{{ asset('images/oferty/') }}/${oferta.zdjecie_1}" style="max-width: 100px; max-height: 100px; margin-bottom: 5px;"><br>`;
+            }
+
+            const currentZdjecie2Display = document.getElementById('current_zdjecie_2_display');
+            currentZdjecie2Display.innerHTML = '';
+            if (oferta.zdjecie_2) {
+                currentZdjecie2Display.innerHTML = `<p>Aktualne zdjęcie 2:</p><img src="{{ asset('images/oferty/') }}/${oferta.zdjecie_2}" style="max-width: 100px; max-height: 100px; margin-bottom: 5px;"><br>`;
+            }
+
+            // Resetuj pola input typu file i checkboxy
+            document.querySelector('#modal_edit_offer input[name="zdjecie_1"]').value = '';
+            document.querySelector('#modal_edit_offer input[name="clear_zdjecie_1"]').checked = false;
+            document.querySelector('#modal_edit_offer input[name="zdjecie_2"]').value = '';
+            document.querySelector('#modal_edit_offer input[name="clear_zdjecie_2"]').checked = false;
 
             const container = document.getElementById('edit_typ_radio');
             container.innerHTML = '';
