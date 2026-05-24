@@ -65,7 +65,7 @@ class AdminController extends Controller implements HasMiddleware
         $uzytkownicy = DB::table('profil')
             ->join('users', 'profil.id_profil', '=', 'users.id_profil')
             ->where('profil.ocena', '<', 2.5) // Próg "niskiej oceny"
-            ->select('users.id', 'users.nick', 'profil.ocena', 'users.aktywny')
+            ->select('users.*', 'profil.imie', 'profil.nazwisko', 'profil.miasto', 'profil.email_kontaktowy', 'profil.profilowe', 'profil.ocena')
             ->get();
 
         return view('admin.niskie_oceny', ['uzytkownicy' => $uzytkownicy]);
@@ -125,7 +125,8 @@ class AdminController extends Controller implements HasMiddleware
     {
         $zgloszenia = DB::table('zgloszenia_naduzyc')
             ->join('oferty', 'zgloszenia_naduzyc.id_oferty', '=', 'oferty.id_oferty')
-            ->select('zgloszenia_naduzyc.*', 'oferty.opis', 'oferty.status as oferta_status')
+            ->join('profil', 'oferty.id_profil_owner', '=', 'profil.id_profil')
+            ->select('zgloszenia_naduzyc.*', 'oferty.opis', 'oferty.status as oferta_status', 'profil.nick', 'profil.imie', 'profil.nazwisko', 'profil.miasto', 'profil.email_kontaktowy', 'profil.profilowe', 'profil.ocena')
             ->where('zgloszenia_naduzyc.status', 'nowe')
             ->get();
 

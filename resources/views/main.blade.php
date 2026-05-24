@@ -40,7 +40,7 @@
     <a href="{{ route('work_ofert') }}">
         <button type="button">Twoje zgłoszenia</button>
     </a>
-    //test
+
     @if(auth()->user()->czy_admin)
     <a href="{{ route('admin.dashboard') }}">
         <button type="button" style="background: #dc3545; color: white;">Panel Admina</button>
@@ -134,6 +134,9 @@
                     <button onclick="openModal_zglos({{ $oferta->id_oferty }})">
                         Zgłoś się
                     </button>
+                    <button onclick="openModal_naduzycie({{ $oferta->id_oferty }})" style="background: #dc3545; color: white;">
+                        Zgłoś naruszenie
+                    </button>
                     @endif
                     @endauth
 
@@ -198,11 +201,26 @@
 
                     @endif
                     @endif
-                    <button type="button" onclick="closeModal_Wiadomosci()">Anuluj</button>
-    </form>
-    </div>
-    </div>
-    </div>
+                    <button type="button" onclick="closeModal_Wiadomosci()">Zamknij</button>
+                </div>
+            </div>
+
+            <!-- Modal zgłaszania naruszenia -->
+            <div id="modal_naduzycie" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+                <div style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative; border-radius: 8px;">
+                    <h2>Zgłoś naruszenie oferty</h2>
+                    <form method="POST" action="{{ route('admin.zglos_oferte') }}">
+                        @csrf
+                        <input type="hidden" name="id_oferty" id="naduzycie_oferta_id">
+                        <label>Powód zgłoszenia:</label>
+                        <textarea name="powod" required style="width:100%; height:100px; margin-top:10px;" placeholder="Opisz dlaczego zgłaszasz tę ofertę..."></textarea>
+                        <br><br>
+                        <button type="submit" style="background: #dc3545; color: white;">Wyślij zgłoszenie</button>
+                        <button type="button" onclick="closeModal_naduzycie()">Anuluj</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     <script>
         function openModal_zglos(ofertaId) {
             document.getElementById('modal_zglos').style.display = 'block';
@@ -222,17 +240,26 @@
             document.getElementById('modal_Wiadomosci').style.display = 'none';
         }
 
+        function openModal_naduzycie(ofertaId) {
+            document.getElementById('modal_naduzycie').style.display = 'block';
+            document.getElementById('naduzycie_oferta_id').value = ofertaId;
+        }
+
+        function closeModal_naduzycie() {
+            document.getElementById('modal_naduzycie').style.display = 'none';
+        }
+
         // Pokazanie modal po wysłaniu zgłoszenia (session flash)
         @if(session('modal_success'))
         document.addEventListener('DOMContentLoaded', function() {
-            const modal = document.getElementById('modal');
+            const modal = document.getElementById('modal_zglos');
             const modalContent = document.getElementById('modal_content');
 
             modal.style.display = 'block';
             modalContent.innerHTML = `
                 <h2>Zgłoszenie wysłane!</h2>
-                <p>Twoja oferta o ID {{ session('modal_success') }} została zgłoszona.</p>
-                <button type="button" onclick="closeModal()">Zamknij</button>`;
+                <p>Pomyślnie zgłosiłeś się do oferty o ID {{ session('modal_success') }}.</p>
+                <button type="button" onclick="closeModal_zglos()">Zamknij</button>`;
         });
         @endif
     </script>
