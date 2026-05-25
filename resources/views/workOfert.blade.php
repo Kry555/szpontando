@@ -222,7 +222,9 @@
 
       <h3>Ostatnie zlecenia</h3>
       <div id="modal_profil_zlecenia_container" class="tiles-grid"></div>
-
+      <button onclick="closeModal_profil()" class="btn_close">
+        Zamknij
+      </button>
     </div>
   </div>
 
@@ -304,7 +306,7 @@
         zleceniaArray.forEach(z => {
           const tile = document.createElement('div');
           tile.className = 'tile';
-          tile.innerHTML = `<strong>Zlecenie</strong>${z.typ.replace('_', ' ')}`;
+          tile.innerHTML = `<strong>Zlecenie: </strong>${z.typ.replace('_', ' ')}`;
           tile.onclick = (e) => {
             e.stopPropagation();
             openModal_historyDetail(z);
@@ -342,7 +344,7 @@
       }
 
       document.getElementById('history_detail_content').innerHTML = `
-                <div style="text-align: left; background: #fdfdfd; padding: 15px; border: 1px solid #eee; border-radius: 8px;">
+                <div style="text-align: left; background: #000000; padding: 15px; border: 1px solid #eee; border-radius: 8px;">
                     <p style="margin: 5px 0;"><strong>Adres:</strong> ${data.adres || 'Brak'}</p>
                     <p style="margin: 5px 0;"><strong>Cena:</strong> ${data.cena || '0'} zł</p>
                     <p style="margin: 5px 0;"><strong>Ważne do:</strong> ${data.do_kiedy_wazne || 'Brak'}</p>

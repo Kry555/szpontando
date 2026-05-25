@@ -284,41 +284,41 @@
         <p>opis:</p>
         <input type="text" name="opis" id="edit_opis" placeholder="opis" required><br>
 
-<p class="upload-title">Zdjęcia do ogłoszenia (max 2)</p>
+        <p class="upload-title">Zdjęcia do ogłoszenia (max 2)</p>
 
-<div class="image-grid">
+        <div class="image-grid">
 
-  <!-- IMAGE 1 -->
-  <div class="image-box">
-    <div id="current_zdjecie_1_display" class="preview"></div>
+          <!-- IMAGE 1 -->
+          <div class="image-box">
+            <div id="current_zdjecie_1_display" class="preview"></div>
 
-    <label class="upload-btn">
-      <input type="file" name="zdjecie_1" accept="image/*">
-      <span> Zmień zdjęcie </span>
-    </label>
+            <label class="upload-btn">
+              <input type="file" name="zdjecie_1" accept="image/*">
+              <span> Zmień zdjęcie </span>
+            </label>
 
-<label class="clear-btn">
-  <input type="checkbox" name="clear_zdjecie_1" value="1">
-  <span> Usuń zdjęcie </span>
-</label>
-  </div>
+            <label class="clear-btn">
+              <input type="checkbox" name="clear_zdjecie_1" value="1">
+              <span> Usuń zdjęcie </span>
+            </label>
+          </div>
 
-  <!-- IMAGE 2 -->
-  <div class="image-box">
-    <div id="current_zdjecie_2_display" class="preview"></div>
+          <!-- IMAGE 2 -->
+          <div class="image-box">
+            <div id="current_zdjecie_2_display" class="preview"></div>
 
-    <label class="upload-btn">
-      <input type="file" name="zdjecie_2" accept="image/*">
-      <span> Zmień zdjęcie </span>
-    </label>
+            <label class="upload-btn">
+              <input type="file" name="zdjecie_2" accept="image/*">
+              <span> Zmień zdjęcie </span>
+            </label>
 
-<label class="clear-btn">
-  <input type="checkbox" name="clear_zdjecie_2" value="1">
-  <span> Usuń zdjęcie </span>
-</label>
-  </div>
+            <label class="clear-btn">
+              <input type="checkbox" name="clear_zdjecie_2" value="1">
+              <span> Usuń zdjęcie </span>
+            </label>
+          </div>
 
-</div>
+        </div>
         <br>
 
         <button type="submit">Zapisz zmiany</button>
@@ -506,7 +506,7 @@
         zleceniaArray.forEach(z => {
           const tile = document.createElement('div');
           tile.className = 'tile';
-          tile.innerHTML = `<strong>Zlecenie</strong>${z.typ.replace('_', ' ')}`;
+          tile.innerHTML = `<strong>Zlecenie: </strong>${z.typ.replace('_', ' ')}`;
           tile.onclick = (e) => {
             e.stopPropagation();
             openModal_historyDetail(z);
