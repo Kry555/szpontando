@@ -1,137 +1,833 @@
-/* sekcja nagłówka */
+/* =========================
+   GLOBAL
+========================= */
 
-.początek {
-    width: 100%;
-    position: relative;
-    margin-bottom: 40px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* tekst pod logo */
+body {
+  background:
+    linear-gradient(
+      180deg,
+      #0b1120 0%,
+      #0f172a 45%,
+      #111827 100%
+    );
+
+  color: #f1f5f9;
+
+  font-family: "Segoe UI", sans-serif;
+
+  min-height: 100vh;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111827;
+}
+
+::-webkit-scrollbar-thumb {
+  background:
+    linear-gradient(
+      #2563eb,
+      #10b981
+    );
+
+  border-radius: 3px;
+}
+
+/* =========================
+   LINKS
+========================= */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+  width: 100%;
+
+  padding: 6px 30px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #0f172a,
+      #111827,
+      #172554
+    );
+
+  border-bottom: 1px solid #1e293b;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 25px;
+
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  min-height: 90px;
+}
+
+/* LOGO */
+
+.header img {
+  width: 230px;
+  height: 230px;
+
+  margin-top: -60px;
+  margin-bottom: -60px;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(0 0 18px rgba(37,99,235,.35))
+    drop-shadow(0 0 25px rgba(16,185,129,.25));
+}
+
+/* NAPIS */
 
 .napisy {
-    margin-top: 60px;
+  flex: 1;
 }
 
+.napisy h2 {
+  font-size: 11px !important;
 
-/* ===== OFERTY ===== */
+  color: #94a3b8 !important;
 
-.oferty {
-    width: 90%;
-    max-width: 1200px;
+  font-weight: 500;
 
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
+  letter-spacing: 2px;
 
-    justify-content: center;
+  text-transform: uppercase;
+
+  opacity: .8;
 }
 
+#wit {
+  color: #60a5fa;
 
-/* karta oferty */
+  font-size: 15px;
 
-.oferty_przeglandarka {
-    background: #2b2b2b;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-
-    transition: transform 0.2s;
+  font-weight: 700;
 }
 
+/* =========================
+   BUTTONS
+========================= */
 
-/* efekt hover */
-
-.oferty_przeglandarka:hover {
-    transform: scale(1.03);
-}
-
-
-/* tekst w ofercie */
-
-.informacje {
-    text-align: left;
-}
-
-.informacje h3 {
-    margin-top: 0;
-}
-
-
-/* przyciski */
-
-.guziki {
-    margin-top: 10px;
+.buttony {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 button {
-    background: #ff7a00;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    color: white;
-    cursor: pointer;
+  color: white;
+
+  border: 1px solid rgba(255,255,255,0.06);
+
+  padding: 11px 18px;
+
+  border-radius: 5px;
+
+  font-weight: 700;
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition: .25s ease;
 }
+
+/* 3 GRADIENTY */
+
+.buttony a:nth-child(3n+1) button,
+.buttony button:nth-child(3n+1) {
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #06b6d4
+    );
+}
+
+.buttony a:nth-child(3n+2) button,
+.buttony button:nth-child(3n+2) {
+  background:
+    linear-gradient(
+      135deg,
+      #10b981,
+      #059669
+    );
+}
+
+.buttony a:nth-child(3n+3) button,
+.buttony button:nth-child(3n+3) {
+  background:
+    linear-gradient(
+      135deg,
+      #3b82f6,
+      #14b8a6
+    );
+}
+
+/* HOVER */
 
 button:hover {
-    background: #ff8f1f;
+  transform: translateY(-2px);
+
+  filter: brightness(1.08);
+
+  box-shadow:
+    0 0 15px rgba(37,99,235,.2),
+    0 0 25px rgba(16,185,129,.12);
 }
 
-
-/* responsywność */
-
-@media (max-width:1100px) {
-
-    .oferty {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
+button:active {
+  transform: scale(.98);
 }
 
-@media (max-width:800px) {
+/* SPECJALNE */
 
-    .oferty {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
+.disabled {
+  background: #374151 !important;
+  cursor: not-allowed;
+  opacity: .7;
 }
 
-@media (max-width:500px) {
-
-    .oferty {
-        grid-template-columns: 1fr;
-    }
-
+#ban_but {
+  background:
+    linear-gradient(
+      135deg,
+      #dc2626,
+      #991b1b
+    ) !important;
 }
 
-
-/* kontener nagłówka */
-.początek {
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto;
-    /* wycentrowanie kontenera */
-    display: flex;
-    align-items: center;
-    /* wyrównanie pionowe do środka logo */
-    justify-content: space-between;
-    /* logo z lewej, tekst z prawej */
+#odbanuj_but {
+  background:
+    linear-gradient(
+      135deg,
+      #16a34a,
+      #15803d
+    ) !important;
 }
 
-/* logo większe */
-.początek img {
-    width: 200px;
-    /* teraz większe logo */
-    height: auto;
+#zglos_nad_but {
+  background:
+    linear-gradient(
+      135deg,
+      #f59e0b,
+      #d97706
+    ) !important;
 }
 
-/* tekst po prawej strony logo, wycentrowany pionowo */
-.napisy h2 {
-    margin: 0;
-    font-size: 1.8rem;
-    /* większy napis */
-    text-align: right;
-    color: #ffffff;
-    /* dla dark-mode */
-    line-height: 1.2;
-    /* dopasowanie do wysokości logo */
+#zglos_but {
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #06b6d4
+    ) !important;
+
+  color: white !important;
+}
+
+.submit_but {
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #10b981
+    ) !important;
+}
+
+.zamknij_but {
+  background:
+    linear-gradient(
+      135deg,
+      #374151,
+      #1f2937
+    ) !important;
+}
+
+button[type="submit"] {
+  background:
+    linear-gradient(
+      135deg,
+      #dc2626,
+      #991b1b
+    ) !important;
+}
+
+/* ADMIN */
+
+.buttony a:first-child button {
+  background:
+    linear-gradient(
+      135deg,
+      #f59e0b,
+      #ea580c
+    ) !important;
+}
+
+/* =========================
+   RANKING BUTTON
+========================= */
+
+#ran_but {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 20px;
+}
+
+#ran_but button {
+  background:
+    linear-gradient(
+      135deg,
+      #facc15,
+      #f59e0b
+    ) !important;
+
+  color: #111827;
+
+  font-weight: 800;
+}
+
+/* =========================
+   FILTRY
+========================= */
+
+.filtry {
+  width: 96%;
+
+  margin: 25px auto;
+
+  padding: 20px 25px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(17,24,39,.97),
+      rgba(15,23,42,.97)
+    );
+
+  border: 1px solid #1e293b;
+
+  border-radius: 6px;
+}
+
+/* FORM */
+
+.filtry form {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 18px;
+
+  flex-wrap: wrap;
+}
+
+/* BLOKI */
+
+.text_field,
+.typ_lista,
+.status_lista {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  min-width: 220px;
+}
+
+/* TEXT FIELD */
+
+.text_field {
+  display: flex;
+  flex-direction: row !important;
+
+  align-items: center;
+
+  gap: 18px;
+
+  flex-wrap: nowrap;
+}
+
+/* CENA */
+
+.label_numery {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  flex-wrap: nowrap;
+}
+
+/* LABELS */
+
+label {
+  color: #cbd5e1;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+/* INPUTY */
+
+input,
+select,
+textarea {
+  background: #0f172a;
+
+  color: white;
+
+  border: 1px solid #334155;
+
+  padding: 11px;
+
+  border-radius: 4px;
+
+  outline: none;
+
+  transition: .2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #10b981;
+
+  box-shadow:
+    0 0 10px rgba(16,185,129,.25);
+}
+
+/* WYSOKOŚĆ */
+
+input,
+select {
+  height: 44px;
+}
+
+/* SZEROKOŚCI */
+
+input[name="cena_min"],
+input[name="cena_max"] {
+  width: 90px !important;
+}
+
+input[name="miasto"] {
+  width: 220px !important;
+}
+
+.typ_lista select,
+.status_lista select {
+  width: 240px;
+}
+
+/* BUTTON FILTRUJ */
+
+.filtry button {
+  height: 44px;
+
+  min-width: 150px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #10b981
+    ) !important;
+}
+
+/* =========================
+   OFERTY GRID
+========================= */
+
+.oferty {
+  width: 95%;
+
+  margin: auto;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(350px, 1fr));
+
+  gap: 25px;
+
+  padding-bottom: 40px;
+}
+
+/* =========================
+   KARTA OFERTY
+========================= */
+
+.oferty_przeglandarka {
+  background:
+    linear-gradient(
+      180deg,
+      #111827,
+      #0f172a
+    );
+
+  border: 1px solid #1e293b;
+
+  border-radius: 6px;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  transition: .25s ease;
+}
+
+.oferty_przeglandarka:hover {
+  transform: translateY(-4px);
+
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 20px rgba(37,99,235,.18),
+    0 0 30px rgba(16,185,129,.1);
+}
+
+.informacje {
+  padding: 20px;
+}
+
+/* =========================
+   MINIATURY
+========================= */
+
+.zdjecia-miniatury {
+  display: flex;
+  gap: 10px;
+
+  margin-bottom: 15px;
+}
+
+.zdjecia-miniatury img {
+  width: 100%;
+  max-width: 150px;
+  height: 120px;
+
+  object-fit: cover;
+
+  border-radius: 4px;
+
+  border: 1px solid #1e293b;
+}
+
+/* =========================
+   TEKSTY
+========================= */
+
+#tytul_oferty {
+  color: #10b981;
+
+  font-size: 22px;
+
+  margin-bottom: 15px;
+}
+
+#opis,
+#cena,
+#adres,
+#waznosc,
+#status,
+#autor {
+  margin-bottom: 10px;
+
+  line-height: 1.5;
+
+  color: #e2e8f0;
+}
+
+strong {
+  color: #60a5fa;
+}
+
+hr {
+  border: none;
+
+  border-top: 1px solid #1e293b;
+
+  margin: 15px 0;
+}
+
+/* =========================
+   BUTTONY OFERT
+========================= */
+
+.buttony_oferty {
+  padding: 20px;
+
+  border-top: 1px solid #1f2937;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
+/* =========================
+   MODALE
+========================= */
+
+.modal {
+  display: none;
+
+  position: fixed;
+
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 9999;
+
+  background: rgba(0,0,0,.75);
+
+  backdrop-filter: blur(4px);
+}
+
+.modal_content {
+  width: 90%;
+  max-width: 550px;
+
+  margin: 90px auto;
+
+  padding: 30px;
+
+  border-radius: 6px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #111827,
+      #0f172a
+    );
+
+  border: 1px solid #1e293b;
+
+  animation: modalShow .25s ease;
+}
+
+.modal_content h2 {
+  color: #10b981;
+
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
+
+  min-height: 120px;
+
+  resize: vertical;
+}
+
+/* =========================
+   WIADOMOŚCI
+========================= */
+
+#modal_Wiadomosci .modal_content {
+  max-height: 75vh;
+
+  overflow-y: auto;
+}
+
+.wiadomosc {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(30,41,59,.95),
+      rgba(15,23,42,.95)
+    );
+
+  border: 1px solid #334155;
+
+  padding: 18px;
+
+  margin-bottom: 16px;
+
+  border-radius: 6px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  transition: .25s ease;
+}
+
+/* GÓRNY PASEK */
+
+.wiadomosc::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #2563eb,
+      #10b981,
+      #06b6d4
+    );
+}
+
+.wiadomosc:hover {
+  transform: translateY(-3px);
+
+  border-color: #3b82f6;
+
+  box-shadow:
+    0 0 15px rgba(37,99,235,.16),
+    0 0 25px rgba(16,185,129,.12);
+}
+
+.wiadomosc strong {
+  display: block;
+
+  color: #f8fafc;
+
+  font-size: 17px;
+
+  margin-bottom: 10px;
+}
+
+.wiadomosc p {
+  color: #cbd5e1;
+
+  line-height: 1.6;
+
+  font-size: 14px;
+}
+
+/* =========================
+   ANIMACJE
+========================= */
+
+@keyframes modalShow {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1100px) {
+
+  .filtry form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .text_field {
+    flex-direction: column !important;
+    align-items: stretch;
+  }
+
+  .label_numery {
+    flex-wrap: wrap;
+  }
+
+  .typ_lista select,
+  .status_lista select,
+  input[name="miasto"] {
+    width: 100% !important;
+  }
+
+  .filtry button {
+    width: 100%;
+  }
+
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .buttony {
+    justify-content: center;
+  }
+
+  .header img {
+    width: 170px;
+    height: 170px;
+
+    margin-top: -35px;
+    margin-bottom: -35px;
+  }
+}
+
+@media (max-width: 900px) {
+
+  .oferty {
+    grid-template-columns: 1fr;
+  }
+
+  .zdjecia-miniatury {
+    flex-direction: column;
+  }
+
+  .zdjecia-miniatury img {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .buttony button {
+    width: 100%;
+  }
 }

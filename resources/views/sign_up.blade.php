@@ -68,36 +68,23 @@
         <button type="button">zaloguj się</button>
     </a>
 
-    <script>
-        document.getElementById("captchaCheck").addEventListener("change", function() {
+<script>
+document.getElementById("captchaCheck").addEventListener("change", function () {
 
-            const checkbox = this;
+    const checkbox = this;
+    const customBox = document.querySelector(".custom-checkbox");
 
-            if (checkbox.checked) {
+    if (checkbox.checked) {
 
-                setTimeout(() => {
-                    checkbox.classList.add("checked");
-                }, 1000);
+        // prevent clicking again
+        customBox.style.pointerEvents = "none";
 
-            } else {
-                checkbox.classList.remove("checked");
-            }
+        setTimeout(() => {
+            checkbox.classList.add("checked");
+        }, 1000);
 
-        });
-    document.getElementById("captchaCheck").addEventListener("change", function () {
-        const checkbox = this;
-
-        if (checkbox.checked) {
-
-            // prevent further interaction immediately
-            checkbox.disabled = true;
-
-            setTimeout(() => {
-                checkbox.classList.add("checked");
-            }, 1000);
-
-        }
-    });
+    }
+});
 </script>
     <a href="{{ route('main') }}">
         <button type="button">wróc na strone główną </button>
