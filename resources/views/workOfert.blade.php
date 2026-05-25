@@ -201,8 +201,6 @@
   <div id="modal_profil_standard" class="modal">
     <div class="modal_content">
 
-      <button type="button" onclick="closeModal_profil()" class="close_btn">✖</button>
-
       <img id="modal_profil_img" src="">
       <h2 id="modal_profil_nick"></h2>
 
@@ -246,9 +244,6 @@
 
   <div id="modal_oferta" class="modal">
     <div class="modal_content">
-
-
-
       <h2>Szczegóły oferty</h2>
 
       <div class="modal_box">

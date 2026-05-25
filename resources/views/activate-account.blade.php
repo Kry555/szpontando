@@ -1,20 +1,40 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Sprzontando</title>
-    <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
-    @vite('resources/css/stop_z_wypalaniem_gał.css')
+  <meta charset="UTF-8">
+  <title>Sprzontando</title>
+  <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
+  @vite('resources/css/activate-account.css')
 </head>
+
 <body>
+  header class="main-header">
 
-<h1>Aktywuj swoje konto</h1>
+  <a href="{{ route('main') }}" class="logo-box">
+    <img src="{{ asset('images/logo.png') }}" alt="logo">
+  </a>
 
-<p>Sprawdź swoją skrzynkę email i kliknij link aktywacyjny.</p>
+  <div class="header-text">
+    <h2>Sprzontando</h2>
+    <p>Aktywuj swoje konto</p>
+  </div>
 
-<a href="{{ route('main') }}">
+  <div class="header-buttons">
+    <a href="{{ route('main') }}">
+      <button type="button">Strona główna</button>
+    </a>
+  </div>
+
+  </header>
+
+
+  <p>Sprawdź swoją skrzynkę email i kliknij link aktywacyjny.</p>
+
+  <a href="{{ route('main') }}">
     <button>Przejdź na stronę główną</button>
-</a>
+  </a>
 
 </body>
+
 </html>

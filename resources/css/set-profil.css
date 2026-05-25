@@ -1,0 +1,175 @@
+/* ========================= RESET ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========================= BODY ========================= */
+body {
+  background: linear-gradient(180deg, #0b1120 0%, #0f172a 45%, #111827 100%);
+  color: #f1f5f9;
+  font-family: "Segoe UI", sans-serif;
+  min-height: 100vh;
+}
+
+/* ========================= PROFILE BOX ========================= */
+.showprofil {
+  width: 60%;
+  margin: 30px auto;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* ========================= BUTTONS ========================= */
+button {
+  padding: 10px 14px;
+  margin: 10px 5px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  background: linear-gradient(135deg, #2563eb, #10b981);
+  color: white;
+  transition: .2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* ========================= MODAL (TAK JAK W OFERTACH) ========================= */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.65);
+  backdrop-filter: blur(6px);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal_content {
+  background: #0f172a;
+  color: #f1f5f9;
+  width: 92%;
+  max-width: 550px;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 0 40px rgba(16,185,129,.12);
+  animation: pop .18s ease-out;
+}
+
+/* animacja */
+@keyframes pop {
+  from { transform: scale(.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ========================= INPUTS ========================= */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="datetime-local"] {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #f1f5f9;
+  outline: none;
+}
+
+input:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 10px rgba(16,185,129,.25);
+}
+
+/* ========================= RADIO ========================= */
+label {
+  display: block;
+  margin: 6px 0;
+  cursor: pointer;
+}
+
+/* ========================= MODAL BUTTONS ========================= */
+.modal_content button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.modal_content button:hover {
+  filter: brightness(1.1);
+}
+
+/* ========================= IMAGE ========================= */
+.showprofil img {
+  border-radius: 50%;
+  border: 3px solid #10b981;
+  margin-bottom: 10px;
+}
+/* ========================= HEADER ========================= */
+.main-header {
+  width: 100%;
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #0f172a, #111827, #172554);
+  border-bottom: 1px solid #1e293b;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.logo-box img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  margin-top: -40px;
+  margin-bottom: -40px;
+  filter: drop-shadow(0 0 18px rgba(37,99,235,.35))
+          drop-shadow(0 0 25px rgba(16,185,129,.25));
+}
+
+.header-text {
+  flex: 1;
+  text-align: center;
+}
+
+.header-text h2 {
+  font-size: 18px;
+  color: #f8fafc;
+}
+
+.header-text p {
+  font-size: 12px;
+  color: #94a3b8;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.header-buttons button {
+  background: linear-gradient(135deg, #2563eb, #10b981);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.header-buttons button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}

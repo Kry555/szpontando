@@ -1,0 +1,115 @@
+/* ========================= RESET ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========================= BODY ========================= */
+body {
+  background: linear-gradient(180deg, #0b1120 0%, #0f172a 45%, #111827 100%);
+  color: #f1f5f9;
+  font-family: "Segoe UI", sans-serif;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+/* ========================= TITLE ========================= */
+h1 {
+  font-size: 28px;
+  color: #10b981;
+  margin-bottom: 15px;
+}
+
+/* ========================= TEXT ========================= */
+p {
+  color: #94a3b8;
+  max-width: 500px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+/* ========================= BUTTON ========================= */
+button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2563eb, #10b981);
+  color: white;
+  transition: .2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 0 15px rgba(37,99,235,.25);
+}
+
+/* ========================= LINK RESET ========================= */
+a {
+  text-decoration: none;
+}
+/* ========================= HEADER ========================= */
+.main-header {
+  width: 100%;
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #0f172a, #111827, #172554);
+  border-bottom: 1px solid #1e293b;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.logo-box img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  margin-top: -40px;
+  margin-bottom: -40px;
+  filter: drop-shadow(0 0 18px rgba(37,99,235,.35))
+          drop-shadow(0 0 25px rgba(16,185,129,.25));
+}
+
+.header-text {
+  flex: 1;
+  text-align: center;
+}
+
+.header-text h2 {
+  font-size: 18px;
+  color: #f8fafc;
+}
+
+.header-text p {
+  font-size: 12px;
+  color: #94a3b8;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.header-buttons button {
+  background: linear-gradient(135deg, #2563eb, #10b981);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.header-buttons button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
