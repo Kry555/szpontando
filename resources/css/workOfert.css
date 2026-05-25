@@ -60,7 +60,7 @@ p {
 ========================= */
 
 .zgloszenie {
-  width: 60%;
+  width: 40%;
   margin: 15px auto;
 
   background: rgba(15, 23, 42, 0.9);
@@ -559,4 +559,114 @@ input[type="datetime-local"]:focus {
 
   display: block;
   margin: 0 auto 15px auto;
+}
+/* =========================
+   OCENA GOSPODARZA
+========================= */
+
+.rating-box {
+  margin-top: 12px;
+  padding: 14px;
+
+  background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(37,99,235,0.08));
+  border: 1px solid #334155;
+  border-left: 4px solid #10b981;
+
+  border-radius: 12px;
+
+  box-shadow: 0 0 18px rgba(16,185,129,0.08);
+}
+
+.rating-box h4 {
+  margin-bottom: 10px;
+  color: #10b981;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+/* input number */
+.rating-box input[type="number"] {
+  width: 100%;
+  padding: 10px;
+
+  margin-top: 6px;
+  margin-bottom: 10px;
+
+  border-radius: 8px;
+  border: 1px solid #334155;
+
+  background: #0f172a;
+  color: #f1f5f9;
+
+  outline: none;
+}
+
+.rating-box input[type="number"]:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 10px rgba(16,185,129,.25);
+}
+
+/* textarea */
+.rating-box textarea {
+  width: 100%;
+  min-height: 80px;
+
+  padding: 10px;
+  margin-top: 8px;
+
+  border-radius: 8px;
+  border: 1px solid #334155;
+
+  background: #0f172a;
+  color: #f1f5f9;
+
+  resize: vertical;
+}
+
+.rating-box textarea:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 10px rgba(16,185,129,.25);
+  outline: none;
+}
+
+/* button inside rating box (override global form button if needed) */
+.rating-box button {
+  width: 100%;
+  margin-top: 10px;
+
+  background: linear-gradient(135deg, #10b981, #2563eb);
+  color: white;
+
+  border-radius: 8px;
+  padding: 10px;
+
+  font-weight: 700;
+
+  transition: .2s;
+}
+
+.rating-box button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+.btn-opinia-gospodarz {
+  width: 100%;
+  margin-top: 10px;
+
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.btn-opinia-gospodarz:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.15);
 }

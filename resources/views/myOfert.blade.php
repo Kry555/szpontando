@@ -190,7 +190,7 @@
 
         {{-- Sekcja oceny pracownika --}}
         @if($zgloszenie->ostateczny_termin && !($zgloszenie->juz_oceniono ?? false))
-        <div class="ocen">
+        <div class="rating-box">
           <h4>Oceń pracownika</h4>
           <form method="POST" action="{{ route('ocena.store') }}">
             @csrf
@@ -200,7 +200,7 @@
             <label>Gwiazdki (0-5):</label>
             <input type="number" name="gwiazdki" min="0" max="5" required><br>
             <textarea name="opis" placeholder="Krótka opinia słowna..." maxlength="255"></textarea><br>
-            <button type="submit">Wystaw opinię pracownikowi</button>
+            <button type="submit" class="rating-submit">Wystaw opinię pracownikowi</button>
           </form>
         </div>
         @endif
@@ -275,28 +275,55 @@
         <div id="edit_typ_radio">
           <!-- tutaj JS wstawi radio buttony jak w add_ofert -->
         </div>
-
+        <p>adres:</p>
         <input type="text" name="adres" id="edit_adres" placeholder="adres" required><br>
-        <input type="number" name="cena" id="edit_cena" placeholder="cena" min="0" step="0.01" required> <span>zł</span><br>
-        Ważne do:<br>
+        <p>cena:</p>
+        <input type="number" name="cena" id="edit_cena" placeholder="cena" min="0" step="0.01" required><br>
+        <p>data wygaśnięcia:</p>
         <input type="datetime-local" name="do_kiedy_wazne" id="edit_do_kiedy_wazne" required><br>
+        <p>opis:</p>
         <input type="text" name="opis" id="edit_opis" placeholder="opis" required><br>
 
-        <p>Zdjęcia do ogłoszenia (max 2):</p>
-        <div id="current_zdjecie_1_display"></div>
-        <input type="file" name="zdjecie_1" accept="image/*"><br>
-        <label><input type="checkbox" name="clear_zdjecie_1" value="1"> Usuń zdjęcie 1</label><br>
-        <br>
+<p class="upload-title">Zdjęcia do ogłoszenia (max 2)</p>
 
-        <div id="current_zdjecie_2_display"></div>
-        <input type="file" name="zdjecie_2" accept="image/*"><br>
-        <label><input type="checkbox" name="clear_zdjecie_2" value="1"> Usuń zdjęcie 2</label><br>
+<div class="image-grid">
+
+  <!-- IMAGE 1 -->
+  <div class="image-box">
+    <div id="current_zdjecie_1_display" class="preview"></div>
+
+    <label class="upload-btn">
+      <input type="file" name="zdjecie_1" accept="image/*">
+      <span> Zmień zdjęcie </span>
+    </label>
+
+<label class="clear-btn">
+  <input type="checkbox" name="clear_zdjecie_1" value="1">
+  <span> Usuń zdjęcie </span>
+</label>
+  </div>
+
+  <!-- IMAGE 2 -->
+  <div class="image-box">
+    <div id="current_zdjecie_2_display" class="preview"></div>
+
+    <label class="upload-btn">
+      <input type="file" name="zdjecie_2" accept="image/*">
+      <span> Zmień zdjęcie </span>
+    </label>
+
+<label class="clear-btn">
+  <input type="checkbox" name="clear_zdjecie_2" value="1">
+  <span> Usuń zdjęcie </span>
+</label>
+  </div>
+
+</div>
         <br>
 
         <button type="submit">Zapisz zmiany</button>
         <button type="button" onclick="closeModal_editOffer()">Anuluj</button>
       </form>
-      <button type="button" onclick="closeModal_editOffer()" class="zaknij_but">Zamknij</button>
     </div>
   </div>
 

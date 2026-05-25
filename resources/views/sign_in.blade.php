@@ -46,7 +46,7 @@
     @auth
 
     <div class="logged-box">
-      <h1>Jesteś już zalogowany 😎</h1>
+      <h1>Jesteś już zalogowany </h1>
 
       <a href="{{ route('main') }}">
         <button type="button">

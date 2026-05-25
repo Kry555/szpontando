@@ -61,7 +61,6 @@ body {
 ========================= */
 
 .register-container {
-  padding-top: 120px;
     width: 100%;
     max-width: 520px;
 
@@ -209,46 +208,60 @@ input:focus {
 
 /* =========================
    CAPTCHA
-   ORYGINALNY STYL
 ========================= */
 
 .captcha-box {
     display: flex;
-    margin: 10px auto 5px;
     align-items: center;
+    justify-content: space-between;
+
+    margin: 14px auto 8px;
+
+    width: 320px;
+    height: 92px;
+
+    padding: 0 14px;
+
     background: white;
-    padding: 0px 5px;
+
     border: 1px solid #d3d3d3;
     border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 260px;
-    height: 70px;
-    justify-content: space-between;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,.1);
 }
 
 .left-section {
     display: flex;
     align-items: center;
-    width: 80%;
+
+    gap: 14px;
+
+    width: 75%;
 }
 
 .right-section {
     text-align: center;
-    font-size: 10px;
+
+    font-size: 11px;
+    line-height: 1.3;
+
     color: #777;
 }
 
 .captcha-text {
-    font-size: 14px;
+    font-size: 18px;
     color: #333;
 }
 
 .zdjtapczan {
-    height: 33.5px;
+    height: 42px;
     width: auto;
+
     display: block;
+
     object-fit: contain;
-    margin: 0 auto;
+
+    margin: 0 auto 3px;
 }
 
 /* HIDE REAL CHECKBOX */
@@ -257,33 +270,41 @@ input:focus {
     display: none;
 }
 
-/* CUSTOM */
+/* CUSTOM CHECKBOX */
 
 .custom-checkbox {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
+
     border: 2px solid #555;
     border-radius: 3px;
-    margin-right: 10px;
+
     position: relative;
     cursor: pointer;
 
     display: flex;
     align-items: center;
     justify-content: center;
+
+    flex-shrink: 0;
 }
 
 .custom-checkbox::before {
     content: "";
+
     position: absolute;
-    width: 16px;
-    height: 16px;
+
+    width: 20px;
+    height: 20px;
+
     border: 3px solid transparent;
     border-top: 3px solid #4285f4;
+
     border-radius: 50%;
 
     top: 50%;
     left: 50%;
+
     transform: translate(-50%, -50%);
 
     opacity: 0;
@@ -291,16 +312,18 @@ input:focus {
 
 .custom-checkbox::after {
     content: "";
+
     position: absolute;
 
-    width: 8px;
-    height: 14px;
+    width: 9px;
+    height: 16px;
 
     border: solid white;
     border-width: 0 3px 3px 0;
 
     top: 50%;
     left: 50%;
+
     transform: translate(-50%, -60%) rotate(45deg);
 
     opacity: 0;
@@ -559,4 +582,8 @@ button:hover {
   box-shadow:
     0 0 15px rgba(37,99,235,.18),
     0 0 25px rgba(16,185,129,.12);
+}
+body {
+    padding: 40px 20px;
+    padding-top: 160px;
 }

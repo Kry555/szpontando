@@ -121,11 +121,11 @@
         style="width:100px">
 
       <div class="typ_lista">
-        <label for="typ">Typ oferty</label>
+        <label for="typ">Typ oferty:</label>
 
         <select name="typ" id="typ">
 
-          <option value="">-- Wszystkie --</option>
+          <option value="">Wszystkie</option>
 
           <optgroup label="Podstawowe">
 
@@ -226,7 +226,7 @@
 
           <option value="wszystkie"
             {{ request('status', 'aktywna') == 'wszystkie' ? 'selected' : '' }}>
-            -- Wszystkie --
+            Wszystkie
           </option>
 
           <option value="aktywna"
