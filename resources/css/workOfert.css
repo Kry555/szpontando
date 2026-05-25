@@ -1,0 +1,562 @@
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(180deg, #0b1120 0%, #0f172a 50%, #111827 100%);
+  color: #f1f5f9;
+  min-height: 100vh;
+}
+
+/* =========================
+   HEADERS / TEXT
+========================= */
+
+h1, h2 {
+  color: #10b981;
+  text-align: center;
+  margin: 20px 0;
+}
+
+p {
+  color: #e2e8f0;
+}
+
+/* =========================
+   MESSAGES
+========================= */
+
+.messages {
+  width: 95%;
+  margin: 20px auto;
+}
+
+.messages div {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.messages .success {
+  border: 1px solid #22c55e;
+  color: #22c55e;
+}
+
+.messages .error {
+  border: 1px solid #ef4444;
+  color: #ef4444;
+}
+
+/* =========================
+   ZGŁOSZENIA - KARTY
+========================= */
+
+.zgloszenie {
+  width: 60%;
+  margin: 15px auto;
+
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid #334155;
+  border-radius: 14px;
+
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  box-shadow: 0 0 18px rgba(0,0,0,0.25);
+
+  transition: .2s ease;
+}
+
+.zgloszenie:hover {
+  transform: translateY(-3px);
+  border-color: #10b981;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+button {
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+
+  background: #1f2937;
+  color: #e2e8f0;
+
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: .2s ease;
+}
+
+button:hover {
+  background: #334155;
+  transform: translateY(-1px);
+}
+
+/* specjalne buttony */
+form button {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+form button:hover {
+  filter: brightness(1.1);
+}
+
+/* disabled */
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: grayscale(100%);
+}
+
+/* =========================
+   PROFIL BUTTON
+========================= */
+
+.profil-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: transparent;
+  border: 1px solid #334155;
+
+  padding: 8px 12px;
+  border-radius: 12px;
+
+  cursor: pointer;
+  transition: .2s;
+}
+
+.profil-btn:hover {
+  border-color: #10b981;
+  background: rgba(16,185,129,.08);
+}
+
+.profil-btn img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profil-btn span {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+/* =========================
+   TERMIN / INFO BOX
+========================= */
+
+.zgloszenie > div {
+  background: rgba(2,6,23,.6);
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+input[type="datetime-local"] {
+  width: 100%;
+  padding: 10px;
+
+  border-radius: 8px;
+  border: 1px solid #334155;
+
+  background: #0f172a;
+  color: #e2e8f0;
+
+  margin-top: 6px;
+}
+
+input[type="datetime-local"]:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 10px rgba(16,185,129,.25);
+  outline: none;
+}
+
+/* =========================
+   MODALS
+========================= */
+
+#modal_profil_standard,
+#modal_history_detail,
+#modal_oferta {
+  display: none;
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+
+  z-index: 9999;
+}
+
+/* CONTENT MODAL */
+#modal_profil_standard > div,
+#modal_history_detail > div,
+#modal_oferta > div {
+  background: #0f172a;
+  color: #f1f5f9;
+
+  width: 90%;
+  max-width: 520px;
+
+  margin: 80px auto;
+  padding: 22px;
+
+  border-radius: 14px;
+
+  box-shadow: 0 0 40px rgba(16,185,129,.15);
+
+  position: relative;
+
+  animation: pop .2s ease-out;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* =========================
+   PROFIL MODAL
+========================= */
+
+#modal_profil_img {
+  width: 110px;
+  height: 110px;
+
+  border-radius: 50%;
+  object-fit: cover;
+
+  border: 3px solid #10b981;
+
+  display: block;
+  margin: 0 auto 15px auto;
+}
+
+/* =========================
+   HISTORY TILES
+========================= */
+
+.tile {
+  background: #111827;
+  border: 1px solid #334155;
+
+  padding: 10px;
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  margin-bottom: 10px;
+
+  transition: .2s;
+}
+
+.tile:hover {
+  border-color: #10b981;
+  transform: translateY(-2px);
+}
+
+/* =========================
+   CLOSE BUTTON MODAL
+========================= */
+
+#modal_profil_standard button,
+#modal_history_detail button,
+#modal_oferta button {
+  margin-top: 15px;
+
+  width: 100%;
+  padding: 12px;
+
+  border-radius: 8px;
+  border: none;
+
+  font-weight: 700;
+
+  background: linear-gradient(135deg, #374151, #1f2937);
+  color: white;
+
+  cursor: pointer;
+}
+
+#modal_profil_standard button:hover,
+#modal_history_detail button:hover,
+#modal_oferta button:hover {
+  filter: brightness(1.15);
+}
+
+/* =========================
+   TERMIN NEGOCJACJE
+========================= */
+
+.negocjacja {
+  margin-top: 10px;
+  padding: 12px;
+
+  border-radius: 10px;
+
+  background: linear-gradient(135deg, rgba(2,6,23,.9), rgba(15,23,42,.9));
+  border: 1px solid #334155;
+  border-left: 4px solid #10b981;
+}
+
+.negocjacja p {
+  margin: 6px 0;
+  color: #cbd5e1;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+  .zgloszenie {
+    width: 95%;
+  }
+}
+/* =========================
+   HEADER (IDENTYCZNY JAK W MYOFERT)
+========================= */
+
+.main-header {
+  width: 100%;
+  padding: 10px 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: linear-gradient(90deg, #0f172a, #111827, #172554);
+  border-bottom: 1px solid #1e293b;
+
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.logo-box img {
+  width: 180px;
+  height: 180px;
+
+  object-fit: contain;
+
+  margin-top: -50px;
+  margin-bottom: -50px;
+
+  filter:
+    drop-shadow(0 0 18px rgba(37,99,235,.35))
+    drop-shadow(0 0 25px rgba(16,185,129,.25));
+}
+
+.header-text {
+  flex: 1;
+  text-align: center;
+}
+
+.header-text h2 {
+  font-size: 18px;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.header-text p {
+  font-size: 12px;
+  color: #94a3b8;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.header-buttons button {
+  background: linear-gradient(135deg, #2563eb, #10b981);
+  color: white;
+
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+
+  font-weight: 700;
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.header-buttons button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 0 15px rgba(37,99,235,.25);
+}
+
+/* =========================
+   MODAL BASE (TAKI JAK W MYOFERT)
+========================= */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+}
+
+/* kontener */
+.modal_content {
+  background: linear-gradient(180deg, #111827, #0f172a);
+  color: #f1f5f9;
+
+  width: 92%;
+  max-width: 550px;
+
+  padding: 22px;
+
+  border-radius: 14px;
+
+  box-shadow: 0 0 40px rgba(16,185,129,.15);
+
+  position: relative;
+
+  animation: pop .2s ease-out;
+}
+
+@keyframes pop {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* X button */
+.close_btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  background: transparent;
+  border: none;
+
+  font-size: 20px;
+  color: #f1f5f9;
+
+  cursor: pointer;
+}
+
+/* =========================
+   MODAL TEXT STYLE
+========================= */
+
+.modal h2 {
+  color: #10b981;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.modal_box,
+#history_detail_content,
+.profil_content {
+  background: rgba(15,23,42,.6);
+  border: 1px solid #334155;
+
+  padding: 14px;
+  border-radius: 10px;
+
+  color: #cbd5e1;
+}
+
+/* =========================
+   HISTORY TILE (jak w myOfert)
+========================= */
+
+.tile {
+  background: #111827;
+  border: 1px solid #334155;
+
+  padding: 10px;
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  margin-bottom: 10px;
+
+  transition: .2s;
+}
+
+.tile:hover {
+  border-color: #10b981;
+  transform: translateY(-2px);
+}
+
+/* =========================
+   BUTTON CLOSE
+========================= */
+
+.btn_close {
+  width: 100%;
+  margin-top: 15px;
+
+  padding: 12px;
+
+  border-radius: 8px;
+  border: none;
+
+  font-weight: 700;
+
+  background: linear-gradient(135deg, #374151, #1f2937);
+  color: white;
+
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.btn_close:hover {
+  filter: brightness(1.15);
+}
+
+/* =========================
+   PROFIL IMG (jak myOfert)
+========================= */
+
+#modal_profil_img {
+  width: 110px;
+  height: 110px;
+
+  border-radius: 50%;
+  object-fit: cover;
+
+  border: 3px solid #10b981;
+
+  display: block;
+  margin: 0 auto 15px auto;
+}
