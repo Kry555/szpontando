@@ -1,6 +1,220 @@
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background:
+        linear-gradient(
+            180deg,
+            #0b1120 0%,
+            #0f172a 45%,
+            #111827 100%
+        );
+
+    color: #f1f5f9;
+
+    font-family: "Segoe UI", sans-serif;
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+    padding-top: 120px;
+}
+.reset-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  z-index: 9999;
+
+  padding: 10px 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #0f172a,
+      #111827,
+      #172554
+    );
+
+  border-bottom: 1px solid #1e293b;
+}
+
+/* =========================
+   REGISTER CARD
+========================= */
+
+.register-container {
+  padding-top: 120px;
+    width: 100%;
+    max-width: 520px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(17,24,39,.98),
+            rgba(15,23,42,.98)
+        );
+
+    border: 1px solid #1e293b;
+
+    border-radius: 10px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 0 30px rgba(37,99,235,.12),
+        0 0 50px rgba(16,185,129,.06);
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.register-title {
+    text-align: center;
+
+    margin-bottom: 30px;
+
+    font-size: 32px;
+
+    color: #10b981;
+}
+
+/* =========================
+   ERRORS
+========================= */
+
+.error-box {
+    background: rgba(220,38,38,.12);
+
+    border: 1px solid rgba(220,38,38,.4);
+
+    color: #fecaca;
+
+    padding: 14px;
+
+    border-radius: 6px;
+
+    margin-bottom: 20px;
+}
+
+.error-box ul {
+    padding-left: 18px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+
+    height: 48px;
+
+    padding: 0 14px;
+
+    background: #0f172a;
+
+    border: 1px solid #334155;
+
+    border-radius: 6px;
+
+    color: white;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: .2s;
+}
+
+input:focus {
+    border-color: #10b981;
+
+    box-shadow:
+        0 0 12px rgba(16,185,129,.22);
+}
+
+/* =========================
+   GENDER
+========================= */
+
+.gender-title {
+    margin-top: 5px;
+
+    color: #cbd5e1;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+.gender-box {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin-bottom: 8px;
+}
+
+.gender-option {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 12px;
+
+    background: rgba(15,23,42,.7);
+
+    border: 1px solid #334155;
+
+    border-radius: 6px;
+}
+
+.gender-option span {
+    color: #e2e8f0;
+}
+
+/* =========================
+   CAPTCHA
+   ORYGINALNY STYL
+========================= */
+
 .captcha-box {
     display: flex;
-    margin: 0 auto;
+    margin: 10px auto 5px;
     align-items: center;
     background: white;
     padding: 0px 5px;
@@ -15,51 +229,18 @@
 .left-section {
     display: flex;
     align-items: center;
-    /* background-color: pink; */
     width: 80%;
 }
 
-.checkbox {
-    width: 24px;
-    height: 24px;
-    border: 2px solid #555;
-    border-radius: 3px;
-    margin-right: 10px;
-    position: relative;
-}
-
-.checkbox::after {
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 18px;
-    border: solid green;
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-    top: 0px;
-    left: 6px;
-    display: none;
-    /* purely visual, no functionality */
+.right-section {
+    text-align: center;
+    font-size: 10px;
+    color: #777;
 }
 
 .captcha-text {
     font-size: 14px;
     color: #333;
-}
-
-.right-section {
-    text-align: center;
-    align-items: right;
-    font-size: 10px;
-    color: #777;
-    /* background-color: red; */
-}
-
-.logo-box-img {
-    height: 80px;
-    width: auto;
-    object-fit: contain;
-    margin-bottom: 3px;
 }
 
 .zdjtapczan {
@@ -68,15 +249,16 @@
     display: block;
     object-fit: contain;
     margin: 0 auto;
-
 }
 
-/* hide real checkbox */
+/* HIDE REAL CHECKBOX */
+
 #captchaCheck {
     display: none;
 }
 
-/* fake checkbox */
+/* CUSTOM */
+
 .custom-checkbox {
     width: 24px;
     height: 24px;
@@ -107,7 +289,6 @@
     opacity: 0;
 }
 
-/* checkmark */
 .custom-checkbox::after {
     content: "";
     position: absolute;
@@ -125,25 +306,27 @@
     opacity: 0;
 }
 
-/* start spinning when checked */
-#captchaCheck:checked+.custom-checkbox::before {
+#captchaCheck:checked + .custom-checkbox::before {
     opacity: 1;
     animation: spinFade 1s linear forwards;
 }
 
-/* after spin make green */
-#captchaCheck.checked+.custom-checkbox {
+#captchaCheck.checked + .custom-checkbox {
     background: #34a853;
     border-color: #34a853;
 }
 
-/* show checkmark */
-#captchaCheck.checked+.custom-checkbox::after {
+#captchaCheck.checked + .custom-checkbox::after {
     opacity: 1;
 }
 
-/* spin animation */
+#captchaCheck:disabled + .custom-checkbox {
+    cursor: default;
+    pointer-events: none;
+}
+
 @keyframes spinFade {
+
     0% {
         transform: translate(-50%, -50%) rotate(0deg);
         opacity: 1;
@@ -160,27 +343,220 @@
     }
 }
 
-/* dark-mode.css */
-body {
-    background-color: #1e1e1e;
-    /* ciemnoszary / prawie czarny */
-    color: #ffffff;
-    /* biały tekst */
-    text-align: center;
-    /* wyrównanie tekstu do środka */
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    /* pełna wysokość widoku */
+/* =========================
+   BUTTONS
+========================= */
+
+.button-group {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    /* wyśrodkowanie w pionie */
-    align-items: center;
-    /* wyśrodkowanie w poziomie */
+
+    gap: 12px;
+
+    margin-top: 15px;
 }
 
-#captchaCheck:disabled+.custom-checkbox {
-    cursor: default;
-    pointer-events: none;
+button {
+    width: 100%;
+
+    height: 48px;
+
+    border: none;
+
+    border-radius: 6px;
+
+    color: white;
+
+    font-weight: 700;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.08);
+
+    box-shadow:
+        0 0 15px rgba(37,99,235,.18),
+        0 0 25px rgba(16,185,129,.1);
+}
+
+.submit-btn {
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #10b981
+        );
+}
+
+.login-btn {
+    background:
+        linear-gradient(
+            135deg,
+            #3b82f6,
+            #06b6d4
+        );
+}
+
+.back-btn {
+    background:
+        linear-gradient(
+            135deg,
+            #374151,
+            #1f2937
+        );
+}
+
+/* =========================
+   LINKS
+========================= */
+
+a {
+    text-decoration: none;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+    .register-container {
+        padding: 25px 20px;
+    }
+
+    .register-title {
+        font-size: 26px;
+    }
+
+    .captcha-box {
+        transform: scale(.95);
+    }
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.reset-header {
+  width: 100%;
+
+  padding: 12px 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #0f172a,
+      #111827,
+      #172554
+    );
+
+  border-bottom: 1px solid #1e293b;
+}
+
+/* LOGO */
+
+.logo-box img {
+  width: 180px;
+  height: 180px;
+
+  object-fit: contain;
+
+  margin-top: -40px;
+  margin-bottom: -40px;
+
+  filter:
+    drop-shadow(0 0 18px rgba(37,99,235,.35))
+    drop-shadow(0 0 25px rgba(16,185,129,.25));
+}
+
+/* TEXT */
+
+.header-text {
+  flex: 1;
+}
+
+.header-text h2 {
+  font-size: 30px;
+
+  color: #f8fafc;
+
+  margin-bottom: 4px;
+}
+
+.header-text p {
+  color: #94a3b8;
+
+  font-size: 13px;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+}
+
+/* BUTTONS */
+
+.header-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.header-buttons button {
+  border: none;
+
+  padding: 11px 18px;
+
+  border-radius: 6px;
+
+  color: white;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: .22s ease;
+}
+
+/* BUTTON COLORS */
+
+.header-buttons a:first-child button {
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #06b6d4
+    );
+}
+
+.header-buttons a:last-child button {
+  background:
+    linear-gradient(
+      135deg,
+      #10b981,
+      #059669
+    );
+}
+
+button:hover {
+  transform: translateY(-2px);
+
+  filter: brightness(1.08);
+
+  box-shadow:
+    0 0 15px rgba(37,99,235,.18),
+    0 0 25px rgba(16,185,129,.12);
 }
