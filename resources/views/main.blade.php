@@ -78,12 +78,15 @@
 
     @else
 
-    <p style="text-align:right">
-      utwórz konto już dziś!
+    <p class="guest_box">
+      Utwórz konto już dziś!
+
       <a href="{{ route('login') }}">
         Zaloguj się
       </a>
+
       lub
+
       <a href="{{ route('register.show') }}">
         Zarejestruj się
       </a>

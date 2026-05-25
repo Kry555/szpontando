@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Sprzontando</title>
-    <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
-    @vite('resources/css/stop_z_wypalaniem_gał.css')
+  <meta charset="UTF-8">
+  <title>Sprzontando</title>
+  <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
+  @vite('resources/css/stop_z_wypalaniem_gał.css')
 </head>
+
 <body>
 
-<h1>Podaj nowy email</h1>
+  <h1>Podaj nowy email</h1>
 
-<form method="POST" action="{{ route('email.change.send.new') }}">
+  <form method="POST" action="{{ route('email.change.send.new') }}">
     @csrf
 
     <input type="hidden"
-           name="request_id"
-           value="{{ $request_id }}">
+      name="request_id"
+      value="{{ $request_id }}">
 
     <input type="email"
-           name="new_email"
-           placeholder="nowy email"
-           required>
+      name="new_email"
+      placeholder="nowy email"
+      required>
 
     <button type="submit">
-        Wyślij potwierdzenie
+      Wyślij potwierdzenie
     </button>
-</form>
-@if(session('status'))
-    <p>
-        {{ session('status') }}
-    </p>
-@endif
+  </form>
+  @if(session('status'))
+  <p>
+    {{ session('status') }}
+  </p>
+  @endif
 
 </body>
+
 </html>
