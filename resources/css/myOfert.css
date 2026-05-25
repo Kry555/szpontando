@@ -1,129 +1,944 @@
-/* Kontener dla pojedynczej oferty */
-.oferta,
-.zgloszenie {
-    background-color: #2a2a2a;
-    /* ciemne tło kart */
-    border-radius: 12px;
-    padding: 15px;
-    margin: 10px auto;
-    width: 350px;
-    max-width: 90%;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    color: #fff;
-    text-align: left;
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Nagłówek oferty */
-.oferta h3 {
-    font-size: 16px;
-    margin-bottom: 8px;
-    color: #1db954;
-    /* wyróżnienie nagłówka */
+body {
+  background:
+    linear-gradient(180deg, #0b1120 0%, #0f172a 45%, #111827 100%);
+  color: #f1f5f9;
+  font-family: "Segoe UI", sans-serif;
+  min-height: 100vh;
 }
 
-/* Tekst oferty */
+/* =========================
+   LINKS
+========================= */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.main-header {
+  width: 100%;
+  padding: 10px 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: linear-gradient(90deg, #0f172a, #111827, #172554);
+  border-bottom: 1px solid #1e293b;
+
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.logo-box img {
+  width: 180px;
+  height: 180px;
+
+  object-fit: contain;
+
+  margin-top: -50px;
+  margin-bottom: -50px;
+
+  filter:
+    drop-shadow(0 0 18px rgba(37,99,235,.35))
+    drop-shadow(0 0 25px rgba(16,185,129,.25));
+}
+
+.header-text {
+  flex: 1;
+  text-align: center;
+}
+
+.header-text h2 {
+  font-size: 18px;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.header-text p {
+  font-size: 12px;
+  color: #94a3b8;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.header-buttons button {
+  background: linear-gradient(135deg, #2563eb, #10b981);
+  color: white;
+
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+
+  font-weight: 700;
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.header-buttons button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 0 15px rgba(37,99,235,.25);
+}
+
+/* =========================
+   MESSAGES
+========================= */
+
+.messages {
+  padding: 20px;
+}
+
+.messages div {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.messages .success {
+  color: #22c55e;
+  border: 1px solid #22c55e;
+}
+
+.messages .error {
+  color: #ef4444;
+  border: 1px solid #ef4444;
+}
+
+/* =========================
+   TWOJE OFERTY
+========================= */
+
+.twoje_ofert {
+  width: 95%;
+  margin: 30px auto;
+}
+
+.twoje_ofert h1 {
+  margin-bottom: 20px;
+  color: #10b981;
+}
+
+.oferta {
+  background: linear-gradient(180deg, #111827, #0f172a);
+  border: 1px solid #1e293b;
+
+  padding: 20px;
+  border-radius: 6px;
+
+  margin-bottom: 15px;
+
+  transition: .25s ease;
+}
+
+.oferta:hover {
+  transform: translateY(-3px);
+  border-color: #2563eb;
+  box-shadow: 0 0 20px rgba(37,99,235,.15);
+}
+
 .oferta p {
-    margin: 4px 0;
-    font-size: 14px;
-    line-height: 1.4;
+  margin-bottom: 8px;
+  color: #e2e8f0;
 }
 
-/* Kontener przycisków oferty */
-.oferta .guziki {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
+/* =========================
+   BUTTONS IN OFERTY
+========================= */
 
 .oferta button {
-    background-color: #1db954;
-    color: #fff;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: background 0.2s ease, transform 0.2s ease;
-    margin: 0 5px;
+  margin-top: 10px;
+
+  background: linear-gradient(135deg, #2563eb, #10b981);
+  color: white;
+
+  border: none;
+  padding: 10px 14px;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  transition: .2s;
 }
 
 .oferta button:hover {
-    background-color: #17a44b;
-    transform: translateY(-2px);
+  transform: translateY(-2px);
+  filter: brightness(1.1);
 }
 
-.oferta button[disabled] {
-    background-color: #555;
-    cursor: not-allowed;
+/* =========================
+   ZGŁOSZENIA
+========================= */
+
+.zgloszenia_do_twoich {
+  width: 95%;
+  margin: 40px auto;
 }
 
-/* Profil w zgłoszeniach */
+.zgloszenia_do_twoich h2 {
+  margin-bottom: 20px;
+  color: #facc15;
+}
+
+.zgloszenie {
+  background: linear-gradient(180deg, #111827, #0f172a);
+  border: 1px solid #1e293b;
+
+  padding: 18px;
+  border-radius: 6px;
+
+  margin-bottom: 15px;
+}
+
+/* PROFIL BUTTON */
 .profil-btn {
-    display: flex;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: transparent;
+  border: 1px solid #334155;
+  color: white;
+
+  padding: 8px 12px;
+  border-radius: 6px;
+
+  cursor: pointer;
+}
+
+/* =========================
+   MODALS
+========================= */
+
+.modal {
+  display: none;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,.75);
+  backdrop-filter: blur(4px);
+
+  z-index: 9999;
+}
+
+.modal_content {
+  width: 90%;
+  max-width: 600px;
+
+  margin: 80px auto;
+  padding: 25px;
+
+  background: linear-gradient(180deg, #111827, #0f172a);
+  border: 1px solid #1e293b;
+
+  border-radius: 6px;
+}
+
+/* =========================
+   HISTORY TILES
+========================= */
+
+.tile {
+  background: #0f172a;
+  border: 1px solid #334155;
+
+  padding: 10px;
+  border-radius: 6px;
+
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.tile:hover {
+  border-color: #2563eb;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  .main-header {
     flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .logo-box img {
+    width: 140px;
+    height: 140px;
+    margin: -35px 0;
+  }
+
+  .twoje_ofert,
+  .zgloszenia_do_twoich {
+    width: 98%;
+  }
+}
+
+
+/* =========================
+   PROFILE BUTTON (OKRĄG)
+========================= */
+
+.profil-btn {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+    border: 2px solid #334155;
+
+    padding: 0;
+    overflow: hidden;
+
+    display: flex;
     align-items: center;
-    border: none;
-    background: transparent;
+    justify-content: center;
+
+    background: #0f172a;
+
     cursor: pointer;
-    margin-bottom: 10px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    transition: .2s ease;
 }
 
 .profil-btn:hover {
+    transform: scale(1.08);
+    border-color: #10b981;
+    box-shadow: 0 0 10px rgba(16,185,129,.25);
+}
+
+/* obrazek w środku */
+.profil-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* usuwamy tekst */
+.profil-btn span {
+    display: none;
+}
+
+
+#modal_profil_img {
+    width: 110px;
+    height: 110px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 3px solid #10b981;
+
+    margin: 0 auto 15px auto;
+    display: block;
+
+    box-shadow: 0 0 20px rgba(16,185,129,.25);
+}
+
+
+.modal-content {
+    background: #0f172a;
+    color: white;
+
+    padding: 25px;
+
+    border-radius: 10px;
+
+    width: 90%;
+    max-width: 500px;
+
+    margin: auto;
+    position: relative;
+}
+
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+
+    filter: grayscale(100%);
+
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+button:disabled:hover {
+    transform: none;
+}
+
+button.zakoncz-btn {
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+    color: white;
+    font-weight: 700;
+}
+
+button.zakoncz-btn:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 18px rgba(220, 38, 38, 0.25);
+}
+
+/* =========================
+   MODAL EDIT OFFER
+========================= */
+
+#modal_edit_offer .modal_content {
+    background: #0f172a;
+    color: #f1f5f9;
+
+    padding: 25px;
+    border-radius: 12px;
+
+    width: 95%;
+    max-width: 520px;
+
+    box-shadow: 0 0 30px rgba(16,185,129,.12);
+}
+
+/* nagłówek */
+#modal_edit_offer h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #10b981;
+}
+
+/* inputy */
+#modal_edit_offer input[type="text"],
+#modal_edit_offer input[type="number"],
+#modal_edit_offer input[type="datetime-local"] {
+    width: 100%;
+    height: 44px;
+
+    margin: 6px 0 12px;
+
+    background: #111827;
+    border: 1px solid #334155;
+
+    border-radius: 8px;
+
+    color: white;
+
+    padding: 0 12px;
+
+    outline: none;
+
+    transition: .2s;
+}
+
+#modal_edit_offer input:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 10px rgba(16,185,129,.2);
+}
+
+/* radio sekcja */
+#edit_typ_radio label {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 8px 10px;
+    margin-bottom: 6px;
+
+    background: rgba(15,23,42,.7);
+    border: 1px solid #334155;
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+#edit_typ_radio label:hover {
+    border-color: #10b981;
+}
+
+/* przyciski w modalu */
+#modal_edit_offer button {
+    width: 100%;
+    margin-top: 10px;
+
+    padding: 12px;
+
+    border: none;
+    border-radius: 8px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+/* zapisz */
+#modal_edit_offer button[type="submit"] {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+}
+
+/* anuluj */
+#modal_edit_offer button[type="button"] {
+    background: #374151;
+    color: white;
+}
+
+/* zdjęcia preview */
+#modal_edit_offer img {
+    border-radius: 8px;
+    border: 1px solid #334155;
+}
+
+
+/* =========================
+   ZGŁOSZENIA - CONTAINER
+========================= */
+
+.zgloszenia_do_twoich {
+    margin-top: 40px;
+    padding: 20px;
+}
+
+.zgloszenia_do_twoich h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #10b981;
+}
+
+/* =========================
+   JEDNO ZGŁOSZENIE - KARTA
+========================= */
+
+.zgloszenie {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid #334155;
+
+    border-radius: 12px;
+
+    padding: 15px;
+    margin-bottom: 15px;
+
+    box-shadow: 0 0 18px rgba(0,0,0,.25);
+
+    transition: .2s ease;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.zgloszenie:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    border-color: #10b981;
+}
+
+/* =========================
+   PROFIL BUTTON W ZGŁOSZENIU
+========================= */
+
+.profil-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    background: transparent;
+    border: 1px solid #334155;
+
+    padding: 8px 12px;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.profil-btn:hover {
+    border-color: #10b981;
+    background: rgba(16,185,129,.08);
 }
 
 .profil-btn img {
-    width: 70px;
-    height: 70px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #fff;
-    margin-bottom: 8px;
-    transition: border-color 0.2s ease;
-}
-
-.profil-btn:hover img {
-    border-color: #1db954;
 }
 
 .profil-btn span {
-    font-weight: bold;
-    color: #ffffff;
-    font-size: 14px;
-    text-align: center;
+    color: #e2e8f0;
+    font-weight: 600;
 }
 
-/* Wiadomość w zgłoszeniu */
-.zgloszenie p {
-    margin: 5px 0;
+/* =========================
+   PRZYCISKI W ZGŁOSZENIU
+========================= */
+
+.zgloszenie button {
+    padding: 10px 12px;
+
+    border-radius: 8px;
+    border: none;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    background: #1f2937;
+    color: white;
+
+    transition: .2s;
+}
+
+.zgloszenie button:hover {
+    background: #334155;
+}
+
+/* AKCEPTUJ */
+.zgloszenie form button {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.zgloszenie form button:hover {
+    filter: brightness(1.1);
+}
+
+
+
+/* =========================
+   MODAL BACKDROP (jeśli nie masz)
+========================= */
+
+.modal {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,.65);
+
+    backdrop-filter: blur(6px);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+}
+
+/* =========================
+   MODAL CONTENT (NOWY LOOK)
+========================= */
+
+.modal_content {
+    background: #0f172a;
+    color: #f1f5f9;
+
+    width: 92%;
+    max-width: 550px;
+
+    border-radius: 14px;
+
+    padding: 22px;
+
+    box-shadow: 0 0 40px rgba(16,185,129,.12);
+
+    animation: pop .18s ease-out;
+}
+
+/* animacja */
+@keyframes pop {
+    from {
+        transform: scale(.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* =========================
+   MODAL HEADER
+========================= */
+
+#history_detail_title {
+    font-size: 20px;
+    color: #10b981;
+    margin-bottom: 10px;
+}
+
+/* =========================
+   CONTENT BOX
+========================= */
+
+#history_detail_content {
+    background: rgba(15,23,42,.6);
+    border: 1px solid #334155;
+
+    padding: 14px;
+    border-radius: 10px;
+
+    color: #cbd5e1;
+}
+
+/* =========================
+   OPINIA BOX
+========================= */
+
+#history_detail_content > div {
+    background: rgba(2,6,23,.6) !important;
+    border: 1px solid #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+/* =========================
+   CLOSE BUTTON
+========================= */
+
+.modal_content button {
+    margin-top: 15px;
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+    border-radius: 8px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    background: linear-gradient(135deg, #374151, #1f2937);
+    color: white;
+
+    transition: .2s;
+}
+
+.modal_content button:hover {
+    filter: brightness(1.15);
+}
+
+
+/* =========================
+   CENTRALNE SEKCJE (60%)
+========================= */
+
+.twoje_ofert,
+.zgloszenia_do_twoich {
+    width: 60%;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.oferta,
+.zgloszenie {
+    width: 100%;
+
+    background: rgba(15, 23, 42, 0.9);
+
+    border: 1px solid #334155;
+    border-radius: 12px;
+
+    padding: 16px;
+
+    margin-bottom: 14px;
+
+    transition: .2s ease;
+
+    box-shadow: 0 0 15px rgba(0,0,0,.25);
+}
+
+.oferta:hover,
+.zgloszenie:hover {
+    transform: translateY(-3px);
+    border-color: #10b981;
+}
+
+/* =========================
+   DATETIME INPUT (LEPSZY LOOK)
+========================= */
+
+input[type="datetime-local"] {
+    background: #0f172a;
+    color: #e2e8f0;
+
+    border: 1px solid #334155;
+    border-radius: 8px;
+
+    padding: 10px 12px;
+
+    outline: none;
+
+    width: 100%;
+}
+
+input[type="datetime-local"]:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 10px rgba(16,185,129,.25);
+}
+
+/* =========================
+   NEGOCJACJA PANEL
+========================= */
+
+.negocjacja {
+    margin-top: 12px;
+    padding: 14px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(2,6,23,.9),
+        rgba(15,23,42,.9)
+    );
+
+    border: 1px solid #334155;
+    border-left: 4px solid #10b981;
+
+    border-radius: 10px;
+
+    color: #cbd5e1;
+}
+
+.negocjacja p {
+    margin: 6px 0;
+}
+
+/* =========================
+   MAŁY PRZYCISK - SZCZEGÓŁY
+========================= */
+
+.zgloszenie button:not([type="submit"]) {
+    width: fit-content;
+    max-width: 200px;
+
+    padding: 6px 10px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    border-radius: 6px;
+
+    background: #1f2937;
+    color: #e2e8f0;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.zgloszenie button:not([type="submit"]):hover {
+    background: #334155;
+    transform: translateY(-1px);
+}
+
+.zgloszenie form button {
+    width: 200px;
+}
+
+/* =========================
+   EDIT MODAL - SZEROKOŚĆ
+========================= */
+
+#modal_edit_offer .modal_content {
+    width: 95%;
+    max-width: 900px;   /* <- dużo szerzej */
+
+    max-height: 90vh;
+    overflow-y: auto;   /* <- scroll pionowy */
+
+    padding: 25px;
+
+    border-radius: 14px;
+}
+
+/* ładny scrollbar */
+#modal_edit_offer .modal_content::-webkit-scrollbar {
+    width: 8px;
+}
+
+#modal_edit_offer .modal_content::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
+}
+
+#modal_edit_offer .modal_content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* =========================
+   RADIO - KAFELKI
+========================= */
+
+#edit_typ_radio {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+/* ukrywamy radio */
+#edit_typ_radio input[type="radio"] {
+    display: none;
+}
+
+/* kafelek */
+#edit_typ_radio label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px;
+
+    background: rgba(15,23,42,.8);
+    border: 1px solid #334155;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
     font-size: 13px;
-    line-height: 1.4;
+    font-weight: 600;
+
+    color: #e2e8f0;
+
+    transition: .2s ease;
 }
 
-.zgloszenie p strong {
-    color: #1db954;
+/* hover */
+#edit_typ_radio label:hover {
+    border-color: #10b981;
+    transform: translateY(-2px);
 }
 
-/* Nagłówki sekcji */
-h1,
-h2 {
-    text-align: center;
-    color: #1db954;
-}
-
-/* Responsywność */
-@media (max-width: 400px) {
-
-    .oferta,
-    .zgloszenie {
-        width: 95%;
-        padding: 12px;
-    }
-
-    .profil-btn img {
-        width: 60px;
-        height: 60px;
-    }
+/* WYBRANY */
+#edit_typ_radio input[type="radio"]:checked + span,
+#edit_typ_radio input[type="radio"]:checked + label {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-color: #10b981;
+    color: white;
+    box-shadow: 0 0 12px rgba(16,185,129,.25);
 }
