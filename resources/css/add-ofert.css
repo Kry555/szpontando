@@ -1,12 +1,207 @@
-.cena-box {
-    display: inline-flex;
-    align-items: center;
+/* ========================= RESET ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.cena-box input {
-    width: 100px;
+/* ========================= BODY ========================= */
+body {
+  background: linear-gradient(180deg, #0b1120 0%, #0f172a 45%, #111827 100%);
+  color: #f1f5f9;
+  font-family: "Segoe UI", sans-serif;
+  min-height: 100vh;
 }
 
-.cena-box span {
-    margin-left: 5px;
+/* ========================= LINKS ========================= */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ========================= HEADER ========================= */
+.main-header {
+  width: 100%;
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #0f172a, #111827, #172554);
+  border-bottom: 1px solid #1e293b;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.logo-box img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  margin-top: -40px;
+  margin-bottom: -40px;
+  filter: drop-shadow(0 0 18px rgba(37,99,235,.35))
+          drop-shadow(0 0 25px rgba(16,185,129,.25));
+}
+
+.header-text {
+  flex: 1;
+  text-align: center;
+}
+
+.header-text h2 {
+  font-size: 18px;
+  color: #f8fafc;
+}
+
+.header-text p {
+  font-size: 12px;
+  color: #94a3b8;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.header-buttons button {
+  background: linear-gradient(135deg, #2563eb, #10b981);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.header-buttons button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* ========================= TITLE ========================= */
+h1 {
+  text-align: center;
+  margin: 30px 0;
+  color: #10b981;
+}
+
+/* ========================= ERROR BOX ========================= */
+div[style*="color:red"] {
+  width: 90%;
+  max-width: 700px;
+  margin: 20px auto;
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid #dc2626;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+/* ========================= FORM ========================= */
+form {
+  width: 90%;
+  max-width: 750px;
+  margin: 0 auto 50px auto;
+  padding: 25px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid #334155;
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(0,0,0,.25);
+}
+
+/* ========================= TEXT INPUTS ========================= */
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #f1f5f9;
+  outline: none;
+  transition: .2s;
+}
+
+input:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 10px rgba(16,185,129,.25);
+}
+
+/* ========================= FILE INPUT ========================= */
+input[type="file"] {
+  margin: 10px 0;
+  color: #cbd5e1;
+}
+
+/* ========================= SPAN CENA ========================= */
+form span {
+  color: #94a3b8;
+  margin-left: 6px;
+}
+
+/* ========================= RADIO SECTION ========================= */
+form p {
+  margin: 15px 0 8px;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+/* radio labels */
+form label {
+  display: block;
+  padding: 10px;
+  margin-bottom: 6px;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  background: rgba(2,6,23,.4);
+  cursor: pointer;
+  transition: .2s;
+}
+
+form label:hover {
+  border-color: #10b981;
+  transform: translateY(-1px);
+}
+
+/* ========================= RADIO INPUT ========================= */
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+/* ========================= BUTTON ========================= */
+button[type="submit"] {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  transition: .2s;
+}
+
+button[type="submit"]:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+/* ========================= RESPONSIVE ========================= */
+@media (max-width: 768px) {
+  .main-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .logo-box img {
+    width: 120px;
+    height: 120px;
+    margin: -30px 0;
+  }
+
+  form {
+    width: 95%;
+    padding: 18px;
+  }
 }
