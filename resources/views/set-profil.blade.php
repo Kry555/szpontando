@@ -30,23 +30,22 @@
   </header>
   @auth
 
-  <div class="showprofil">
-    <img src="{{ asset('images/profilowe/' . $profil->profilowe) }}" alt="Profilowe" width="100"><br>
-    {{$profil->nick}}<br>
-    {{$profil->imie}}<br>
-    {{$profil->nazwisko}}<br>
-    {{$profil->sex}}<br>
-    {{$profil->data_ur}}<br>
-    {{$profil->miasto}}<br>
-    {{$profil->email_kontaktowy}}<br>
-    {{$profil->ocena}}<br>
-  </div>
-  <button onclick="openModal_change()">
-    Edytuj profil
-  </button>
-  <button onclick="openModal_change_users()">
-    Edytuj dane logowania
-  </button>
+<div class="showprofil">
+  <img src="{{ asset('images/profilowe/' . $profil->profilowe) }}" alt="Profilowe" width="100"><br>
+  Nick: {{$profil->nick}}<br>
+  Imię: {{$profil->imie}}<br>
+  Nazwisko: {{$profil->nazwisko}}<br>
+  Płeć: {{$profil->sex}}<br>
+  Data ur.: {{$profil->data_ur}}<br>
+  Miasto: {{$profil->miasto}}<br>
+  Emial kontaktowy: {{$profil->email_kontaktowy}}<br>
+  Średnie oceny: {{$profil->ocena}}<br>
+</div>
+
+<div class="profile-buttons">
+  <button onclick="openModal_change()">Edytuj profil</button>
+  <button onclick="openModal_change_users()">Edytuj dane logowania</button>
+</div>
 
   <!-- MODAL EDYCJA PROFILU -->
   <div id="modal_change" class="modal">
@@ -137,46 +136,52 @@
     </div>
   </div>
   <script>
-    function closeModal_change_email() {
-      document.getElementById('modal_change_email').style.display = 'none';
-    }
+function openModal(id) {
+  document.getElementById(id).classList.add('active');
+}
 
-    function openModal_change() {
-      document.getElementById('modal_change').style.display = 'block';
-    }
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+}
 
-    function closeModal_change() {
-      document.getElementById('modal_change').style.display = 'none';
-    }
+function openModal_change() {
+  openModal('modal_change');
+}
 
-    function openModal_change_users() {
-      document.getElementById('modal_change_users').style.display = 'block';
-    }
+function closeModal_change() {
+  closeModal('modal_change');
+}
 
-    function closeModal_change_users() {
-      document.getElementById('modal_change_users').style.display = 'none';
-    }
+function openModal_change_users() {
+  openModal('modal_change_users');
+}
 
-    function openEmailSentModal() {
-      document.getElementById('modal_email_sent').style.display = 'block';
-    }
+function closeModal_change_users() {
+  closeModal('modal_change_users');
+}
 
+function openModal_change_email() {
+  closeModal('modal_change_users');
+  openModal('modal_change_email');
+  document.getElementById('emailChangeForm').reset();
+}
 
-    function closeEmailSentModal() {
-      document.getElementById('modal_email_sent').style.display = 'none';
-    }
+function closeModal_change_email() {
+  closeModal('modal_change_email');
+}
 
-    function goBackToUsersModal() {
-      closeModal_change_email();
-      openModal_change_users();
-    }
+function openEmailSentModal() {
+  openModal('modal_email_sent');
+}
 
-    function openModal_change_email() {
-      closeModal_change_users();
-      document.getElementById('modal_change_email').style.display = 'block';
+function closeEmailSentModal() {
+  closeModal('modal_email_sent');
+}
 
-      document.getElementById('emailChangeForm').reset();
-    }
+function goBackToUsersModal() {
+  closeModal_change_email();
+  openModal_change_users();
+}
   </script>
 
   @if($errors->any())
@@ -194,11 +199,6 @@
   </script>
   @endif
   @endauth
-
-
-  <a href="{{ route('main') }}">
-    <button type="button">wróc na strone główną </button>
-  </a>
 </body>
 
 </html>

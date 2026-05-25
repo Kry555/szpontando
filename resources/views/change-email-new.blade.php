@@ -27,6 +27,7 @@
     </div>
 
   </header>
+  <div class="page-content">
   <h1>Podaj nowy email</h1>
 
   <form method="POST" action="{{ route('email.change.send.new') }}">
@@ -45,6 +46,7 @@
       Wyślij potwierdzenie
     </button>
   </form>
+</div>
   @if(session('status'))
   <p>
     {{ session('status') }}
