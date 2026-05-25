@@ -7,7 +7,121 @@
   <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
 
   @vite('resources/css/admin.css')
+  <style>
+    /* ========================= MODAL BACKGROUND ========================= */
 
+    #modal_profil_standard {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 9998;
+      animation: fadeIn .2s ease;
+    }
+
+    /* ========================= MODAL BOX ========================= */
+
+    .profil-modal-box {
+      width: 95%;
+      max-width: 480px;
+      margin: 70px auto;
+      background: linear-gradient(180deg, #0f172a, #111827);
+      border: 1px solid #334155;
+      border-radius: 18px;
+      padding: 25px;
+      color: #f8fafc;
+      position: relative;
+      box-shadow:
+        0 0 30px rgba(0, 0, 0, .45),
+        0 0 60px rgba(16, 185, 129, .08);
+      animation: modalOpen .25s ease;
+    }
+
+    /* ========================= CLOSE BUTTON ========================= */
+
+    .profil-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 22px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .profil-close:hover {
+      color: #ef4444;
+      transform: scale(1.1);
+    }
+
+    /* ========================= AVATAR ========================= */
+
+    .profil-avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #10b981;
+      margin-bottom: 15px;
+      box-shadow: 0 0 20px rgba(16, 185, 129, .25);
+    }
+
+    /* ========================= TITLE ========================= */
+
+    .profil-title {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #f8fafc;
+    }
+
+    /* ========================= INFO BOX ========================= */
+
+    .profil-info {
+      background: rgba(15, 23, 42, .7);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: left;
+    }
+
+    .profil-info p {
+      margin-bottom: 12px;
+      color: #e2e8f0;
+      font-size: 15px;
+    }
+
+    .profil-info strong {
+      color: #10b981;
+    }
+
+    /* ========================= ANIMATIONS ========================= */
+
+    @keyframes modalOpen {
+      from {
+        opacity: 0;
+        transform: translateY(-20px) scale(.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -72,18 +186,61 @@
   </div>
 
   <!-- MODAL PROFIL -->
-  <div id="modal_profil_standard" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); z-index: 9998;">
-    <div style="background:#fff; color:black; padding:25px; width:450px; margin:50px auto; position:relative; border-radius:12px; text-align:center;">
-      <button type="button" onclick="closeModal_profil()" style="position:absolute; top:15px; right:15px; border:none; background:none; font-size:22px; cursor:pointer;">✖</button>
-      <img id="modal_profil_img" src="" style="width:110px; height:110px; border-radius:50%; margin-bottom:15px; border: 3px solid orange; object-fit: cover;">
-      <h2 id="modal_profil_nick" style="margin-top:0;"></h2>
-      <div style="text-align: left; background: #fdfdfd; border: 1px solid #eee; padding: 15px; border-radius: 8px;">
-        <p><strong>Imię i nazwisko:</strong> <span id="modal_profil_imie"></span> <span id="modal_profil_nazwisko"></span></p>
-        <p><strong>Miasto:</strong> <span id="modal_profil_miasto"></span></p>
-        <p><strong>Email:</strong> <span id="modal_profil_email"></span></p>
-        <p><strong>Średnia ocena:</strong> <span id="modal_profil_ocena"></span> / 5 ⭐</p>
+  <div id="modal_profil_standard">
+
+    <div class="profil-modal-box">
+
+      <button
+        type="button"
+        onclick="closeModal_profil()"
+        class="profil-close">
+
+        ✖
+
+      </button>
+
+      <div style="text-align:center;">
+
+        <img
+          id="modal_profil_img"
+          src=""
+          class="profil-avatar">
+
+        <h2
+          id="modal_profil_nick"
+          class="profil-title">
+
+        </h2>
+
       </div>
+
+      <div class="profil-info">
+
+        <p>
+          <strong>Imię i nazwisko:</strong>
+          <span id="modal_profil_imie"></span>
+          <span id="modal_profil_nazwisko"></span>
+        </p>
+
+        <p>
+          <strong>Miasto:</strong>
+          <span id="modal_profil_miasto"></span>
+        </p>
+
+        <p>
+          <strong>Email:</strong>
+          <span id="modal_profil_email"></span>
+        </p>
+
+        <p>
+          <strong>Średnia ocena:</strong>
+          <span id="modal_profil_ocena"></span> / 5 ⭐
+        </p>
+
+      </div>
+
     </div>
+
   </div>
 
   <script>

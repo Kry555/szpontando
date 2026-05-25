@@ -253,6 +253,7 @@
               {{ $oferta->owner_imie }}
               {{ $oferta->owner_nazwisko }}
             </p>
+            <p style="padding-top:10px"></p>
 
             <div class="mb-3">
 
@@ -323,7 +324,7 @@
     style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2000;">
 
     <div id="modal_content"
-      style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative; border-radius:8px;">
+      style="color:white; padding:20px; width:400px; margin:100px auto; position:relative; border-radius:8px; border-color: #10b981; background: 0 0 10px rgba(16,185,129,.2);">
 
       <h2 class="h4 mb-3">
         Zgłoś chęć wykonania
@@ -351,11 +352,7 @@
         <div class="mt-3 d-flex gap-2">
 
           <button type="submit"
-            class="btn btn-primary flex-grow-1">
-
-            Wyślij
-
-          </button>
+            class="btn btn-primary flex-grow-1"> Wyślij</button>
 
           <button type="button"
             class="btn btn-light"

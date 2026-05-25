@@ -7,7 +7,212 @@
   <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
   @vite('resources/css/admin.css')
 
+  <style>
+    /* ========================= MODAL OVERLAY ========================= */
 
+    #modal_profil_standard,
+    #modal_history_detail {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .78);
+      backdrop-filter: blur(7px);
+      z-index: 9998;
+      animation: fadeIn .2s ease;
+    }
+
+    /* ========================= MODAL BOX ========================= */
+
+    .profil-modal-box,
+    .history-modal-box {
+      width: 95%;
+      max-width: 520px;
+      margin: 60px auto;
+      background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+      border: 1px solid #334155;
+      border-radius: 18px;
+      padding: 24px;
+      position: relative;
+      color: #000000;
+      box-shadow:
+        0 0 25px rgba(0, 0, 0, .45),
+        0 0 60px rgba(16, 185, 129, .08);
+      animation: modalOpen .25s ease;
+    }
+
+    /* ========================= CLOSE BUTTON ========================= */
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 22px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .modal-close:hover {
+      color: #ef4444;
+      transform: scale(1.1);
+    }
+
+    /* ========================= AVATAR ========================= */
+
+    .modal-avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #10b981;
+      margin-bottom: 15px;
+      box-shadow: 0 0 20px rgba(16, 185, 129, .25);
+    }
+
+    /* ========================= TITLES ========================= */
+
+    .modal-title {
+      margin: 0 0 20px;
+      font-size: 28px;
+      color: #f8fafc;
+    }
+
+    .modal-subtitle {
+      margin: 20px 0 12px;
+      font-size: 18px;
+      color: #10b981;
+    }
+
+    /* ========================= INFO BOX ========================= */
+
+    .modal-info-box {
+      background: rgba(15, 23, 42, .7);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: left;
+    }
+
+    .modal-info-box p {
+      margin: 8px 0;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+
+    .modal-info-box strong {
+      color: #10b981;
+    }
+
+    /* ========================= TILES ========================= */
+
+    .tiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .tile {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 14px;
+      cursor: pointer;
+      transition: .2s;
+      color: #f8fafc;
+      font-size: 14px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    }
+
+    .tile strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #10b981;
+    }
+
+    .tile:hover {
+      transform: translateY(-3px);
+      border-color: #10b981;
+      box-shadow: 0 0 18px rgba(16, 185, 129, .2);
+    }
+
+    /* ========================= BUTTON ========================= */
+
+    .modal-btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      background: linear-gradient(135deg, #2563eb, #10b981);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .modal-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+    }
+
+    /* ========================= REVIEW ========================= */
+
+    .review-box {
+      margin-top: 15px;
+      padding: 14px;
+      background: rgba(15, 23, 42, .7);
+      border: 1px solid #334155;
+      border-left: 4px solid #10b981;
+      border-radius: 10px;
+    }
+
+    .review-user {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .review-user img {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      margin-right: 10px;
+      object-fit: cover;
+      border: 1px solid #334155;
+    }
+
+    .review-rating {
+      color: #facc15;
+      font-weight: 700;
+    }
+
+    /* ========================= ANIMATIONS ========================= */
+
+    @keyframes modalOpen {
+      from {
+        opacity: 0;
+        transform: translateY(-20px) scale(.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -72,36 +277,106 @@
       </tbody>
     </table>
   </div>
-
   <!-- MODAL PROFIL -->
-  <div id="modal_profil_standard" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); z-index: 9998;">
-    <div style="background:#fff; color:black; padding:25px; width:450px; margin:50px auto; position:relative; border-radius:12px; text-align:center; box-shadow: 0 5px 25px rgba(0,0,0,0.4);">
-      <button type="button" onclick="closeModal_profil()" style="position:absolute; top:15px; right:15px; border:none; background:none; font-size:22px; cursor:pointer;">✖</button>
+  <div id="modal_profil_standard">
 
-      <img id="modal_profil_img" src="" style="width:110px; height:110px; border-radius:50%; margin-bottom:15px; border: 3px solid orange; object-fit: cover;">
-      <h2 id="modal_profil_nick" style="margin-top:0; color: #333;"></h2>
+    <div class="profil-modal-box">
 
-      <div style="text-align: left; background: #fdfdfd; border: 1px solid #eee; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-        <p style="margin: 5px 0;"><strong>Imię i nazwisko:</strong> <span id="modal_profil_imie"></span> <span id="modal_profil_nazwisko"></span></p>
-        <p style="margin: 5px 0;"><strong>Miasto:</strong> <span id="modal_profil_miasto"></span></p>
-        <p style="margin: 5px 0;"><strong>Email:</strong> <span id="modal_profil_email"></span></p>
-        <p style="margin: 5px 0;"><strong>Średnia ocena:</strong> <span id="modal_profil_ocena" style="color: #d4af37; font-weight: bold;"></span> / 5 ⭐</p>
+      <button
+        type="button"
+        onclick="closeModal_profil()"
+        class="modal-close">
+
+        ✖
+
+      </button>
+
+      <div style="text-align:center;">
+
+        <img
+          id="modal_profil_img"
+          src=""
+          class="modal-avatar">
+
+        <h2
+          id="modal_profil_nick"
+          class="modal-title">
+
+        </h2>
+
       </div>
 
-      <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-      <h3 style="margin-bottom: 10px; font-size: 1.1em;">Ostatnie zlecenia (kliknij kafel)</h3>
-      <div id="modal_profil_zlecenia_container" class="tiles-grid"></div>
+      <div class="modal-info-box">
+
+        <p>
+          <strong>Imię i nazwisko:</strong>
+          <span id="modal_profil_imie"></span>
+          <span id="modal_profil_nazwisko"></span>
+        </p>
+
+        <p>
+          <strong>Miasto:</strong>
+          <span id="modal_profil_miasto"></span>
+        </p>
+
+        <p>
+          <strong>Email:</strong>
+          <span id="modal_profil_email"></span>
+        </p>
+
+        <p>
+          <strong>Średnia ocena:</strong>
+          <span id="modal_profil_ocena"></span> / 5 ⭐
+        </p>
+
+      </div>
+
+      <h3 class="modal-subtitle">
+        Ostatnie zlecenia
+      </h3>
+
+      <div
+        id="modal_profil_zlecenia_container"
+        class="tiles-grid">
+
+      </div>
+
     </div>
+
   </div>
 
-  <!-- MODAL SZCZEGÓŁY ZLECENIA (dla historii z modal_profil) -->
-  <div id="modal_history_detail" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); z-index: 9999;">
-    <div style="background:#fff; color:black; padding:25px; width:380px; margin:130px auto; position:relative; border-radius:12px; border-top: 5px solid orange; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-      <button type="button" onclick="closeModal_historyDetail()" style="position:absolute; top:15px; right:15px; border:none; background:none; font-size:22px; cursor:pointer;">✖</button>
-      <h2 id="history_detail_title" style="color: orange; margin-top: 0;"></h2>
-      <div id="history_detail_content" style="line-height: 1.6; color: #444;"></div>
-      <button onclick="closeModal_historyDetail()" style="width:100%; margin-top:20px; padding:10px; background: orange; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Zamknij</button>
+  <!-- MODAL HISTORIA -->
+  <div id="modal_history_detail">
+
+    <div class="history-modal-box">
+
+      <button
+        type="button"
+        onclick="closeModal_historyDetail()"
+        class="modal-close">
+
+        ✖
+
+      </button>
+
+      <h2
+        id="history_detail_title"
+        class="modal-title">
+
+      </h2>
+
+      <div id="history_detail_content"></div>
+
+      <button
+        onclick="closeModal_historyDetail()"
+        class="modal-btn">
+
+        Zamknij
+
+      </button>
+
     </div>
+
   </div>
 
   <script>
@@ -136,7 +411,7 @@
           container.appendChild(tile);
         });
       } else {
-        container.innerHTML = '<p style="grid-column: 1/-1; color: #999; font-style: italic;">Użytkownik nie posiada jeszcze historii współprac.</p>';
+        container.innerHTML = '<p style="grid-column: 1/-1; color: #030303; font-style: italic;">Użytkownik nie posiada jeszcze historii współprac.</p>';
       }
 
       document.getElementById('modal_profil_standard').style.display = 'block';
@@ -162,7 +437,7 @@
                     </div>
                 `;
       } else {
-        reviewHtml = `<p style="color: #999; font-style: italic; margin-top: 15px;">To zlecenie nie otrzymało jeszcze opinii.</p>`;
+        reviewHtml = `<p style="color: #070707; font-style: italic; margin-top: 15px;">To zlecenie nie otrzymało jeszcze opinii.</p>`;
       }
 
       document.getElementById('history_detail_content').innerHTML = `
@@ -173,7 +448,7 @@
                     <p style="margin: 5px 0;"><strong>Opis:</strong> ${data.oferta_opis || 'Brak opisu'}</p>
                 </div>
                 <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-                <p><strong>Opinia o tym użytkowniku:</strong></p>
+                <p><strong style="color:white">Opinia o tym użytkowniku:</strong></p>
                 ${reviewHtml}
             `;
       document.getElementById('modal_history_detail').style.display = 'block';
