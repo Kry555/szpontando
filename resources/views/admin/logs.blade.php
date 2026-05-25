@@ -1,88 +1,53 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Sprzontando</title>
-    <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
+  <meta charset="UTF-8">
+  <title>Sprzontando</title>
+  <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
+  @vite('resources/css/admin.css')
 
-    <style>
 
-        body{
-            font-family: Arial, sans-serif;
-        }
-
-        table{
-            width:100%;
-            border-collapse:collapse;
-        }
-
-        th, td{
-            border:1px solid #ccc;
-            padding:8px;
-            text-align:left;
-            vertical-align:middle;
-        }
-
-        tr:nth-child(even){
-            background:#f9f9f9;
-        }
-
-        .profil-btn{
-            background:#6c757d;
-            color:white;
-            border:none;
-            padding:5px 10px;
-            border-radius:4px;
-            cursor:pointer;
-            display:flex;
-            align-items:center;
-            gap:5px;
-        }
-
-        .profil-btn img{
-            border-radius:50%;
-            object-fit:cover;
-        }
-
-    </style>
 </head>
 
 <body>
 
-@include('admin.sidebar')
+  @include('admin.sidebar')
 
-<div class="container">
+
+
+  <div class="container">
 
     <h1>Dziennik Zdarzeń (Admin Logs)</h1>
 
     <table>
 
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Administrator</th>
-                <th>Akcja</th>
-                <th>Szczegóły</th>
-            </tr>
-        </thead>
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Administrator</th>
+          <th>Akcja</th>
+          <th>Szczegóły</th>
+        </tr>
+      </thead>
 
-        <tbody>
+      <tbody>
 
         @foreach($logi as $log)
 
-            <tr>
+        <tr>
 
-                <!-- DATA -->
-                <td>
-                    {{ $log->created_at }}
-                </td>
+          <!-- DATA -->
+          <td>
+            {{ $log->created_at }}
+          </td>
 
-                <!-- ADMIN -->
-                <td>
+          <!-- ADMIN -->
+          <td>
 
-                    <button class="profil-btn"
+            <button class="profil-btn"
 
-                        onclick="openModal_profil(
+              onclick="openModal_profil(
                             '{{ $log->admin_nick }}',
                             '{{ asset('images/profilowe/' . ($log->admin_profilowe ?: 'default.png')) }}',
                             '{{ $log->admin_imie }}',
@@ -92,39 +57,38 @@
                             ''
                         )">
 
-                        <img
-                            src="{{ asset('images/profilowe/' . ($log->admin_profilowe ?: 'default.png')) }}"
-                            alt="P"
-                            width="25"
-                            height="25"
-                        >
+              <img
+                src="{{ asset('images/profilowe/' . ($log->admin_profilowe ?: 'default.png')) }}"
+                alt="P"
+                width="25"
+                height="25">
 
-                        <span>
-                            {{ $log->admin_nick }}
-                        </span>
+              <span>
+                {{ $log->admin_nick }}
+              </span>
 
-                    </button>
+            </button>
 
-                </td>
+          </td>
 
-                <!-- AKCJA -->
-                <td>
-                    {{ $log->action }}
-                </td>
+          <!-- AKCJA -->
+          <td>
+            {{ $log->action }}
+          </td>
 
-                <!-- SZCZEGÓŁY -->
-                <td>
+          <!-- SZCZEGÓŁY -->
+          <td>
 
-                    @php
+            @php
 
-                        $details = e($log->details);
+            $details = e($log->details);
 
-                        if($log->target_id){
+            if($log->target_id){
 
-                            $button = '
-                            <button class="profil-btn"
+            $button = '
+            <button class="profil-btn"
 
-                                onclick="openModal_profil(
+              onclick="openModal_profil(
                                     \'' . e($log->target_nick) . '\',
                                     \'' . asset('images/profilowe/' . ($log->profilowe ?: 'default.png')) . '\',
                                     \'' . e($log->imie) . '\',
@@ -134,44 +98,43 @@
                                     \'' . e($log->ocena ?? '0') . '\'
                                 )">
 
-                                <img
-                                    src="' . asset('images/profilowe/' . ($log->profilowe ?: 'default.png')) . '"
-                                    width="25"
-                                    height="25"
-                                >
+              <img
+                src="' . asset('images/profilowe/' . ($log->profilowe ?: 'default.png')) . '"
+                width="25"
+                height="25">
 
-                                <span>' . e($log->target_nick) . '</span>
+              <span>' . e($log->target_nick) . '</span>
 
-                            </button>
-                            ';
+            </button>
+            ';
 
-                            $details = preg_replace(
-                                '/Użytkownik ID:\s*\d+/',
-                                $button,
-                                $details
-                            );
-                        }
+            $details = preg_replace(
+            '/Użytkownik ID:\s*\d+/',
+            $button,
+            $details
+            );
+            }
 
-                    @endphp
+            @endphp
 
-                    {!! $details !!}
+            {!! $details !!}
 
-                </td>
+          </td>
 
-            </tr>
+        </tr>
 
         @endforeach
 
-        </tbody>
+      </tbody>
 
     </table>
 
-</div>
+  </div>
 
-<!-- MODAL PROFIL -->
-<div id="modal_profil_standard"
+  <!-- MODAL PROFIL -->
+  <div id="modal_profil_standard"
 
-     style="
+    style="
         display:none;
         position:fixed;
         top:0;
@@ -184,7 +147,7 @@
 
     <div
 
-        style="
+      style="
             background:#fff;
             color:black;
             padding:25px;
@@ -195,13 +158,13 @@
             text-align:center;
         ">
 
-        <button
+      <button
 
-            type="button"
+        type="button"
 
-            onclick="closeModal_profil()"
+        onclick="closeModal_profil()"
 
-            style="
+        style="
                 position:absolute;
                 top:15px;
                 right:15px;
@@ -211,17 +174,17 @@
                 cursor:pointer;
             ">
 
-            ✖
+        ✖
 
-        </button>
+      </button>
 
-        <img
+      <img
 
-            id="modal_profil_img"
+        id="modal_profil_img"
 
-            src=""
+        src=""
 
-            style="
+        style="
                 width:110px;
                 height:110px;
                 border-radius:50%;
@@ -230,11 +193,11 @@
                 object-fit:cover;
             ">
 
-        <h2 id="modal_profil_nick"></h2>
+      <h2 id="modal_profil_nick"></h2>
 
-        <div
+      <div
 
-            style="
+        style="
                 text-align:left;
                 background:#fdfdfd;
                 border:1px solid #eee;
@@ -242,79 +205,78 @@
                 border-radius:8px;
             ">
 
-            <p>
-                <strong>Imię i nazwisko:</strong>
+        <p>
+          <strong>Imię i nazwisko:</strong>
 
-                <span id="modal_profil_imie"></span>
-                <span id="modal_profil_nazwisko"></span>
-            </p>
+          <span id="modal_profil_imie"></span>
+          <span id="modal_profil_nazwisko"></span>
+        </p>
 
-            <p>
-                <strong>Miasto:</strong>
+        <p>
+          <strong>Miasto:</strong>
 
-                <span id="modal_profil_miasto"></span>
-            </p>
+          <span id="modal_profil_miasto"></span>
+        </p>
 
-            <p>
-                <strong>Email:</strong>
+        <p>
+          <strong>Email:</strong>
 
-                <span id="modal_profil_email"></span>
-            </p>
+          <span id="modal_profil_email"></span>
+        </p>
 
-            <p>
-                <strong>Ocena:</strong>
+        <p>
+          <strong>Ocena:</strong>
 
-                <span id="modal_profil_ocena"></span>
-            </p>
+          <span id="modal_profil_ocena"></span>
+        </p>
 
-        </div>
+      </div>
 
     </div>
 
-</div>
+  </div>
 
-<script>
-
+  <script>
     function openModal_profil(
-        nick,
-        profilowe,
-        imie,
-        nazwisko,
-        miasto,
-        email,
-        ocena
-    ){
+      nick,
+      profilowe,
+      imie,
+      nazwisko,
+      miasto,
+      email,
+      ocena
+    ) {
 
-        document.getElementById('modal_profil_img').src = profilowe;
+      document.getElementById('modal_profil_img').src = profilowe;
 
-        document.getElementById('modal_profil_nick').textContent = nick;
+      document.getElementById('modal_profil_nick').textContent = nick;
 
-        document.getElementById('modal_profil_imie').textContent =
-            imie || 'Brak';
+      document.getElementById('modal_profil_imie').textContent =
+        imie || 'Brak';
 
-        document.getElementById('modal_profil_nazwisko').textContent =
-            nazwisko || '';
+      document.getElementById('modal_profil_nazwisko').textContent =
+        nazwisko || '';
 
-        document.getElementById('modal_profil_miasto').textContent =
-            miasto || 'Brak lokalizacji';
+      document.getElementById('modal_profil_miasto').textContent =
+        miasto || 'Brak lokalizacji';
 
-        document.getElementById('modal_profil_email').textContent =
-            email || 'Brak kontaktu';
+      document.getElementById('modal_profil_email').textContent =
+        email || 'Brak kontaktu';
 
-        document.getElementById('modal_profil_ocena').textContent =
-            ocena || '0';
+      document.getElementById('modal_profil_ocena').textContent =
+        ocena || '0';
 
-        document.getElementById('modal_profil_standard').style.display =
-            'block';
+      document.getElementById('modal_profil_standard').style.display =
+        'block';
     }
 
-    function closeModal_profil(){
+    function closeModal_profil() {
 
-        document.getElementById('modal_profil_standard').style.display =
-            'none';
+      document.getElementById('modal_profil_standard').style.display =
+        'none';
     }
-
-</script>
+  </script>
 
 </body>
+
 </html>

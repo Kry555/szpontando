@@ -1,0 +1,402 @@
+/* =========================
+   GLOBAL RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #0b1220;
+  color: #e5e7eb;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.admin-content {
+  margin-left: 260px;
+  padding: 20px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.main-header {
+  width: 100%;
+  padding: 10px 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: linear-gradient(90deg, #0f172a, #111827, #172554);
+  border-bottom: 1px solid #1e293b;
+
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.logo-box img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+}
+
+.header-text {
+  flex: 1;
+  text-align: center;
+}
+
+.header-text h2 {
+  font-size: 18px;
+  color: #f8fafc;
+}
+
+.header-text p {
+  font-size: 12px;
+  color: #94a3b8;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.header-buttons button {
+  background: linear-gradient(135deg, #2563eb, #10b981);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.header-buttons button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 260px;
+  height: 100vh;
+
+  background: #0f172a;
+  border-right: 1px solid #1e293b;
+
+  padding: 20px;
+}
+
+.sidebar h2 {
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  display: block;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+
+  color: #cbd5e1;
+  text-decoration: none;
+  border-radius: 6px;
+
+  transition: 0.2s;
+}
+
+.sidebar a:hover {
+  background: #1e293b;
+  color: white;
+}
+
+/* =========================
+   CARDS / DASHBOARD
+========================= */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: #111827;
+  padding: 15px;
+  border-radius: 10px;
+
+  border: 1px solid #1e293b;
+  text-decoration: none;
+  color: white;
+
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: #2563eb;
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 10px;
+
+  background: #2563eb;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+/* =========================
+   TABLES
+========================= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+
+  background: #0f172a;
+  border: 1px solid #1e293b;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #1e293b;
+  text-align: left;
+}
+
+th {
+  background: #111827;
+  color: #f8fafc;
+}
+
+tr:hover {
+  background: #111827;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+button {
+  cursor: pointer;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.btn-ban {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-ok {
+  background: #22c55e;
+  color: white;
+}
+
+.btn-unban {
+  background: #10b981;
+  color: white;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,0.7);
+  z-index: 9999;
+}
+
+.modal-content {
+  background: #fff;
+  color: #000;
+
+  width: 450px;
+  margin: 80px auto;
+
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* =========================
+   CHART
+========================= */
+
+.chart-container {
+  margin-top: 30px;
+  background: #0f172a;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #1e293b;
+}
+body {
+  background: #0b1220;
+  color: #e5e7eb;
+}
+
+/* 🔥 TO JEST KLUCZ */
+.container {
+  margin-left: 260px;
+  padding: 20px;
+}
+
+/* =========================
+   MODAL BASE
+========================= */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 9999;
+
+  align-items: center;
+  justify-content: center;
+}
+
+/* aktywny modal (jeśli dasz JS toggle class) */
+.modal.show {
+  display: flex;
+}
+
+/* =========================
+   MODAL CONTENT
+========================= */
+
+.modal_content {
+  position: relative;
+
+  width: 420px;
+  max-width: 95%;
+
+  background: #0f172a;
+  color: #e5e7eb;
+
+  border: 1px solid #1e293b;
+  border-radius: 14px;
+
+  padding: 25px;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+
+  text-align: center;
+
+  animation: modalPop 0.2s ease-out;
+}
+
+/* animacja wejścia */
+@keyframes modalPop {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* =========================
+   CLOSE BUTTON
+========================= */
+
+.modal_content button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  border: none;
+  background: transparent;
+
+  font-size: 20px;
+  color: #94a3b8;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.modal_content button:hover {
+  color: white;
+  transform: scale(1.1);
+}
+
+/* =========================
+   AVATAR
+========================= */
+
+#modal_profil_img {
+  width: 110px;
+  height: 110px;
+
+  border-radius: 50%;
+
+  border: 3px solid #2563eb; /* spójne z blue theme */
+
+  object-fit: cover;
+
+  margin-bottom: 15px;
+
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.25);
+}
+
+/* =========================
+   NICK
+========================= */
+
+#modal_profil_nick {
+  margin: 10px 0 15px;
+
+  font-size: 20px;
+  color: #f8fafc;
+}
+
+/* =========================
+   INFO BOX
+========================= */
+
+.modal_content > div {
+  text-align: left;
+
+  background: #111827;
+  border: 1px solid #1e293b;
+
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.modal_content p {
+  margin: 8px 0;
+  color: #cbd5e1;
+}
+
+.modal_content strong {
+  color: #f8fafc;
+}
