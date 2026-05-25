@@ -2,228 +2,203 @@
 <html lang="pl">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sprzontando</title>
-    <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
-    @vite('resources/css/stop_z_wypalaniem_gał.css')
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sprzontando</title>
+  <link rel="icon" href="{{ Vite::asset('resources/images/sprzontandoico.ico') }}" type="image/x-icon">
+  @vite('resources/css/set-profil.css')
 </head>
 
 <body>
-    @auth
-    <h4>To twój profil {{ auth()->user()->nick }}!</h4>
-    <div class="showprofil">
-        <img src="{{ asset('images/profilowe/' . $profil->profilowe) }}" alt="Profilowe" width="100"><br>
-        {{$profil->nick}}<br>
-        {{$profil->imie}}<br>
-        {{$profil->nazwisko}}<br>
-        {{$profil->sex}}<br>
-        {{$profil->data_ur}}<br>
-        {{$profil->miasto}}<br>
-        {{$profil->email_kontaktowy}}<br>
-        {{$profil->ocena}}<br>
-    </div>
-    <button onclick="openModal_change()">
-        Edytuj profil
-    </button>
-    <button onclick="openModal_change_users()">
-        Edytuj dane logowania
-    </button>
+  <header class="main-header">
 
-<div id="modal_change_email"
-     style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+    <a href="{{ route('main') }}" class="logo-box">
+      <img src="{{ asset('images/logo.png') }}" alt="logo">
+    </a>
 
-    <div style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
-
-        <h1>Zmień email</h1>
-
-        <form id="emailChangeForm" method="POST" action="{{ route('email.change.request') }}">
-            @csrf
-
-            <label>Podaj hasło:</label><br>
-            <input type="password" name="password" required><br><br>
-
-            <button type="submit">Wyślij link potwierdzający na stary email</button>
-        </form>
-        <button type="button" onclick="goBackToUsersModal()">Wróć</button>
-    </div>
-</div>
-<div id="modal_email_sent"
-     style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.5);">
-
-    <div style="background:#fff; color:black; padding:20px; width:400px;
-                margin:100px auto; text-align:center;">
-
-        <p>Link do zmiany email został wysłany na Twój aktualny adres.</p>
-
-        <button onclick="closeEmailSentModal()">Wróć</button>
-    </div>
-</div>
-
-    <div id="modal_change" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
-        <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
-            <h1>Edytuj profil</h1>
-            <form method="POST" action="{{ route('set_profil.post') }}" enctype="multipart/form-data">
-                @csrf
-
-                <!-- Profilowe (zdjęcie) -->
-                <label for="profilowe">Wybierz zdjęcie profilowe:</label><br>
-                <input type="file" id="profilowe" name="profilowe" accept="image/*"><br>
-                @if($profil->profilowe)
-                <img src="{{ asset('images/profilowe/' . $profil->profilowe) }}" alt="Profilowe" width="100" style="margin-top:5px;">
-                @endif
-                @error('profilowe')
-                <div class="error-message">{{ $message }}</div>
-                @enderror
-
-                <!-- Nick -->
-                <input type="text" name="nick" placeholder="nick" value="{{ old('nick', $profil->nick) }}" required><br>
-                @error('nick')
-                <div class="error-message">{{ $message }}</div>
-                @enderror
-
-                <!-- Imię -->
-                <input type="text" name="imie" placeholder="imie" value="{{ old('imie', $profil->imie) }}" required><br>
-                @error('imie')
-                <div class="error-message">{{ $message }}</div>
-                @enderror
-
-                <!-- Nazwisko -->
-                <input type="text" name="nazwisko" placeholder="nazwisko" value="{{ old('nazwisko', $profil->nazwisko) }}" required><br>
-                @error('nazwisko')
-                <div class="error-message">{{ $message }}</div>
-                @enderror
-
-                <!-- Data urodzenia -->
-                 <p>Data urodzenia:</p>
-                <input type="datetime-local" name="data_ur"
-                    value="{{ old('data_ur', optional($profil->data_ur) ? \Carbon\Carbon::parse($profil->data_ur)->format('Y-m-d\TH:i') : '') }}"
-                    required><br>
-                @error('data_ur')
-                <div class="error-message">{{ $message }}</div>
-                @enderror
-
-                <!-- Miasto -->
-                <input type="text" name="miasto" placeholder="miasto" value="{{ old('miasto', $profil->miasto) }}" required><br>
-                @error('miasto')
-                <div class="error-message">{{ $message }}</div>
-                @enderror
-
-                <!-- Email kontaktowy -->
-                <input type="email" name="email_kontaktowy" placeholder="email_kontaktowy" value="{{ old('email_kontaktowy', $profil->email_kontaktowy) }}" required><br>
-                @error('email_kontaktowy')
-                <div class="error-message">{{ $message }}</div>
-                @enderror
-
-                <!-- Gender -->
-                <div class="gender-radio">
-                    <input type="radio" id="menCheck" name="gender" value="men"
-                        {{ old('gender', $profil->sex) == 'men' ? 'checked' : '' }}>
-                    <label for="menCheck">Men</label>
-                </div>
-                <div class="gender-radio">
-                    <input type="radio" id="womenCheck" name="gender" value="women"
-                        {{ old('gender', $profil->sex) == 'women' ? 'checked' : '' }}>
-                    <label for="womenCheck">Women</label>
-                </div>
-                <div class="gender-radio">
-                    <input type="radio" id="slupCheck" name="gender" value="slup"
-                        {{ old('gender', $profil->sex) == 'slup' ? 'checked' : '' }}>
-                    <label for="slupCheck">Słup elektryczny</label>
-                </div>
-                @error('gender')
-                <div class="error-message">{{ $message }}</div>
-                @enderror
-
-                <button type="submit">Zaktualizuj profil</button>
-                <button type="button" onclick="closeModal_change()">Anuluj</button>
-            </form>
-
-        </div>
+    <div class="header-text">
+      <h2>Sprzontando</h2>
+      <p>Twój profil</p>
     </div>
 
-    <div id="modal_change_users" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
-        <div id="modal_content" style="background:#fff; color:black; padding:20px; width:400px; margin:100px auto; position:relative;">
-            <h1>Edytuj dane logowania</h1>
-
-<button type="button" onclick="openModal_change_email()">
-    Zmień email
-</button>
-
-<form method="GET" action="{{ route('password.request') }}">
-    <button type="submit">Zmień hasło</button>
-</form>
-</button>
-</form>
-            <!-- tu bendzie dwa guzki zmien email i zmien haslo -->
-
-            <button type="button" onclick="closeModal_change_users()">Anuluj</button>
-        </div>
+    <div class="header-buttons">
+      <a href="{{ route('main') }}">
+        <button type="button">Strona główna</button>
+      </a>
     </div>
-    <script>
+
+  </header>
+  @auth
+
+  <div class="showprofil">
+    <img src="{{ asset('images/profilowe/' . $profil->profilowe) }}" alt="Profilowe" width="100"><br>
+    {{$profil->nick}}<br>
+    {{$profil->imie}}<br>
+    {{$profil->nazwisko}}<br>
+    {{$profil->sex}}<br>
+    {{$profil->data_ur}}<br>
+    {{$profil->miasto}}<br>
+    {{$profil->email_kontaktowy}}<br>
+    {{$profil->ocena}}<br>
+  </div>
+  <button onclick="openModal_change()">
+    Edytuj profil
+  </button>
+  <button onclick="openModal_change_users()">
+    Edytuj dane logowania
+  </button>
+
+  <!-- MODAL EDYCJA PROFILU -->
+  <div id="modal_change" class="modal">
+    <div class="modal_content">
+
+      <h1>Edytuj profil</h1>
+
+      <form method="POST" action="{{ route('set_profil.post') }}" enctype="multipart/form-data">
+        @csrf
+
+        <label>Profilowe:</label>
+        <input type="file" name="profilowe" accept="image/*">
+
+        @if($profil->profilowe)
+        <img src="{{ asset('images/profilowe/' . $profil->profilowe) }}" width="90">
+        @endif
+
+        <input type="text" name="nick" value="{{ $profil->nick }}" required>
+        <input type="text" name="imie" value="{{ $profil->imie }}" required>
+        <input type="text" name="nazwisko" value="{{ $profil->nazwisko }}" required>
+
+        <p>Data urodzenia:</p>
+        <input type="datetime-local" name="data_ur"
+          value="{{ \Carbon\Carbon::parse($profil->data_ur)->format('Y-m-d\TH:i') }}" required>
+
+        <input type="text" name="miasto" value="{{ $profil->miasto }}" required>
+        <input type="email" name="email_kontaktowy" value="{{ $profil->email_kontaktowy }}" required>
+
+        <p>Płeć:</p>
+        <label><input type="radio" name="gender" value="men" {{ $profil->sex=='men'?'checked':'' }}> Men</label>
+        <label><input type="radio" name="gender" value="women" {{ $profil->sex=='women'?'checked':'' }}> Women</label>
+        <label><input type="radio" name="gender" value="slup" {{ $profil->sex=='slup'?'checked':'' }}> Słup</label>
+
+        <button type="submit">Zapisz</button>
+        <button type="button" onclick="closeModal_change()">Anuluj</button>
+      </form>
+
+    </div>
+  </div>
+
+
+  <!-- MODAL DANE LOGOWANIA -->
+  <div id="modal_change_users" class="modal">
+    <div class="modal_content">
+
+      <h1>Dane logowania</h1>
+
+      <button onclick="openModal_change_email()">Zmień email</button>
+
+      <form method="GET" action="{{ route('password.request') }}">
+        <button type="submit">Zmień hasło</button>
+      </form>
+
+      <button onclick="closeModal_change_users()">Anuluj</button>
+
+    </div>
+  </div>
+
+
+  <!-- MODAL EMAIL -->
+  <div id="modal_change_email" class="modal">
+    <div class="modal_content">
+
+      <h1>Zmień email</h1>
+
+      <form id="emailChangeForm" method="POST" action="{{ route('email.change.request') }}">
+        @csrf
+
+        <input type="password" name="password" placeholder="Podaj hasło" required>
+
+        <button type="submit">Wyślij link</button>
+      </form>
+
+      <button onclick="goBackToUsersModal()">Wróć</button>
+
+    </div>
+  </div>
+
+
+  <!-- MODAL INFO -->
+  <div id="modal_email_sent" class="modal">
+    <div class="modal_content">
+
+      <p>Link został wysłany na Twój email.</p>
+
+      <button onclick="closeEmailSentModal()">OK</button>
+
+    </div>
+  </div>
+  <script>
     function closeModal_change_email() {
-        document.getElementById('modal_change_email').style.display = 'none';
+      document.getElementById('modal_change_email').style.display = 'none';
     }
 
-        function openModal_change() {
-            document.getElementById('modal_change').style.display = 'block';
-        }
+    function openModal_change() {
+      document.getElementById('modal_change').style.display = 'block';
+    }
 
-        function closeModal_change() {
-            document.getElementById('modal_change').style.display = 'none';
-        }
+    function closeModal_change() {
+      document.getElementById('modal_change').style.display = 'none';
+    }
 
-        function openModal_change_users() {
-            document.getElementById('modal_change_users').style.display = 'block';
-        }
+    function openModal_change_users() {
+      document.getElementById('modal_change_users').style.display = 'block';
+    }
 
-        function closeModal_change_users() {
-            document.getElementById('modal_change_users').style.display = 'none';
-        }
-        function openEmailSentModal() {
-    document.getElementById('modal_email_sent').style.display = 'block';
-}
+    function closeModal_change_users() {
+      document.getElementById('modal_change_users').style.display = 'none';
+    }
+
+    function openEmailSentModal() {
+      document.getElementById('modal_email_sent').style.display = 'block';
+    }
 
 
-function closeEmailSentModal() {
-    document.getElementById('modal_email_sent').style.display = 'none';
-}
+    function closeEmailSentModal() {
+      document.getElementById('modal_email_sent').style.display = 'none';
+    }
 
     function goBackToUsersModal() {
-        closeModal_change_email();
-        openModal_change_users();
+      closeModal_change_email();
+      openModal_change_users();
     }
 
-function openModal_change_email() {
-    closeModal_change_users();
-    document.getElementById('modal_change_email').style.display = 'block';
+    function openModal_change_email() {
+      closeModal_change_users();
+      document.getElementById('modal_change_email').style.display = 'block';
 
-    document.getElementById('emailChangeForm').reset();
-}
+      document.getElementById('emailChangeForm').reset();
+    }
+  </script>
 
-</script>
- 
-    @if($errors->any())
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            openModal_change();
-        });
-    </script>
-    @endif
-        @if(session('status'))
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        openEmailSentModal();
+  @if($errors->any())
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      openModal_change();
     });
-</script>
-@endif
-    @endauth
+  </script>
+  @endif
+  @if(session('status'))
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      openEmailSentModal();
+    });
+  </script>
+  @endif
+  @endauth
 
-    
-    <a href="{{ route('main') }}">
-        <button type="button">wróc na strone główną </button>
-    </a>
+
+  <a href="{{ route('main') }}">
+    <button type="button">wróc na strone główną </button>
+  </a>
 </body>
 
 </html>
