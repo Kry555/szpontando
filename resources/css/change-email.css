@@ -1,0 +1,146 @@
+/* ========================= RESET ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========================= BODY ========================= */
+body {
+  background: linear-gradient(180deg, #0b1120 0%, #0f172a 45%, #111827 100%);
+  color: #f1f5f9;
+  font-family: "Segoe UI", sans-serif;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+/* ========================= TITLE ========================= */
+h1 {
+  color: #10b981;
+  margin-bottom: 20px;
+  font-size: 26px;
+}
+
+/* ========================= FORM ========================= */
+form {
+  width: 100%;
+  max-width: 420px;
+  padding: 22px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid #334155;
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(0,0,0,.25);
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ========================= INPUT ========================= */
+input[type="email"] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #334155;
+  background: #0f172a;
+  color: #f1f5f9;
+  outline: none;
+  transition: .2s;
+}
+
+input[type="email"]:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 10px rgba(16,185,129,.25);
+}
+
+/* ========================= BUTTON ========================= */
+button {
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2563eb, #10b981);
+  color: white;
+  transition: .2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 0 15px rgba(37,99,235,.25);
+}
+
+/* ========================= STATUS MESSAGE ========================= */
+p {
+  margin-top: 15px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* success highlight */
+p:has(+ form) {
+  color: #10b981;
+}
+/* ========================= HEADER ========================= */
+.main-header {
+  width: 100%;
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #0f172a, #111827, #172554);
+  border-bottom: 1px solid #1e293b;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.logo-box img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  margin-top: -40px;
+  margin-bottom: -40px;
+  filter: drop-shadow(0 0 18px rgba(37,99,235,.35))
+          drop-shadow(0 0 25px rgba(16,185,129,.25));
+}
+
+.header-text {
+  flex: 1;
+  text-align: center;
+}
+
+.header-text h2 {
+  font-size: 18px;
+  color: #f8fafc;
+}
+
+.header-text p {
+  font-size: 12px;
+  color: #94a3b8;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.header-buttons button {
+  background: linear-gradient(135deg, #2563eb, #10b981);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.header-buttons button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
