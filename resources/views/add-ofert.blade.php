@@ -44,78 +44,89 @@
 
   <form method="POST" action="{{ route('add_ofert.post') }}" enctype="multipart/form-data">
     @csrf
-    <p>Rodzaj sprzątania (wybierz jeden):</p>
+<p><strong>Rodzaj sprzątania (wybierz jeden):</strong></p>
 
-    <p><strong>Podstawowe:</strong></p>
+<div id="add_typ_radio">
+  <div class="radio-box">
+  <p class="radio-group-title">Podstawowe</p>
 
     <label>
       <input type="radio" name="typ" value="samochód" {{ old('typ') == 'samochod' ? 'checked' : '' }}> Samochód
-    </label><br>
+    </label>
 
     <label>
       <input type="radio" name="typ" value="rower" {{ old('typ') == 'rower' ? 'checked' : '' }}> Rower
-    </label><br>
+    </label>
 
     <label>
       <input type="radio" name="typ" value="cały_dom" {{ old('typ') == 'caly_dom' ? 'checked' : '' }}> Cały dom
-    </label><br>
-
+    </label>
     <label>
       <input type="radio" name="typ" value="wybrane_pomieszczenia" {{ old('typ') == 'wybrane_pomieszczenia' ? 'checked' : '' }}> Wybrane pomieszczenia
-    </label><br>
-
-    <p><strong>Specjalistyczne:</strong></p>
+    </label>
+    </div>
+<div class="radio-box">
+    <p class="radio-group-title">Specjalistyczne:</p>
 
     <label>
       <input type="radio" name="typ" value="brud_ciężki_przemysłowy" {{ old('typ') == 'brud_ciezki_przemyslowy' ? 'checked' : '' }}> Brud ciężki (przemysłowy)
-    </label><br>
+    </label>
 
     <label>
       <input type="radio" name="typ" value="miejsce_zbrodni" {{ old('typ') == 'miejsce_zbrodni' ? 'checked' : '' }}> Miejsce zbrodni
-    </label><br>
+    </label>
 
     <label>
       <input type="radio" name="typ" value="po_remoncie" {{ old('typ') == 'po_remoncie' ? 'checked' : '' }}> Po remoncie
-    </label><br>
+    </label>
 
     <label>
       <input type="radio" name="typ" value="po_imprezie" {{ old('typ') == 'po_imprezie' ? 'checked' : '' }}> Po imprezie
-    </label><br>
+    </label>
+    </div>
 
-    <p><strong>Zwierzęta:</strong></p>
+<div class="radio-box">
+    <p class="radio-group-title">Zwierzęta:</p>
 
     <label>
       <input type="radio" name="typ" value="zwierzęce_zabrudzenia" {{ old('typ') == 'zwierzece_zabrudzenia' ? 'checked' : '' }}> Zwierzęce zabrudzenia
-    </label><br>
+    </label>
 
     <label>
       <input type="radio" name="typ" value="sprzątanie_po_psie" {{ old('typ') == 'sprzatanie_po_psie' ? 'checked' : '' }}> Sprzątanie po psie
-    </label><br>
+    </label>
 
     <label>
       <input type="radio" name="typ" value="kuweta_kota" {{ old('typ') == 'kuweta_kota' ? 'checked' : '' }}> Kuweta kota
-    </label><br>
+    </label>
+    </div>
 
-    <p><strong>Inne przydatne:</strong></p>
+<div class="radio-box">
+    <p class="radio-group-title">Inne przydatne:</p>
 
     <label>
       <input type="radio" name="typ" value="mycie_okien" {{ old('typ') == 'mycie_okien' ? 'checked' : '' }}> Mycie okien
-    </label><br>
+    </label>
 
     <label>
       <input type="radio" name="typ" value="garaż_piwnica" {{ old('typ') == 'garaz_piwnica' ? 'checked' : '' }}> Garaż / piwnica
-    </label><br>
+    </label>
 
     <label>
       <input type="radio" name="typ" value="ogród_tarasy" {{ old('typ') == 'ogrod_tarasy' ? 'checked' : '' }}> Ogród / tarasy
-    </label><br>
+    </label>
 
     <label>
       <input type="radio" name="typ" value="dezynfekcja" {{ old('typ') == 'dezynfekcja' ? 'checked' : '' }}> Dezynfekcja
-    </label><br>
+    </label>
+     </div>
+      </div>
     <!-- wolin kazal checkboxy -->
     <!-- <input type="text" name="typ" placeholder="typ" value="{{ old('typ') }}" required><br> -->
+     <p>adres</p>
     <input type="text" name="adres" placeholder="adres" value="{{ old('adres') }}" required><br>
+         <p>cena</p>
+
     <input
       type="number"
       name="cena"
@@ -123,7 +134,7 @@
       value="{{ old('cena') }}"
       min="0"
       step="0.01"
-      required> <span>zł</span><br>
+      required><br>
     <p>Data wygaśnięcia:</p>
     <input
       type="datetime-local"
@@ -131,13 +142,32 @@
       value="{{ old('do_kiedy_wazne') }}"
       min="{{ now()->addDay()->format('Y-m-d\TH:i') }}"
       required><br>
+           <p>opis</p>
+
     <input type="text" name="opis" placeholder="opis" value="{{ old('opis') }}" required><br>
 
-    <p>Zdjęcia do ogłoszenia (max 2):</p>
-    <input type="file" name="zdjecie_1" accept="image/*"><br>
-    <input type="file" name="zdjecie_2" accept="image/*"><br>
-    <br>
+<p>Zdjęcia do ogłoszenia (max 2):</p>
 
+<div class="file-upload">
+
+  <label class="file-btn">
+    Wybierz zdjęcie 1
+    <input type="file" name="zdjecie_1" accept="image/*" id="img1">
+  </label>
+
+  <div class="img-preview" id="preview1"></div>
+
+  <label class="file-btn">
+    Wybierz zdjęcie 2
+    <input type="file" name="zdjecie_2" accept="image/*" id="img2">
+  </label>
+
+  <div class="img-preview" id="preview2"></div>
+
+</div>
+
+
+    <br>
     <button type="submit">Wystaw ogloszenie</button>
   </form>
 
@@ -145,7 +175,33 @@
   @guest
   <h1>Nie jestes zalogowany</h1>
   @endguest
+<script>
+function previewImage(input, previewId) {
+    const preview = document.getElementById(previewId);
+    preview.innerHTML = "";
 
+    if (input.files && input.files[0]) {
+        const file = input.files[0];
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            preview.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);
+    }
+}
+
+document.getElementById("img1").addEventListener("change", function () {
+    previewImage(this, "preview1");
+});
+
+document.getElementById("img2").addEventListener("change", function () {
+    previewImage(this, "preview2");
+});
+</script>
 </body>
 
 </html>

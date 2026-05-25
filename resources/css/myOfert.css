@@ -934,11 +934,276 @@ input[type="datetime-local"]:focus {
     transform: translateY(-2px);
 }
 
-/* WYBRANY */
-#edit_typ_radio input[type="radio"]:checked + span,
-#edit_typ_radio input[type="radio"]:checked + label {
+/* WYBRANY KAFELEK */
+#edit_typ_radio label:has(input[type="radio"]:checked) {
     background: linear-gradient(135deg, #10b981, #059669);
     border-color: #10b981;
     color: white;
     box-shadow: 0 0 12px rgba(16,185,129,.25);
+}
+/* =========================
+   IMAGE UPLOADER (MODAL EDIT)
+========================= */
+
+.upload-title {
+    margin: 15px 0 10px;
+    font-weight: 700;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.image-box {
+    background: rgba(15,23,42,.8);
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    transition: .2s;
+}
+
+.image-box:hover {
+    border-color: #10b981;
+    transform: translateY(-2px);
+}
+
+/* preview */
+.preview img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+
+    border-radius: 10px;
+    border: 1px solid #334155;
+}
+
+/* upload button (klikany kafel) */
+.upload-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(135deg, #2563eb, #10b981);
+    color: white;
+
+    padding: 10px;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: 700;
+    font-size: 13px;
+
+    transition: .2s;
+}
+
+.upload-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+/* ukrywamy input file */
+.upload-btn input {
+    display: none;
+}
+
+/* checkbox */
+.clear-box {
+    font-size: 12px;
+    color: #cbd5e1;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    cursor: pointer;
+}
+/* =========================
+   DELETE BUTTON (KAFEL)
+========================= */
+
+/* =========================
+   DELETE TILE (TOGGLE STYLE)
+========================= */
+
+.clear-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid #334155;
+
+    padding: 12px;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: 700;
+    font-size: 13px;
+
+    color: #e2e8f0;
+
+    transition: .2s ease;
+
+    user-select: none;
+}
+
+/* hover jak inne kafelki */
+.clear-btn:hover {
+    transform: translateY(-2px);
+    border-color: #ef4444;
+}
+
+/* ukryty checkbox */
+.clear-btn input {
+    display: none;
+}
+
+/* =========================
+   SELECTED STATE (RED)
+========================= */
+
+/* gdy checkbox zaznaczony */
+.clear-btn:has(input:checked) {
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+    border-color: #ef4444;
+    color: white;
+
+    box-shadow: 0 0 12px rgba(220, 38, 38, 0.25);
+}
+
+/* tekst wewnątrz */
+.clear-btn:has(input:checked) span {
+    opacity: 1;
+}
+
+/* delikatny efekt kliknięcia */
+.clear-btn:active {
+    transform: scale(0.98);
+}
+/* =========================
+   OCENA PRACOWNIKA
+========================= */
+
+.rating-box {
+    width: 100%;
+  margin-top: 12px;
+  padding: 14px;
+
+  background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(37,99,235,0.08));
+  border: 1px solid #334155;
+  border-left: 4px solid #10b981;
+
+  border-radius: 12px;
+
+  box-shadow: 0 0 18px rgba(16,185,129,0.08);
+}
+
+.rating-box h4 {
+  margin-bottom: 10px;
+  color: #10b981;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+/* input number */
+.rating-box input[type="number"] {
+  width: 100%;
+  padding: 10px;
+
+  margin-top: 6px;
+  margin-bottom: 10px;
+
+  border-radius: 8px;
+  border: 1px solid #334155;
+
+  background: #0f172a;
+  color: #f1f5f9;
+
+  outline: none;
+}
+
+.rating-box input[type="number"]:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 10px rgba(16,185,129,.25);
+}
+
+/* textarea */
+.rating-box textarea {
+  width: 100%;
+  min-height: 80px;
+
+  padding: 10px;
+  margin-top: 8px;
+
+  border-radius: 8px;
+  border: 1px solid #334155;
+
+  background: #0f172a;
+  color: #f1f5f9;
+
+  resize: vertical;
+}
+
+.rating-box textarea:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 10px rgba(16,185,129,.25);
+  outline: none;
+}
+
+/* label */
+.rating-box label {
+  color: #cbd5e1;
+  font-size: 13px;
+}
+
+/* button */
+.rating-box button {
+  width: 100%;
+  margin-top: 10px;
+
+  background: linear-gradient(135deg, #10b981, #2563eb);
+  color: white;
+
+  border-radius: 8px;
+  padding: 10px;
+
+  font-weight: 700;
+
+  transition: .2s;
+}
+
+.rating-box button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+.rating-submit {
+  width: 100%;
+  margin-top: 10px;
+
+  background: linear-gradient(135deg, #10b981, #2563eb);
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.rating-submit:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 0 15px rgba(16,185,129,.25);
 }

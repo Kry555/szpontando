@@ -173,7 +173,7 @@
 
       {{-- Sekcja oceny gospodarza --}}
       @if(!empty($zgloszenie->ostateczny_termin) && !($zgloszenie->juz_oceniono ?? false))
-      <div style="background: #f0f7ff; padding: 10px; border: 1px dashed blue; margin-top: 10px; color: #1e1e1e;">
+      <div class="rating-box">
         <h4>Oceń gospodarza</h4>
         <form method="POST" action="{{ route('ocena.store') }}">
           @csrf
@@ -183,7 +183,7 @@
           <label>Gwiazdki (0-5):</label>
           <input type="number" name="gwiazdki" min="0" max="5" required><br>
           <textarea name="opis" placeholder="Jak oceniasz współpracę z gospodarzem?" maxlength="255"></textarea><br>
-          <button type="submit">Wystaw opinię gospodarzowi</button>
+          <button type="submit" class="btn-opinia-gospodarz">Wystaw opinię gospodarzowi</button>
         </form>
       </div>
       @endif

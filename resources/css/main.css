@@ -361,12 +361,10 @@ button[type="submit"] {
 .typ_lista,
 .status_lista {
   display: flex;
-  flex-direction: column;
-
-  justify-content: center;
-
-  gap: 8px;
-
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
   min-width: 220px;
 }
 
@@ -917,4 +915,9 @@ textarea {
   box-shadow:
     0 0 15px rgba(37,99,235,.2),
     0 0 20px rgba(16,185,129,.12);
+}
+
+.status_lista select {
+  position: relative;
+  top: 5px;
 }

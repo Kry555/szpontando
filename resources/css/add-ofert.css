@@ -205,3 +205,156 @@ button[type="submit"]:hover {
     padding: 18px;
   }
 }
+/* =========================
+   ADD OFFER - RADIO TILES (same as edit modal)
+========================= */
+
+/* =========================
+   2x2 CATEGORY GRID (CUBE)
+========================= */
+
+#add_typ_radio {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+/* each quadrant box */
+.radio-box {
+    background: rgba(15,23,42,.5);
+    border: 1px solid #334155;
+    border-radius: 12px;
+
+    padding: 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    transition: .2s ease;
+}
+
+.radio-box:hover {
+    border-color: #10b981;
+    transform: translateY(-2px);
+}
+
+/* category title */
+.radio-group-title {
+    margin: 0 0 6px;
+    color: #94a3b8;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* hide radio */
+.radio-box input[type="radio"] {
+    display: none;
+}
+
+/* tile */
+.radio-box label {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    background: rgba(2,6,23,.6);
+    border: 1px solid #334155;
+
+    cursor: pointer;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #e2e8f0;
+
+    transition: .2s ease;
+}
+
+/* hover */
+.radio-box label:hover {
+    border-color: #10b981;
+    transform: translateY(-2px);
+}
+
+/* selected */
+.radio-box label:has(input[type="radio"]:checked) {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-color: #10b981;
+    color: white;
+    box-shadow: 0 0 12px rgba(16,185,129,.25);
+}
+.file-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* button look */
+.file-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px;
+    border-radius: 10px;
+
+    background: rgba(2,6,23,.6);
+    border: 1px solid #334155;
+
+    color: #e2e8f0;
+    font-weight: 600;
+    font-size: 13px;
+
+    cursor: pointer;
+    transition: .2s ease;
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* hover */
+.file-btn:hover {
+    border-color: #10b981;
+    transform: translateY(-2px);
+}
+
+/* hide default input */
+.file-btn input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+.img-preview {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.img-preview img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+
+    border-radius: 10px;
+    border: 1px solid #334155;
+
+    box-shadow: 0 0 10px rgba(0,0,0,.25);
+    transition: .2s;
+}
+
+.img-preview img:hover {
+    transform: scale(1.05);
+    border-color: #10b981;
+}
